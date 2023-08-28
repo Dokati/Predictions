@@ -19,7 +19,7 @@ public class SingleCondition implements Condition{
     private final Expression expressionValue;
     private final String operator;
     private final String singularity;
-    private final String propertyName;
+    private final Expression propertyName;
     private final EntityDefinition entity;
 
     public SingleCondition(PRDCondition prdCondition, HashMap<String,EntityDefinition> entities, HashMap<String, EnvPropertyDefinition> environmentProperties) {
@@ -27,7 +27,7 @@ public class SingleCondition implements Condition{
         CheckOperator(prdCondition.getOperator());
         this.operator = prdCondition.getOperator();
         this.singularity = prdCondition.getSingularity();
-        this.propertyName = prdCondition.getProperty();
+        this.propertyName = new Expression(prdCondition.getProperty());
         this.entity = entities.get(prdCondition.getEntity());
     }
 
@@ -57,13 +57,7 @@ public class SingleCondition implements Condition{
     public Boolean conditionIsTrue(Context context) {
         EntityInstance activeEntity = context.getActiveEntityInstance();
         Object cmpToValue =  this.expressionValue.getTranslatedValue(context);
-        Object propertyValue = activeEntity.getProperties().get(propertyName).getValue();
-
-        if (activeEntity.getProperties().get(propertyName).getType().equals(PropertyType.FLOAT)
-        || activeEntity.getProperties().get(propertyName).getType().equals(PropertyType.DECIMAL)) {
-            cmpToValue = PropertyType.FLOAT.convert(cmpToValue);
-            propertyValue = PropertyType.FLOAT.convert(propertyValue);
-        }
+        Object propertyValue = this.propertyName.getTranslatedValue(context);
 
         boolean result = false;
 
