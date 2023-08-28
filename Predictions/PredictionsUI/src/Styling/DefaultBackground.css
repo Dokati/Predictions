@@ -1,0 +1,22 @@
+.tree-view{
+    -fx-base: rgb(255, 255, 255);
+
+    -fx-accent: rgba(0, 0, 0, 0.5);
+    -fx-focus-color: rgba(0, 0, 0, 0.25);
+    -fx-faint-focus-color: rgba(0, 0, 0, 0.25);
+
+}
+#grid-first-screen, #hbox-header{
+    -fx-background-color: rgba(173, 216, 230, .3);
+}
+#grid-first-screen, #hbox-header{
+    -fx-background-color: rgba(173, 216, 230, .3);
+}
+.tab-pane>*.tab-header-area>*.tab-header-background
+{
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, rgba(173, 216, 230, 0.3);
+}
+.menu-bar
+{
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, rgba(173, 216, 230, 0.2);
+}
