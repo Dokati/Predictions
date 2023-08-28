@@ -22,7 +22,7 @@ public class EntityDefinition {
 
         for (PRDProperty property : entityDef.getPRDProperties().getPRDProperty()) {
             if(this.properties.containsKey(property.getPRDName())){
-                throw new IllegalXmlDataDupEntityPropNameExceptions("Xml contain two Properties with the same name for" + this.name);
+                throw new IllegalXmlDataDupEntityPropNameExceptions("Xml contain two Properties with the same name for " + this.name);
             }
 
             PropertyType propertyType = null;
@@ -33,7 +33,7 @@ public class EntityDefinition {
                 throw new IllegalArgumentException("Invalid property type. A property cannot be of type " + property.getType());
             }
 
-            if(propertyType == PropertyType.DECIMAL || propertyType  == PropertyType.FLOAT){
+            if(propertyType  == PropertyType.FLOAT){
                 this.properties.put(property.getPRDName(),new NumericPropertyDefinition(property));
             }
             else{

@@ -17,22 +17,17 @@ public class Decrease extends Action {
     private final Expression by;
     private EntityDefinition entity;
 
-    public String getProperty(){return propertyName;}
-
-    public String getBy(){return propertyName;}
-
     public Decrease(PRDAction prdAction, HashMap<String,EntityDefinition> entities, HashMap<String, EnvPropertyDefinition> environmentProperties) {
         super(prdAction, entities, environmentProperties);
         this.entity = entities.get(prdAction.getEntity());
         this.propertyName = prdAction.getProperty();
         this.by = new Expression(prdAction.getBy());
-        if(CheckIfTypeOfByNotMatchesTypeOfProperty(this.by.GetTranslatedValueType(entity,environmentProperties),entity.getProperties().get(propertyName).getType()))
-        {
-            throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("It is not possible to perform the Decrease " +
-                    "operation on a property of type " + entity.getProperties().get(propertyName).getType().name().toLowerCase() + " by a value of type "
-                    + this.by.GetTranslatedValueType(entity,environmentProperties).name().toLowerCase());
-        }
+        CheckTypeOfBy(this.by.GetTranslatedValueType(entity,environmentProperties));
     }
+
+    public String getProperty(){return propertyName;}
+
+    public String getBy(){return propertyName;}
 
     @Override
     public void Activate(Context context) {

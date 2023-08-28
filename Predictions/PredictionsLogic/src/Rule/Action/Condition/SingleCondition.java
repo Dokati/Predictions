@@ -19,7 +19,7 @@ public class SingleCondition implements Condition{
     private final Expression expressionValue;
     private final String operator;
     private final String singularity;
-    private final Expression propertyName;
+    private final Expression property;
     private final EntityDefinition entity;
 
     public SingleCondition(PRDCondition prdCondition, HashMap<String,EntityDefinition> entities, HashMap<String, EnvPropertyDefinition> environmentProperties) {
@@ -27,22 +27,8 @@ public class SingleCondition implements Condition{
         CheckOperator(prdCondition.getOperator());
         this.operator = prdCondition.getOperator();
         this.singularity = prdCondition.getSingularity();
-        this.propertyName = new Expression(prdCondition.getProperty());
+        this.property = new Expression(prdCondition.getProperty());
         this.entity = entities.get(prdCondition.getEntity());
-    }
-
-    //need a fix!
-    private void CheckIfTypeOfValueMatchesTypeOfProperty(PropertyType valueType, PropertyType propertyType)
-    {
-        if(Action.CheckIfValueIsNumeric(propertyType)) {
-            if(!Action.CheckIfValueIsNumeric(valueType)){
-                throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("The property type is numeric and the expression value type is" + valueType.name().toLowerCase());
-            }
-        }
-        else if(!propertyType.equals(valueType))
-        {
-            throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("The property type is "+ propertyType.name().toLowerCase() +" and the expression value type is" + valueType.name().toLowerCase());
-        }
     }
 
     private void CheckOperator(String pRDoperator)
@@ -57,7 +43,7 @@ public class SingleCondition implements Condition{
     public Boolean conditionIsTrue(Context context) {
         EntityInstance activeEntity = context.getActiveEntityInstance();
         Object cmpToValue =  this.expressionValue.getTranslatedValue(context);
-        Object propertyValue = this.propertyName.getTranslatedValue(context);
+        Object propertyValue = this.property.getTranslatedValue(context);
 
         boolean result = false;
 
@@ -84,7 +70,7 @@ public class SingleCondition implements Condition{
     public String getDetails() {
         return "Singularity: " + singularity+
                 "\nEntity: "  + entity.getName()+
-                "\nProperty name: " + propertyName+
+                "\nProperty name: " + property+
                 "\nOperator: " + operator+
                 "\n Value: " + expressionValue.getExpression();
     }

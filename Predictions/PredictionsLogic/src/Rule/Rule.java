@@ -91,10 +91,6 @@ public class Rule {
         return ticks;
     }
 
-    public void setTicks(Integer ticks) {
-        this.ticks = ticks;
-    }
-
     public Double getProbability() {
         return probability;
     }

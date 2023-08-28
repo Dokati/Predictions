@@ -37,13 +37,10 @@ public class WorldDefinition {
         //Get entities
         entities = new HashMap<>();
         for(PRDEntity entity : pRDworld.getPRDEntities().getPRDEntity()) {
-            CheckIfEntityAlreadyExistsInPRD(entity.getName());
             this.entities.put(entity.getName(),new EntityDefinition(entity));
         }
 
         //Get termination
-        CheckIfPRDHasTerminationConditions(pRDworld.getPRDTermination().getPRDBySecondOrPRDByTicks());
-
         terminationConditions = new HashMap<>();
         if(pRDworld.getPRDTermination() != null)
         {
@@ -91,25 +88,10 @@ public class WorldDefinition {
         return rules;
     }
 
-    private void CheckIfEntityAlreadyExistsInPRD(String entityName)
-    {
-        if(this.entities.containsKey(entityName)){
-            throw new IllegalArgumentException("Xml file contain two entities with the same name");
-        }
-    }
-
     private void CheckIfEnvPropertyAlreadyExistsInPRD(String envPropertyName)
     {
         if(this.environmentProperties.containsKey(envPropertyName)){
             throw new IllegalXmlDataDupEnvVarNameExceptions("Xml file contain two environment variables with the same name");
-        }
-    }
-
-    private void CheckIfPRDHasTerminationConditions(List<Object> terminationConditions)
-    {
-        if (terminationConditions == null)
-        {
-            throw new IllegalArgumentException("XML file does not contain termination conditions");
         }
     }
 

@@ -3,6 +3,7 @@ package Rule.Action;
 import Context.Context;
 import Dto.ActionDetailsDto;
 import Entity.definition.EntityDefinition;
+import Exceptions.IllegalXmlDataArgOfNumericActionAreNotNumericExceptions;
 import Expression.Expression;
 import PRD.PRDAction;
 import PRD.PRDActions;
@@ -20,14 +21,21 @@ public class Proximity extends Action {
 
     public Proximity(PRDAction prdAction, HashMap<String,EntityDefinition> entities, HashMap<String, EnvPropertyDefinition> environmentProperties) {
         super(prdAction, entities, environmentProperties);
-        //check if of float
         this.of = new Expression(prdAction.getPRDEnvDepth().getOf());
         this.sourceEntity = entities.get(prdAction.getPRDBetween().getSourceEntity());
         this.targetEntity = entities.get(prdAction.getPRDBetween().getTargetEntity());
+        CheckTypeOf(of.GetTranslatedValueType(sourceEntity,environmentProperties));
         this.actions = new ArrayList<>();
         for (PRDAction action : prdAction.getPRDActions().getPRDAction()) {
             this.actions.add(ActionFactory.ActionCreator(action, entities, environmentProperties));
         }
+    }
+
+    public void CheckTypeOf(PropertyType ofType)
+    {
+        if (!ofType.equals(PropertyType.FLOAT)){
+            throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("The proximity operation cannot be performed when the \"of\" argument is of type: " + ofType.name().toLowerCase());
+        };
     }
 
     @Override
@@ -48,9 +56,8 @@ public class Proximity extends Action {
                 Integer currentY = (sourceEntityY + j) % cols;
                 if(context.getWorldInstance().getGrid()[currentX][currentY].getEntityDef() == targetEntity)
                 {
-                    Context newContext = new Context(context.getWorldInstance().getGrid()[currentX][currentY], context.getWorldInstance(), context.getEnvVariables(), context.getCurrentTick());
+                    Context newContext = new Context(context.getWorldInstance().getGrid()[sourceEntityX][sourceEntityY], context.getWorldInstance(), context.getEnvVariables(), context.getCurrentTick());
                     for (Action action: this.actions)
-                        //need to chaeck if entity is good
                         action.Activate(newContext);
                     }
                 }
