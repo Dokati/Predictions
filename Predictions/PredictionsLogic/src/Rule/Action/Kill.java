@@ -29,5 +29,10 @@ public class Kill extends Action{
                 +"\nEntity: " + entity.getName());
     }
 
+    @Override
+    public EntityDefinition getMainEntity() {
+        return entity;
+    }
+
 
 }

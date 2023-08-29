@@ -7,6 +7,7 @@ import PRD.PRDAction;
 import Property.definition.EnvPropertyDefinition;
 import Rule.Action.Action;
 import Rule.Action.Condition.Condition;
+import Rule.Action.Condition.SingleCondition;
 
 import java.util.HashMap;
 
@@ -44,5 +45,11 @@ public class ConditionAction extends Action {
                 + condition.getDetails());
     }
 
-
+    @Override
+    public EntityDefinition getMainEntity() {
+        if (condition instanceof SingleCondition){
+            return ((SingleCondition)condition).getEntity();
+        }
+        return null;
+    }
 }

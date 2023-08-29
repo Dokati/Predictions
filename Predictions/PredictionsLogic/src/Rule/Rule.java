@@ -2,14 +2,15 @@ package Rule;
 
 import Context.Context;
 import Entity.definition.EntityDefinition;
+import Entity.instance.EntityInstance;
 import Exceptions.IllegalXmlDataInvalidActionEntityExceptions;
 import Exceptions.IllegalXmlDataInvalidActionPropExceptions;
 import PRD.PRDAction;
 import PRD.PRDCondition;
 import PRD.PRDRule;
 import Property.definition.EnvPropertyDefinition;
-import Rule.Action.Action;
-import Rule.Action.ActionFactory;
+import Rule.Action.*;
+import Rule.Action.ConditionAction.ConditionAction;
 import Validation.Validation;
 
 import java.util.ArrayList;
@@ -75,8 +76,19 @@ public class Rule {
 
     public void RunRule(Context context){
         for (Action action: this.actions) {
-            action.Activate(context);
+            if(CheckIfActionForTheEntityInThContext(action,context.getActiveEntityInstance())){
+                action.Activate(context);
+            }
         }
+    }
+
+    public Boolean CheckIfActionForTheEntityInThContext(Action action,EntityInstance entityInstance)
+    {
+        if(action.getMainEntity() == null)
+        {
+            return false;
+        }
+        return action.getMainEntity().equals(entityInstance.getEntityDef());
     }
 
     public String getName() {
@@ -95,16 +107,8 @@ public class Rule {
         return probability;
     }
 
-    public void setProbability(Double probability) {
-        this.probability = probability;
-    }
-
     public ArrayList<Action> getActions() {
         return actions;
-    }
-
-    public void setActions(ArrayList<Action> actions) {
-        this.actions = actions;
     }
 
     @Override

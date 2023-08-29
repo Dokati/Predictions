@@ -1,17 +1,26 @@
 package Manager;
 
+import Context.Context;
 import Dto.*;
+import Entity.definition.EntityDefinition;
+import Entity.instance.EntityInstance;
 import Grid.Grid;
 import PRD.PRDWorld;
 import Property.Range;
 import Property.definition.EnvPropertyDefinition;
 import Property.definition.PropertyDefinition;
+import Property.instance.EnvPropertyInstance;
 import Rule.Rule;
+import Terminition.TerminationType;
 import World.definition.WorldDefinition;
 import World.instance.WorldInstance;
 
 import javax.xml.bind.JAXB;
 import java.io.File;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +59,8 @@ public class PredictionManager {
 
         // create SimulationDetailsDto
 
+        runSimulationDEMO();
+
         List<String> entitiesNames = worldDefinition.getEntities().keySet().stream().collect(Collectors.toList());
         List<RuleTitleDto> ruleDtos = worldDefinition.getRules().stream()
                 .map(rule -> new RuleTitleDto(
@@ -62,6 +73,79 @@ public class PredictionManager {
         List<String> EnvVariableNames = worldDefinition.getEnvironmentProperties().values().stream().map(EnvPropertyDefinition::getName).collect(Collectors.toList());
         return new SimulationTitlesDetails(entitiesNames, ruleDtos,EnvVariableNames);
 
+    }
+
+    public void runSimulationDEMO()
+    {
+        if(worldDefinition == null)
+        {
+            throw new RuntimeException("There is no simulation loaded in the system");
+        }
+        InitializePopulationDEMO(); //every population is 10
+        worldInstance = new WorldInstance(worldDefinition);
+        InitializeEnvVariablesValueDEMO();
+        boolean simulationTermBySecond = false;
+        boolean simulationTermByTicks = false;
+        boolean simulationFinished = false;
+        Instant endTime = null;
+        Context context;
+        int tick = 1;
+
+        if(worldInstance.getTerminationConditions().containsKey(TerminationType.TICK)){
+            simulationTermByTicks = true;
+        }
+        if(worldInstance.getTerminationConditions().containsKey(TerminationType.SECOND)){
+            simulationTermBySecond = true;
+            endTime = Instant.now().plusSeconds(worldInstance.getSecTermination().getCount());
+        }
+
+        while (!simulationFinished) {
+
+            MoveEntitiesOneStepRandomly(); // 1.move all entities one step
+
+            for (EntityInstance entity : this.worldInstance.getEntities()) {
+                if (!entity.getAlive()) {
+                    continue;
+                }
+                context = new Context(entity, this.worldInstance, this.worldInstance.getEnvironmentProperties(),tick);
+
+                for (Rule rule : worldInstance.getRules()) {
+                    if (rule.RuleIsRunnable(tick)) {
+                        rule.RunRule(context);
+                    }
+                }
+            }
+
+            if (simulationTermBySecond && Instant.now().isAfter(endTime)) {
+                simulationFinished = true;
+                System.out.println("The Activation ended after " + worldDefinition.getTerminationConditions().get(TerminationType.SECOND).getCount() + " seconds");
+            }
+            if (simulationTermByTicks && tick >= worldInstance.getTicksTermination().getCount()) {
+                simulationFinished = true;
+                System.out.println("The Activation ended after " + worldDefinition.getTerminationConditions().get(TerminationType.TICK).getCount() + " ticks");
+            }
+            tick++;
+        }
+    }
+
+    private void MoveEntitiesOneStepRandomly() {
+        for (EntityInstance entity : worldInstance.getEntities()) {
+            worldInstance.getGrid()[entity.getCoordinate().getX()][entity.getCoordinate().getY()] = null;
+            entity.getCoordinate().chooseRandomNeighbor(worldInstance.getGrid());
+            worldInstance.getGrid()[entity.getCoordinate().getX()][entity.getCoordinate().getY()] = entity;
+        }
+    }
+
+    private void InitializeEnvVariablesValueDEMO() {
+        for (Map.Entry<String, EnvPropertyInstance> entry : this.worldInstance.getEnvironmentProperties().entrySet()) {
+            entry.getValue().setValue(entry.getValue().getPropertyDef().getType().randomInitialization(entry.getValue().getPropertyDef().getRange()));
+        }
+    }
+
+    private void InitializePopulationDEMO(){
+        for (Map.Entry<String, EntityDefinition> entityDef : this.worldDefinition.getEntities().entrySet()) {
+            entityDef.getValue().setPopulation(10);
+        }
     }
 
     public EntityPropertyDetailDto getEntityPropertiesDetail(String value) {
