@@ -1,12 +1,14 @@
-.detail-label {
 
+.label {
     -fx-font-size: 15;
-    -fx-text-fill: #ffffff;
+    -fx-font-family: "Pacifico";
+    -fx-text-fill: #333333;
     -fx-font-weight: bold;
     -fx-pref-width: 250px;
     -fx-pref-height: 150px;
-    -fx-background-color: #192641;
+    -fx-background-color: #F5F5F5;
     -fx-border-color: #0b0808;
     -fx-border-width: 5px;
     -fx-wrap-text: true;
+    -fx-padding: 0 0 0 10px;
 }

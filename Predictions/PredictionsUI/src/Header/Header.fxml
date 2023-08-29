@@ -16,9 +16,9 @@
          <children>
           <AnchorPane maxWidth="-Infinity" minWidth="0.0" prefHeight="105.0" prefWidth="995.0">
                <children>
-                  <Button fx:id="loadFileButton" layoutX="20.0" layoutY="49.0" mnemonicParsing="false" onAction="#HandleLoadFileButton" prefHeight="31.0" prefWidth="127.0" text="Load file button" />
+                  <Button fx:id="loadFileButton" layoutX="20.0" layoutY="49.0" mnemonicParsing="false" onAction="#HandleLoadFileButton" prefHeight="31.0" prefWidth="127.0" text="Load file " />
                   <TextField fx:id="filePathTextField" layoutX="160.0" layoutY="52.0" prefHeight="31.0" prefWidth="590.0" />
-                  <Button fx:id="queueMmanagementButton" layoutX="810.0" layoutY="37.0" mnemonicParsing="false" prefHeight="62.0" text="Queue Mmanagement" />
+                  <Button fx:id="queueMmanagementButton" layoutX="792.0" layoutY="37.0" mnemonicParsing="false" prefHeight="62.0" text="Queue Mmanagement" />
                   <MenuBar fx:id="menuBar" prefHeight="0.0" prefWidth="998.0">
                     <menus>
                       <Menu mnemonicParsing="false" text="Theme">
@@ -30,7 +30,20 @@
                                     <MenuItem mnemonicParsing="false" onAction="#ChangeBackgroundskinColor" text="rose-gold" />
                                 </items>
                               </Menu>
-                          <MenuItem mnemonicParsing="false" text="Close" />
+                              <Menu mnemonicParsing="false" text="Buttons theme">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" onAction="#ChangeButtonsAppearance" text="default" />
+                                    <MenuItem mnemonicParsing="false" onAction="#ChangeButtonsAppearance" text="dark" />
+                                    <MenuItem mnemonicParsing="false" onAction="#ChangeButtonsAppearance" text="rose-gold" />
+                                </items>
+                              </Menu>
+                              <Menu mnemonicParsing="false" text="Label theme">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#ChangeLabelAppearance" text="default" />
+                                    <MenuItem mnemonicParsing="false" onAction="#ChangeLabelAppearance" text="Medium montserrat" />
+                                    <MenuItem mnemonicParsing="false" onAction="#ChangeLabelAppearance" text="Large raleway" />
+                                 </items>
+                              </Menu>
                         </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Edit">

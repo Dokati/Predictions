@@ -6,12 +6,10 @@
     -fx-faint-focus-color: rgba(0, 0, 0, 0.25);
 
 }
-#grid-first-screen, #hbox-header{
+#grid-first-screen, #grid-second-screen, #hbox-header{
     -fx-background-color: rgba(173, 216, 230, .3);
 }
-#grid-first-screen, #hbox-header{
-    -fx-background-color: rgba(173, 216, 230, .3);
-}
+
 .tab-pane>*.tab-header-area>*.tab-header-background
 {
     -fx-background-color: -fx-outer-border, -fx-text-box-border, rgba(173, 216, 230, 0.3);

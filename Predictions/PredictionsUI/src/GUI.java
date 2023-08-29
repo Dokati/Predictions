@@ -13,7 +13,6 @@ public class GUI extends Application {
         primaryStage.setTitle("Predictions");
         Parent load = FXMLLoader.load(getClass().getResource("PrimaryContreoller/primaryController.fxml"));
         Scene scene = new Scene(load, 1000, 700);
-        scene.getStylesheets().add("Styling/details.css");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

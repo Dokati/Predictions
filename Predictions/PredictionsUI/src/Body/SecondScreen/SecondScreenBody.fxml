@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fx:id="scrollpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Body.SecondScreen.SecondScreenBodyController">
+   <content>
+      <GridPane id="grid-second-screen" fx:id="grid" alignment="CENTER" prefHeight="548.0" prefWidth="998.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="475.0" minWidth="1.0" prefWidth="222.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="939.0" minWidth="10.0" prefWidth="314.0" />
+          <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="459.0" minWidth="10.0" prefWidth="459.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="239.0" minHeight="10.0" prefHeight="239.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="243.0" minHeight="10.0" prefHeight="168.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="176.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <AnchorPane prefHeight="434.0" prefWidth="182.0" GridPane.rowSpan="3">
+               <GridPane.margin>
+                  <Insets bottom="30.0" left="10.0" right="10.0" top="30.0" />
+               </GridPane.margin>
+               <children>
+                  <Button fx:id="enviormentVariablesButton" layoutX="23.0" layoutY="112.0" mnemonicParsing="false" onAction="#ShowEnvPropListOnClick" prefHeight="77.0" prefWidth="175.0" text="Enviorment Variables" />
+                  <Button fx:id="entitypopulationButton" layoutX="29.0" layoutY="231.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="164.0" text="Entity population" />
+               </children>
+            </AnchorPane>
+            <HBox fx:id="hbox" prefHeight="224.0" prefWidth="360.0" GridPane.columnIndex="1" GridPane.rowSpan="3">
+               <GridPane.margin>
+                  <Insets left="10.0" right="10.0" top="30.0" />
+               </GridPane.margin>
+            </HBox>
+            <VBox fx:id="vbox" prefHeight="415.0" prefWidth="378.0" GridPane.columnIndex="2" GridPane.rowSpan="3">
+               <GridPane.margin>
+                  <Insets bottom="30.0" left="10.0" top="100.0" />
+               </GridPane.margin>
+            </VBox>
+            <AnchorPane prefHeight="54.0" prefWidth="460.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <children>
+                  <Button layoutX="200.0" layoutY="-8.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="177.0" text="Run Simulation!" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+               <children>
+                  <Button layoutX="84.0" layoutY="-8.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="126.0" text="Clear" />
+               </children>
+            </AnchorPane>
+         </children>
+      </GridPane>
+   </content>
+</ScrollPane>
