@@ -3,6 +3,7 @@ package Manager;
 import Dto.*;
 import Grid.Grid;
 import PRD.PRDWorld;
+import Property.Range;
 import Property.definition.EnvPropertyDefinition;
 import Property.definition.PropertyDefinition;
 import Rule.Rule;
@@ -11,6 +12,7 @@ import World.instance.WorldInstance;
 
 import javax.xml.bind.JAXB;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -99,5 +101,11 @@ public class PredictionManager {
     public GridDto getGridDetails() {
         Grid grid = this.worldDefinition.getGrid();
         return new GridDto(grid.getRows().toString(),grid.getColumns().toString());
+    }
+
+    public EnvPropDto getEnvProp(String envPropName) {
+        EnvPropertyDefinition envProp = this.worldDefinition.getEnvironmentProperties().get(envPropName);
+        Range range = envProp.hasRange()? envProp.getRange():null;
+        return new EnvPropDto(envPropName,envProp.getType().toString().toLowerCase(), range);
     }
 }

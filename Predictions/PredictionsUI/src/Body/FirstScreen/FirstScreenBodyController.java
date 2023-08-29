@@ -41,8 +41,6 @@ public class FirstScreenBodyController implements Initializable {
         this.TreeView.setRoot(rootItem);
         rootItem.getChildren().addAll(entitiesItem, rulesItem, terminationItem, envItem, gridItem);
 
-
-
     }
 
     

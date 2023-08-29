@@ -1,4 +1,10 @@
 package Body.SecondScreen.ListViewItems;
 
-public class FloatEnvPropListItem {
+import javafx.scene.text.Text;
+
+
+public class FloatEnvPropListItem implements MyListItem {
+
+
+
 }

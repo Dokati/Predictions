@@ -1,6 +1,9 @@
 package PrimaryContreoller;
 
 import Body.FirstScreen.FirstScreenBodyController;
+import Body.SecondScreen.SecondScreenBodyController;
+import Dto.EnvPropDto;
+import Dto.EnvPropNEntitiesDto;
 import Dto.SimulationTitlesDetails;
 import Header.HeaderController;
 import Manager.PredictionManager;
@@ -28,22 +31,26 @@ public class PrimaryController implements Initializable {
     @FXML private HeaderController headerComponentController;
     @FXML private ScrollPane firstScreenBody;
     @FXML private FirstScreenBodyController firstScreenBodyController;
-    @FXML
-    public void initialize() {
-        if (headerComponentController != null && firstScreenBodyController != null) {
-            headerComponentController.setMainController(this);
-            firstScreenBodyController.setMainController(this);
-        }
-    }
+    @FXML private ScrollPane secondScreenBody;
+    @FXML private SecondScreenBodyController secondScreenBodyController;
+//    @FXML
+//    public void initialize() {
+//        if (headerComponentController != null && firstScreenBodyController != null) {
+//            headerComponentController.setMainController(this);
+//            firstScreenBodyController.setMainController(this);
+//            secondScreenBodyController.setMainController(this);
+//        }
+//    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         predictionManager = new PredictionManager();
         previousActivations = new HashMap<>();
 
-        if (headerComponentController != null && firstScreenBodyController != null) {
+        if (headerComponentController != null && firstScreenBodyController != null && secondScreenBodyController !=null) {
             headerComponentController.setMainController(this);
             firstScreenBodyController.setMainController(this);
+            secondScreenBodyController.setMainController(this);
         }
     }
     public PredictionManager getPredictionManager() {
@@ -135,5 +142,15 @@ public class PrimaryController implements Initializable {
         }
 
         tabPane.getStylesheets().removeAll(stylesheetsToRemove);
+    }
+
+    public void initFirstNSecondScrean(String FilePath) {
+        //first screen
+        SimulationTitlesDetails simulationTitleDto = getPredictionManager().loadSimulation(FilePath);
+        SetTitleDetailsOnFirstScreen(simulationTitleDto);
+
+//        second screen - the envprop list and entity list
+
+        this.secondScreenBodyController.setEnvPropList(simulationTitleDto.getEnvVariableNames());
     }
 }

@@ -19,7 +19,7 @@
             </Tab>
           <Tab text="New Execution">
                <content>
-                  <fx:include source="../Body/SecondScreen/SecondScreenBody.fxml" />
+                  <fx:include fx:id="secondScreenBody" source="../Body/SecondScreen/SecondScreenBody.fxml" />
                </content></Tab>
             <Tab text="Result" />
         </tabs>

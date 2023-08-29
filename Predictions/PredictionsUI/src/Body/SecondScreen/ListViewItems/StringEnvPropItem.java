@@ -7,7 +7,6 @@ public class StringEnvPropItem {
 
     String name;
     String Type;
-
     TextArea text;
 
     public StringEnvPropItem(String name, String type, TextArea text) {

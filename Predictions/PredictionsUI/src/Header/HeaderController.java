@@ -40,8 +40,7 @@ public class HeaderController {
         if (selectedFile != null) {
             filePathTextField.setText(selectedFile.getAbsolutePath());
         }
-        SimulationTitlesDetails simulationTitleDto = primaryController.getPredictionManager().loadSimulation(filePathTextField.getText());
-        primaryController.SetTitleDetailsOnFirstScreen(simulationTitleDto);
+        primaryController.initFirstNSecondScrean(filePathTextField.getText());
 
     }
     @FXML
