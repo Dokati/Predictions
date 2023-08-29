@@ -19,7 +19,7 @@ public class Divide extends Calculation{
         super(prdAction, entities, environmentProperties);
         this.arg1 = new Expression(prdAction.getPRDDivide().getArg1());
         this.arg2 = new Expression(prdAction.getPRDDivide().getArg2());
-        CheckIfTypeOfArgumentsMatchesTypeOfPropertyForCalculation(this.arg1.GetTranslatedValueType(entities.get(prdAction.getEntity()),environmentProperties),this.arg2.GetTranslatedValueType(entities.get(prdAction.getEntity()),environmentProperties),(entities.get(prdAction.getEntity()).getProperties().get(resultProp).getType()));
+        CheckIfTypeOfArgumentsMatchesForNumericAction(this.arg1.GetTranslatedValueType(entities.get(prdAction.getEntity()),environmentProperties),this.arg2.GetTranslatedValueType(entities.get(prdAction.getEntity()),environmentProperties));
     }
 
     @Override

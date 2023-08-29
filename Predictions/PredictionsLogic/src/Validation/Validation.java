@@ -12,40 +12,37 @@ import java.util.HashMap;
 public class Validation {
     public static void CheckPRDActionDef(PRDAction actionDef, HashMap<String, EntityDefinition> entities) {
 
-        //Check If Entity Already Exists
+        //Check If Entity Already Exists - all action types
         CheckIfEntityAlreadyExists(actionDef, entities);
 
         //Check If Property Exist In Entity
-        if (actionDef.getType().equals("condition")){
-            for (PRDCondition condition: actionDef.getPRDCondition().getPRDCondition()){
-                CheckConditionProperty(condition,entities);
-            }
-        }
-
-        else {
-            ArrayList<String> actionsList = new ArrayList<>();
-            actionsList.add("increase");
-            actionsList.add("decrease");
-            actionsList.add("set");
-
-            if (actionsList.contains(actionDef.getType())){
-                if(!entities.get(actionDef.getEntity()).getProperties().containsKey(actionDef.getProperty())){
-                    throw new IllegalXmlDataInvalidActionPropExceptions("Xml contain Action that its property: "+
-                            actionDef.getProperty()  + " unexisted in related entity");
+        switch (actionDef.getType()) {
+            case "condition":
+                for (PRDCondition condition : actionDef.getPRDCondition().getPRDCondition()) {
+                    CheckConditionProperty(condition, entities);
                 }
-            }
-            if (actionDef.getType().equals("calculation")){
-                if(!entities.get(actionDef.getEntity()).getProperties().containsKey(actionDef.getResultProp())){
-                    throw new IllegalXmlDataInvalidActionPropExceptions("Xml contain Action that its property: "+
-                            actionDef.getResultProp()  + " unexisted in related entity");
+                break;
+            case "calculation":
+                if (!entities.get(actionDef.getEntity()).getProperties().containsKey(actionDef.getResultProp())) {
+                    throw new IllegalXmlDataInvalidActionPropExceptions("Xml contain Action that its property: " +
+                            actionDef.getResultProp() + " unexisted in related entity");
                 }
-            }
-            if(!actionsList.contains(actionDef.getType()) && !actionDef.getType().equals("calculation")
-                    && !actionDef.getType().equals("kill") && !actionDef.getType().equals("replace") && !actionDef.getType().equals("proximity"))
-            {
+                break;
+            case "increase":
+            case "decrease":
+            case "set":
+                if (!entities.get(actionDef.getEntity()).getProperties().containsKey(actionDef.getProperty())) {
+                    throw new IllegalXmlDataInvalidActionPropExceptions("Xml contain Action that its property: " +
+                            actionDef.getProperty() + " unexisted in related entity");
+                }
+                break;
+            case "proximity":
+            case "replace":
+            case "kill":
+                break;
+            default:
                 throw new IllegalXmlDataInvalidActionPropExceptions("The XML file contains an action of the "+ actionDef.getType() +" type." +
                         " This action is not supported by the system");
-            }
         }
     }
 

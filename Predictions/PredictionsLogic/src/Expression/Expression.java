@@ -39,20 +39,25 @@ public class Expression {
 
     public PropertyType GetTranslatedValueType(EntityDefinition entityDefinition, HashMap<String, EnvPropertyDefinition> environmentProperties){
         if(expressionIsSupportMethod()){
-            if(this.expression.contains("environment")){
-                List<String> arguments = extractArguments(this.expression);
-                String envVarName = arguments.get(0);
-                return environmentProperties.get(envVarName).getType();
+            List<String> arguments = extractArguments(this.expression);
+            if(this.expression.startsWith("environment")){
+                if(!environmentProperties.containsKey(arguments.get(0))) {
+                    throw new IllegalArgumentException("The evaluate operation cannot be performed because the environment property " + arguments.get(0) + " does not exist");
+                }
+                return environmentProperties.get(arguments.get(0)).getType();
             }
-            return PropertyType.DECIMAL;
-        }
+            else if(this.expression.startsWith("evaluate")){
+                String[] parts = arguments.get(0).split("\\.");
+                if(!entityDefinition.getProperties().containsKey(parts[1])) {
+                    throw new IllegalArgumentException("The evaluate operation cannot be performed because the property " + parts[1] + " does not exist in the context of the requested entity");
+                }
+                return entityDefinition.getProperties().get(parts[1]).getType();
+            }
 
+            return PropertyType.FLOAT;
+        }
         else if (expressionIsPropertyDef(entityDefinition.getProperties())) {
             return entityDefinition.getProperties().get(this.expression).getType();
-        }
-
-        else if(isConvertibleToInteger(this.expression)) {
-            return PropertyType.DECIMAL;
         }
         else if(isConvertibleToFloat(this.expression)) {
             return PropertyType.FLOAT;
@@ -64,6 +69,7 @@ public class Expression {
             return PropertyType.STRING;
         }
     }
+
     private Object evaluateExpression(Context context){
 
         if(expressionIsSupportMethod()){
@@ -99,11 +105,11 @@ public class Expression {
 
     private Object returnValueOfSupportMethod(Context context) {
         String methodName = null;
-        List<String> arguments = extractArguments(this.expression);
         Object result = null;
+        List<String> arguments = null;
 
         for(String method : supportMethods){
-            if(this.expression.contains(method)){
+            if(this.expression.startsWith(method)){
                 methodName = method;
                 break;
             }
@@ -111,21 +117,26 @@ public class Expression {
 
         switch (Objects.requireNonNull(methodName)){
             case "environment":
+                arguments = extractArguments(this.expression);
                 result = context.environment(arguments.get(0));
                 break;
             case  "random":
+                arguments = extractArguments(this.expression);
                 if(!isConvertibleToNumber(arguments.get(0))){
                     throw new NotNumericValueException();
                 }
                 result = context.random(Integer.parseInt(arguments.get(0)));
                 break;
             case "evaluate":
+                arguments = extractArguments(this.expression);
                 result = context.evaluate(arguments.get(0));
                 break;
             case "percent":
+                arguments = extractArgumentsPercent(this.expression);
                 result = context.percent(new Expression(arguments.get(0)),new Expression(arguments.get(1)));
                 break;
             case "ticks":
+                arguments = extractArguments(this.expression);
                 result = context.ticks(arguments.get(0));
                 break;
 
@@ -135,7 +146,7 @@ public class Expression {
 
     private Boolean expressionIsSupportMethod() {
         for(String method : supportMethods){
-            if(this.expression.contains(method))
+            if(this.expression.startsWith(method))
                 return true;
         }
 
@@ -157,6 +168,22 @@ public class Expression {
             for (String arg : argsArray) {
                 arguments.add(arg);
             }
+        }
+
+        return arguments;
+    }
+
+    public List<String> extractArgumentsPercent(String input) {
+        List<String> arguments = new ArrayList<>();
+
+        // Define a regex pattern to match arguments within parentheses
+        Pattern pattern = Pattern.compile("\\((.*?)\\)");
+        Matcher matcher = pattern.matcher(input);
+
+        // Find all occurrences of the pattern and add the matches to the list
+        while (matcher.find()) {
+            String argument = matcher.group(1);
+            arguments.add(argument);
         }
 
         return arguments;

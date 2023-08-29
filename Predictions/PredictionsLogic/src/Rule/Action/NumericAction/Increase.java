@@ -24,13 +24,7 @@ public class Increase extends Action {
         this.entity = entities.get(prdAction.getEntity());
         this.propertyName = prdAction.getProperty();
         this.by = new Expression(prdAction.getBy());
-
-        /*if(CheckIfTypeOfByNotMatchesTypeOfProperty(this.by.GetTranslatedValueType(entity,environmentProperties),entity.getProperties().get(propertyName).getType()))
-        {
-            throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("It is not possible to perform the Increase " +
-                    "operation on a property of type " + entity.getProperties().get(propertyName).getType().name().toLowerCase() + " by a value of type "
-            + this.by.GetTranslatedValueType(entity,environmentProperties).name().toLowerCase());
-        }*/
+        CheckTypeOfBy(this.by.GetTranslatedValueType(entity,environmentProperties));
     }
 
     @Override

@@ -53,14 +53,15 @@ public class Context {
         return currentTick;
     }
 
-    public Integer random(Integer maxRange) {
+    public Float random(Integer maxRange) {
         if (maxRange < 0) {
             throw new IllegalArgumentException("Argument must be a non-negative integer.");
         }
         int min = 0; // Minimum value of the range (inclusive)
         Random random = new Random();
+        Integer res = random.nextInt(maxRange - min + 1) + min;
 
-        return random.nextInt(maxRange - min + 1) + min;
+        return res.floatValue();
     }
 
     public Object evaluate(String EntityPropertyFormat){
@@ -86,7 +87,7 @@ public class Context {
         return (percent / 100) * theWholePart;
     }
 
-    public Integer ticks(String EntityPropertyFormat){
+    public Float ticks(String EntityPropertyFormat){
         String[] parts = EntityPropertyFormat.split("\\.");
 
         String entityName = parts[0];
@@ -100,8 +101,6 @@ public class Context {
             throw new IllegalArgumentException("The evaluate operation cannot be performed because the property " + propertyName +" does not exist in the context of the requested entity");
         }
 
-        return currentTick - activeEntityInstance.getProperties().get(propertyName).getChangeTick();
-
+        return currentTick.floatValue() - activeEntityInstance.getProperties().get(propertyName).getChangeTick().floatValue();
     }
-
 }

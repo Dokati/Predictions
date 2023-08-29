@@ -17,7 +17,6 @@ public class ConditionAction extends Action {
     private final Condition condition;
     private EntityDefinition entity;
 
-
     public ConditionAction(PRDAction prdAction, Then then, Else elseAct, Condition condition, HashMap<String,EntityDefinition> entities, HashMap<String, EnvPropertyDefinition> environmentProperties) {
         super(prdAction, entities, environmentProperties);
         this.entity = entities.get(prdAction.getEntity());

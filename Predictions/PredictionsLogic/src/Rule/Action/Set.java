@@ -23,17 +23,6 @@ public class Set extends Action{
         this.entity =  entities.get(prdAction.getEntity());
         this.propertyName = prdAction.getProperty();
         this.expressionValue = new Expression(prdAction.getValue());
-        if(!expressionValue.GetTranslatedValueType(entity,environmentProperties).equals(entity.getProperties().get(propertyName).getType())
-        && !CheckIfValueIsNumeric(entity.getProperties().get(propertyName).getType()))
-        {
-            throw new IllegalArgumentException("The set operation cannot be performed on a property of type: " + entity.getProperties().get(propertyName).getType().name().toLowerCase()+
-                    " by value of type: " + expressionValue.GetTranslatedValueType(entity,environmentProperties).name().toLowerCase());
-        }
-        else if(entity.getProperties().get(propertyName).getType().equals(PropertyType.DECIMAL) && !expressionValue.GetTranslatedValueType(entity,environmentProperties).equals(PropertyType.DECIMAL))
-        {
-            throw new IllegalArgumentException("The set operation cannot be performed on a property of type: " + entity.getProperties().get(propertyName).getType().name().toLowerCase()+
-                    " by value of type: " + expressionValue.GetTranslatedValueType(entity,environmentProperties).name().toLowerCase());
-        }
     }
 
     @Override

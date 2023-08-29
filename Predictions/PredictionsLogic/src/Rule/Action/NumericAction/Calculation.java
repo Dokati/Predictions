@@ -22,21 +22,14 @@ public abstract class Calculation extends Action {
         this.resultProp = prdAction.getResultProp();
     }
 
-    public void CheckIfTypeOfArgumentsMatchesTypeOfPropertyForCalculation(PropertyType arg1Type, PropertyType arg2Type,PropertyType propertyType) {
-        if(!propertyType.equals(PropertyType.DECIMAL) && !propertyType.equals(PropertyType.FLOAT))
-        {
-            throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("It is not possible to perform a Divide operation and place it into a property of type " + propertyType.name().toLowerCase());
+    public void CheckIfTypeOfArgumentsMatchesForNumericAction(PropertyType arg1Type, PropertyType arg2Type) {
+        if (!arg1Type.equals(PropertyType.FLOAT)) {
+            throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("It is not possible to perform the " + this.getClass().getSimpleName() +
+                    "operation because The variable arg1 is not of numeric value type");
         }
-        if(!arg1Type.equals(PropertyType.DECIMAL) && !arg1Type.equals(PropertyType.FLOAT)) {
-
-            throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("The variable arg1 is not of numeric value type");
-        }
-        if(!arg2Type.equals(PropertyType.DECIMAL) && !arg2Type.equals(PropertyType.FLOAT)) {
-
-            throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("The variable arg2 is not of numeric value type");
-        }
-        if (propertyType.equals(PropertyType.DECIMAL) && (!arg1Type.equals(PropertyType.DECIMAL) || !arg2Type.equals(PropertyType.DECIMAL))) {
-            throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("The property type is integer and one of the arguments type is float");
+        if (!arg2Type.equals(PropertyType.FLOAT)) {
+            throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("It is not possible to perform the " + this.getClass().getSimpleName() +
+                    "operation because The variable arg2 is not of numeric value type");
         }
     }
 

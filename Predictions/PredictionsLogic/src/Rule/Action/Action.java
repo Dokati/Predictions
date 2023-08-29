@@ -4,6 +4,7 @@ import Context.Context;
 import Dto.ActionDetailsDto;
 import Entity.SecondaryEntity;
 import Entity.definition.EntityDefinition;
+import Exceptions.IllegalXmlDataArgOfNumericActionAreNotNumericExceptions;
 import PRD.PRDAction;
 import Property.PropertyType;
 import Property.definition.EnvPropertyDefinition;
@@ -21,23 +22,23 @@ public abstract class Action {
             this.secondaryEntity = new SecondaryEntity(prdAction.getPRDSecondaryEntity(), environmentProperties, entities);
         }
     }
+
     abstract public void Activate(Context context);
 
-    public static boolean CheckIfValueIsNumeric(PropertyType val)
+    public void CheckTypeOfBy(PropertyType byType)
     {
-        return val.equals(PropertyType.DECIMAL) || val.equals(PropertyType.FLOAT);
-    }
-
-    public Boolean CheckIfTypeOfByNotMatchesTypeOfProperty(PropertyType byType, PropertyType propertyType)
-    {
-        return (!CheckIfValueIsNumeric(propertyType) || !CheckIfValueIsNumeric(byType))
-                || (propertyType.equals(PropertyType.DECIMAL) && !byType.equals(PropertyType.DECIMAL));
+        if (!byType.equals(PropertyType.FLOAT)){
+            throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("It is not possible to perform the " + this.getClass().getSimpleName()
+                    +" by a value of type "  + byType.name().toLowerCase());
+        };
     }
 
     public String getType() {
         return type;
     }
+
     public abstract ActionDetailsDto getDetails();
+
     @Override
     public String toString() {
         return "type: " + type;
