@@ -12,8 +12,8 @@
    <content>
       <GridPane id="grid-first-screen" fx:id="grid" alignment="CENTER" prefHeight="548.0" prefWidth="998.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="475.0" minWidth="10.0" prefWidth="220.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="545.0" minWidth="10.0" prefWidth="545.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="475.0" minWidth="10.0" prefWidth="284.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="545.0" minWidth="10.0" prefWidth="482.0" />
           <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="233.0" minWidth="10.0" />
         </columnConstraints>
         <rowConstraints>
@@ -30,11 +30,14 @@
                   <Insets />
                </opaqueInsets>
             </TreeView>
-            <TilePane fx:id="tilePane" hgap="10.0" prefHeight="488.0" prefWidth="515.0" vgap="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowSpan="3">
+            <ScrollPane GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowSpan="3">
                <GridPane.margin>
                   <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                </GridPane.margin>
-            </TilePane>
+               <content>
+                  <TilePane fx:id="tilePane" hgap="10.0" prefHeight="486.0" prefWidth="651.0" vgap="10.0" />
+               </content>
+            </ScrollPane>
          </children>
       </GridPane>
    </content>
