@@ -49,6 +49,14 @@ public class HeaderController {
         primaryController.setBackgroundskinColor(color);
     }
 
+    @FXML
+    void ChangeButtonsAppearance(ActionEvent event) {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String color = menuItem.getText();
+        primaryController.setButtonsAppearance(color);
+
+    }
+
     public void setMainController(PrimaryController primaryController) {
         this.primaryController = primaryController;
     }

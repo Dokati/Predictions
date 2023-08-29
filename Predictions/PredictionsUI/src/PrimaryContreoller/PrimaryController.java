@@ -72,4 +72,19 @@ public class PrimaryController implements Initializable {
 
 
     }
+
+    public void setButtonsAppearance(String color) {
+        if(color.equals("dark")){
+            this.borderPane.getStylesheets().clear();
+            this.borderPane.getStylesheets().add(StylePaths.DARK_BUTTONS);
+        }
+        if(color.equals("rose-gold")){
+            this.borderPane.getStylesheets().clear();
+            this.borderPane.getStylesheets().add(StylePaths.ROSE_BUTTONS);
+        }
+        if(color.equals("default")){
+            this.borderPane.getStylesheets().clear();
+            this.borderPane.getStylesheets().add(StylePaths.DEFAULT_BUTTONS);
+        }
+    }
 }
