@@ -6,6 +6,5 @@ public class DetailLabel extends Label {
 
     public DetailLabel(String text) {
         super(text);
-        getStyleClass().add("detail-label");
     }
 }

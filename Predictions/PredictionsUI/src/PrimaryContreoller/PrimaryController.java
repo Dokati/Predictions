@@ -8,17 +8,22 @@ import StylePaths.StylePaths;
 import World.instance.WorldInstance;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class PrimaryController implements Initializable {
     private PredictionManager predictionManager;
     private HashMap<String, WorldInstance> previousActivations;
     @FXML private BorderPane borderPane;
+    @FXML private TabPane tabPane;
     @FXML private ScrollPane headerComponent;
     @FXML private HeaderController headerComponentController;
     @FXML private ScrollPane firstScreenBody;
@@ -56,17 +61,14 @@ public class PrimaryController implements Initializable {
     }
 
     public void setBackgroundskinColor(String color) {
-
+        removeBackgroundStylesheets(this.borderPane);
         if(color.equals("dark")){
-            this.borderPane.getStylesheets().clear();
             this.borderPane.getStylesheets().add(StylePaths.DARK_THEME);
         }
         if(color.equals("rose-gold")){
-            this.borderPane.getStylesheets().clear();
             this.borderPane.getStylesheets().add(StylePaths.ROSE_GOLD_THEME);
         }
         if(color.equals("default")){
-            this.borderPane.getStylesheets().clear();
             this.borderPane.getStylesheets().add(StylePaths.DEFAULT);
         }
 
@@ -74,17 +76,64 @@ public class PrimaryController implements Initializable {
     }
 
     public void setButtonsAppearance(String color) {
+        removeButtonStylesheets(this.borderPane);
         if(color.equals("dark")){
-            this.borderPane.getStylesheets().clear();
             this.borderPane.getStylesheets().add(StylePaths.DARK_BUTTONS);
         }
         if(color.equals("rose-gold")){
-            this.borderPane.getStylesheets().clear();
             this.borderPane.getStylesheets().add(StylePaths.ROSE_BUTTONS);
         }
         if(color.equals("default")){
-            this.borderPane.getStylesheets().clear();
             this.borderPane.getStylesheets().add(StylePaths.DEFAULT_BUTTONS);
         }
+    }
+
+    private void removeButtonStylesheets(BorderPane borderPane) {
+        List<String> stylesheetsToRemove = new ArrayList<>();
+
+        for (String stylesheet : borderPane.getStylesheets()) {
+            if (stylesheet.endsWith("Button.css")) {
+                stylesheetsToRemove.add(stylesheet);
+            }
+        }
+
+        borderPane.getStylesheets().removeAll(stylesheetsToRemove);
+    }
+
+    private void removeBackgroundStylesheets(BorderPane borderPane) {
+        List<String> stylesheetsToRemove = new ArrayList<>();
+
+        for (String stylesheet : borderPane.getStylesheets()) {
+            if (stylesheet.endsWith("Background.css")) {
+                stylesheetsToRemove.add(stylesheet);
+            }
+        }
+
+        borderPane.getStylesheets().removeAll(stylesheetsToRemove);
+    }
+
+    public void setLabelsAppearance(String sizeNFont) {
+        removeLabelStylesheets(this.tabPane);
+        if(sizeNFont.equals("Medium montserrat")){
+            this.tabPane.getStylesheets().add(StylePaths.MEDIUM_LABEL);
+        }
+        if(sizeNFont.equals("Large raleway")){
+            this.tabPane.getStylesheets().add(StylePaths.LARGE_LABEL);
+        }
+        if(sizeNFont.equals("default")){
+            this.tabPane.getStylesheets().add(StylePaths.DEFAULT_LABEL);
+        }
+    }
+
+    private void removeLabelStylesheets(TabPane tabPane) {
+        List<String> stylesheetsToRemove = new ArrayList<>();
+
+        for (String stylesheet : tabPane.getStylesheets()) {
+            if (stylesheet.endsWith("Label.css")) {
+                stylesheetsToRemove.add(stylesheet);
+            }
+        }
+
+        tabPane.getStylesheets().removeAll(stylesheetsToRemove);
     }
 }

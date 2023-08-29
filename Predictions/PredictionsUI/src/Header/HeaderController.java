@@ -33,6 +33,8 @@ public class HeaderController {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose a File");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
         File selectedFile = fileChooser.showOpenDialog(new Stage());
 
         if (selectedFile != null) {
@@ -54,6 +56,14 @@ public class HeaderController {
         MenuItem menuItem = (MenuItem) event.getSource();
         String color = menuItem.getText();
         primaryController.setButtonsAppearance(color);
+
+    }
+
+    @FXML
+    void ChangeLabelAppearance(ActionEvent event) {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String SizeNFont = menuItem.getText();
+        primaryController.setLabelsAppearance(SizeNFont);
 
     }
 

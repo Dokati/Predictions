@@ -11,7 +11,7 @@
       <fx:include fx:id="headerComponent" source="../Header/Header.fxml" />
    </top>
    <center>
-      <TabPane id="tab-pane" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane id="tab-pane" fx:id="tabPane" stylesheets="@../Styling/LabelStyling/DefaultLabel.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab text="Details">
                <content>

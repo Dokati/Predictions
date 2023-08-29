@@ -37,7 +37,13 @@
                                     <MenuItem mnemonicParsing="false" onAction="#ChangeButtonsAppearance" text="rose-gold" />
                                 </items>
                               </Menu>
-                          <MenuItem mnemonicParsing="false" text="Close" />
+                              <Menu mnemonicParsing="false" text="Label theme">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#ChangeLabelAppearance" text="default" />
+                                    <MenuItem mnemonicParsing="false" onAction="#ChangeLabelAppearance" text="Medium montserrat" />
+                                    <MenuItem mnemonicParsing="false" onAction="#ChangeLabelAppearance" text="Large raleway" />
+                                 </items>
+                              </Menu>
                         </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Edit">
