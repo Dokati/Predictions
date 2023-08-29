@@ -39,6 +39,7 @@ public abstract class Action {
 
     public abstract ActionDetailsDto getDetails();
 
+    public abstract EntityDefinition getMainEntity();
     @Override
     public String toString() {
         return "type: " + type;

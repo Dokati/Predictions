@@ -44,5 +44,8 @@ public class Increase extends Action {
                 "\nby: " + by.getExpression());
     }
 
-
+    @Override
+    public EntityDefinition getMainEntity() {
+        return entity;
+    }
 }

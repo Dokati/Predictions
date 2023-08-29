@@ -64,12 +64,21 @@ public class Proximity extends Action {
             }
         }
 
+    public EntityDefinition getSourceEntity() {
+        return sourceEntity;
+    }
+
     @Override
     public ActionDetailsDto getDetails() {
         return new ActionDetailsDto("Type: " + this.type
                 +"\nSource entity: " + sourceEntity.getName() +
                 "\nTarget entity: " + targetEntity.getName()+
                 "\nOf: " + of.getExpression());
+    }
+
+    @Override
+    public EntityDefinition getMainEntity() {
+        return sourceEntity;
     }
 
 

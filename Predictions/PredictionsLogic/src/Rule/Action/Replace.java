@@ -43,11 +43,20 @@ public class Replace extends Action{
         }
     }
 
+    public EntityDefinition getKillEntity() {
+        return killEntity;
+    }
+
     @Override
     public ActionDetailsDto getDetails() {
         return new ActionDetailsDto("Type: " + this.type
                 +"\nCreate entity: " + createEntity.getName() +
                 "\nKill entity: " + killEntity.getName() +
                 "\nMode: " + mode);
+    }
+
+    @Override
+    public EntityDefinition getMainEntity() {
+        return killEntity;
     }
 }

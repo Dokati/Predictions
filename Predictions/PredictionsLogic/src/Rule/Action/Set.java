@@ -44,4 +44,9 @@ public class Set extends Action{
                 +"\nProperty name: " + propertyName +
                 "\nValue: " + expressionValue.getExpression());
     }
+
+    @Override
+    public EntityDefinition getMainEntity() {
+        return entity;
+    }
 }

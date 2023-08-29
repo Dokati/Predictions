@@ -39,5 +39,10 @@ public class Divide extends Calculation{
                 "Result-prop:" + resultProp);
     }
 
+    @Override
+    public EntityDefinition getMainEntity() {
+        return entity;
+    }
+
 
 }

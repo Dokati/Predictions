@@ -39,47 +39,47 @@ public class Coordinate {
     }
 
     public void chooseRandomNeighbor(EntityInstance[][] grid) {
+        boolean found = false;
         Random random = new Random();
         int choice = random.nextInt(5); // Generate a random number between 0 and 3
 
-        switch (choice) {
-            case 0:
-                if(x == 0){
-                    x = grid.length;
-                }
-                else{
-                    x = x - 1;
-                }
-                break;
-            case 1:
-                if(y == 0){
-                    y = grid[0].length;
-                }
-                else{
-                    y = y - 1;
-                }
-                break;
-            case 2:
-                if(x == grid.length)
-                {
-                    x = 0;
-                }
-                else
-                {
-                    x = x + 1;
-                }
-                break;
-            case 3:
-                if(y == grid[0].length)
-                {
-                    y = 0;
-                }
-                else {
-                    y = y + 1;
-                }
-                break;
-            case 4:
-                break;
+        while(!found) {
+            switch (choice) {
+                case 0:
+                    if (x == 0) {
+                        x = grid.length - 1;
+                    } else {
+                        x = x - 1;
+                    }
+                    break;
+                case 1:
+                    if (y == 0) {
+                        y = grid[0].length - 1;
+                    } else {
+                        y = y - 1;
+                    }
+                    break;
+                case 2:
+                    if (x == (grid.length - 1)) {
+                        x = 0;
+                    } else {
+                        x = x + 1;
+                    }
+                    break;
+                case 3:
+                    if (y == (grid[0].length - 1)) {
+                        y = 0;
+                    } else {
+                        y = y + 1;
+                    }
+                    break;
+                case 4:
+                    break;
+            }
+
+            if(grid[x][y] == null){
+                found = true;
+            }
         }
     }
 

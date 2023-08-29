@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public abstract class Calculation extends Action {
     protected String resultProp;
-    private EntityDefinition entity;
+    protected EntityDefinition entity;
 
     public Calculation(PRDAction prdAction, HashMap<String,EntityDefinition> entities, HashMap<String, EnvPropertyDefinition> environmentProperties) {
         super(prdAction, entities, environmentProperties);

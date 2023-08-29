@@ -66,6 +66,10 @@ public class SingleCondition implements Condition{
         return result;
     }
 
+    public EntityDefinition getEntity() {
+        return entity;
+    }
+
     @Override
     public String getDetails() {
         return "Singularity: " + singularity+
