@@ -8,10 +8,13 @@ public class SimulationTitlesDetails {
     List<RuleTitleDto> rulesTitleDto;
     List<String> envVariableNames;
 
-    public SimulationTitlesDetails(List<String> entitiesNames, List<RuleTitleDto> rulesDto, List<String> envVariableNames) {
+    Integer populationSpace;
+
+    public SimulationTitlesDetails(List<String> entitiesNames, List<RuleTitleDto> rulesDto, List<String> envVariableNames,Integer populationSpace) {
         this.entitiesNames = entitiesNames;
         this.rulesTitleDto = rulesDto;
         this.envVariableNames = envVariableNames;
+        this.populationSpace = populationSpace;
     }
 
     public List<String> getEntitiesNames() {
@@ -24,5 +27,9 @@ public class SimulationTitlesDetails {
 
     public List<String> getEnvVariableNames() {
         return envVariableNames;
+    }
+
+    public Integer getPopulationSpace() {
+        return populationSpace;
     }
 }

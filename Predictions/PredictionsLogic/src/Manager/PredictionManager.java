@@ -59,8 +59,6 @@ public class PredictionManager {
 
         // create SimulationDetailsDto
 
-        runSimulationDEMO();
-
         List<String> entitiesNames = worldDefinition.getEntities().keySet().stream().collect(Collectors.toList());
         List<RuleTitleDto> ruleDtos = worldDefinition.getRules().stream()
                 .map(rule -> new RuleTitleDto(
@@ -70,8 +68,10 @@ public class PredictionManager {
                         rule.getActions().stream().map(action -> action.getType()).collect(Collectors.toList())
                 ))
                 .collect(Collectors.toList());
-        List<String> EnvVariableNames = worldDefinition.getEnvironmentProperties().values().stream().map(EnvPropertyDefinition::getName).collect(Collectors.toList());
-        return new SimulationTitlesDetails(entitiesNames, ruleDtos,EnvVariableNames);
+        List<String> EnvVariableNames = worldDefinition.getEnvironmentProperties().values().stream()
+                .map(EnvPropertyDefinition::getName).collect(Collectors.toList());
+        Integer populationSpace = worldDefinition.getGrid().getColumns()*worldDefinition.getGrid().getRows();
+        return new SimulationTitlesDetails(entitiesNames, ruleDtos,EnvVariableNames, populationSpace);
 
     }
 

@@ -152,5 +152,6 @@ public class PrimaryController implements Initializable {
 //        second screen - the envprop list and entity list
 
         this.secondScreenBodyController.setEnvPropList(simulationTitleDto.getEnvVariableNames());
+        this.secondScreenBodyController.setEntitiesPopulationList(simulationTitleDto.getEntitiesNames(),simulationTitleDto.getPopulationSpace());
     }
 }

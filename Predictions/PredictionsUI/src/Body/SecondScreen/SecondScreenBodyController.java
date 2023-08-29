@@ -4,10 +4,13 @@ import Dto.EnvPropDto;
 import PrimaryContreoller.PrimaryController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -35,13 +38,17 @@ public class SecondScreenBodyController implements Initializable {
     private HBox hbox;
     @FXML
     private VBox vbox;
+    @FXML
+    private AnchorPane anchorPane;
+    @FXML
+    private VBox amountVbox;
+    @FXML
+    private Button runSimulationButton;
     private ListView<String> myListView;
-    private Map<String,String> envPropValues;
-    @FXML
-    private Button enviormentVariablesButton;
+    private Map<String, String> envPropValues;
+    Map<String, TextField> entityToTextFieldMap;
+    int totalPopulation = 0;
 
-    @FXML
-    private Button entitypopulationButton;
 
 
     @Override
@@ -50,7 +57,7 @@ public class SecondScreenBodyController implements Initializable {
         //-----------------------------//
         numberTextField = new TextField();
         numberTextField.setPrefWidth(200); // Change this to your desired width
-        numberTextField.textProperty().addListener((observable, oldValue, newValue) -> envPropValues.put(activeEnvProp,newValue));
+        numberTextField.textProperty().addListener((observable, oldValue, newValue) -> envPropValues.put(activeEnvProp, newValue));
         makeNumberButtonNumericOnly();
         //-----------------------------//
         currenSliderValue = new Text();
@@ -64,7 +71,9 @@ public class SecondScreenBodyController implements Initializable {
         trueOrFalseBox.setOnAction(event -> envPropValues.put(activeEnvProp, trueOrFalseBox.getValue()));
         //-----------------------------//
         this.stringTextField = new TextField();
-        stringTextField.textProperty().addListener((observable, oldValue, newValue) -> envPropValues.put(activeEnvProp,newValue));
+        stringTextField.textProperty().addListener((observable, oldValue, newValue) -> envPropValues.put(activeEnvProp, newValue));
+        //-----------------------------//
+        entityToTextFieldMap = new HashMap<>();
     }
 
     private void makeNumberButtonNumericOnly() {
@@ -84,44 +93,42 @@ public class SecondScreenBodyController implements Initializable {
         EnvPropDto envPropDto = this.primaryController.getPredictionManager().getEnvProp(selectedEnvProp);
         Text text = createAskFromUserString(envPropDto.getType(), envPropDto.getName());
 
-        String value = envPropValues.containsKey(activeEnvProp)? envPropValues.get(activeEnvProp): "";
-        if(envPropDto.getType().equals("boolean")){
+        String value = envPropValues.containsKey(activeEnvProp) ? envPropValues.get(activeEnvProp) : "";
+        if (envPropDto.getType().equals("boolean")) {
             this.trueOrFalseBox.setValue(value);
-            this.vbox.getChildren().addAll(text,this.trueOrFalseBox);
+            this.vbox.getChildren().addAll(text, this.trueOrFalseBox);
         }
-        if(envPropDto.getType().equals("float")){
-            if(envPropDto.hasRange()){
-                value = value.equals("")? envPropDto.getRange().getFrom().toString():envPropValues.get(activeEnvProp);
+        if (envPropDto.getType().equals("float")) {
+            if (envPropDto.hasRange()) {
+                value = value.equals("") ? envPropDto.getRange().getFrom().toString() : envPropValues.get(activeEnvProp);
                 this.slider.setValue(Double.parseDouble(value));
                 this.currenSliderValue.setText("Value:" + this.slider.getValue());
                 this.slider.setMin(envPropDto.getRange().getFrom());
                 this.slider.setMax(envPropDto.getRange().getTo());
 
-                this.vbox.getChildren().addAll(text,this.slider, currenSliderValue);
-            }
-            else {
+                this.vbox.getChildren().addAll(text, this.slider, currenSliderValue);
+            } else {
                 this.numberTextField.setText(value);
-                this.vbox.getChildren().addAll(text,this.numberTextField);
+                this.vbox.getChildren().addAll(text, this.numberTextField);
             }
         }
-        if(envPropDto.getType().equals("string")){
+        if (envPropDto.getType().equals("string")) {
             this.stringTextField.setText(value);
-            this.vbox.getChildren().addAll(text,this.stringTextField);
+            this.vbox.getChildren().addAll(text, this.stringTextField);
         }
-
 
 
     }
 
     private Text createAskFromUserString(String type, String name) {
         Text text = new Text();
-        if(type.equals("float")){
+        if (type.equals("float")) {
             text.setText(("Please insert your desire float number for " + name));
         }
-        if (type.equals("string")){
+        if (type.equals("string")) {
             text.setText(("Please insert your desire string for " + name));
         }
-        if (type.equals("boolean")){
+        if (type.equals("boolean")) {
             text.setText(("Please choose your desire boolean value for " + name));
         }
         return text;
@@ -132,7 +139,7 @@ public class SecondScreenBodyController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 currenSliderValue.setText("Current: " + newValue);
-                envPropValues.put(activeEnvProp,newValue.toString());
+                envPropValues.put(activeEnvProp, newValue.toString());
             }
         });
     }
@@ -152,13 +159,76 @@ public class SecondScreenBodyController implements Initializable {
                 }
             }
         });
+
+        ShowEnvPropList();
+    }
+
+
+    void ShowEnvPropList() {
+        this.hbox.getChildren().add(this.myListView);
+    }
+
+    public void setMainController(PrimaryController primaryController) {
+        this.primaryController = primaryController;
+    }
+
+
+    ///////////----------Entities Section:---------------------------////////////////////
+    public void setEntitiesPopulationList(List<String> entitiesNames, Integer populationSpace) {
+        ObservableList<String> countries = FXCollections.observableArrayList(entitiesNames);
+
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        Text totalPopulation = new Text("Total Population: ");
+        Text maxPopulationLabel = new Text("Max Population: " + populationSpace);
+        int rowIndex = 0;
+        for (String country : countries) {
+            Text countryLabel = new Text(country);
+            TextField populationTextField = new TextField();
+            populationTextField.setPromptText("Population of " + country);
+
+            entityToTextFieldMap.put(country, populationTextField);
+
+            // Add a listener to each TextField to allow only integer input
+            populationTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("\\d*")) {
+                    populationTextField.setText(oldValue);
+                }
+                updateTotalPopulationLabel(entityToTextFieldMap, totalPopulation);
+                if (this.totalPopulation>populationSpace) {
+                    populationTextField.setText(oldValue);
+                }
+                updateTotalPopulationLabel(entityToTextFieldMap, totalPopulation);
+
+
+            });
+            gridPane.add(countryLabel, 0, rowIndex);
+            gridPane.add(populationTextField, 1, rowIndex);
+
+            rowIndex++;
+        }
+//        VBox vBox = new VBox();
+//        vBox.getChildren().addAll(totalPopulation,totalPopulation);
+//        gridPane.add(totalPopulation, 0, rowIndex+5);
+//        gridPane.add(totalPopulation, 0, rowIndex+6);
+          this.anchorPane.getChildren().add(gridPane);
+          this.amountVbox.getChildren().addAll(totalPopulation,maxPopulationLabel);
+    }
+
+    private void updateTotalPopulationLabel(Map<String, TextField> countryToPopulationMap, Text totalPopulationLabel) {
+        int totalPopulation = 0;
+        for (TextField populationTextField : countryToPopulationMap.values()) {
+            if (!populationTextField.getText().isEmpty()) {
+                totalPopulation += Integer.parseInt(populationTextField.getText());
+            }
+        }
+        totalPopulationLabel.setText("Total Population: " + totalPopulation);
+        this.totalPopulation =totalPopulation;
     }
 
     @FXML
-    void ShowEnvPropListOnClick(ActionEvent event) {
-        this.hbox.getChildren().add(this.myListView);
-    }
-    public void setMainController(PrimaryController primaryController) {
-        this.primaryController = primaryController;
+    private void runSimulationOnClick(ActionEvent event) {
+
     }
 }
