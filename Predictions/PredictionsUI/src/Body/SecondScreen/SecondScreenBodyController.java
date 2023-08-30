@@ -230,10 +230,11 @@ public class SecondScreenBodyController implements Initializable {
 
     @FXML
     private void runSimulationOnClick(ActionEvent event) {
+        // convert the Map<String, TextField> to Map<String, Integer>. if value is empty string, put 0 population.
         Map<String, Integer> entitiesPopulationMap = entityToTextFieldMap.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        entry -> {return Integer.parseInt(entry.getValue().getText());}));
+                        entry -> {return entry.getValue().getText().equals("")? 0: Integer.parseInt(entry.getValue().getText());}));
 
         primaryController.runSimulation(entitiesPopulationMap, envPropValues);
 
