@@ -93,6 +93,7 @@ public class SecondScreenBodyController implements Initializable {
         this.vbox.getChildren().clear();
         EnvPropDto envPropDto = this.primaryController.getPredictionManager().getEnvProp(selectedEnvProp);
         Text text = createAskFromUserString(envPropDto.getType(), envPropDto.getName());
+        text.setWrappingWidth(260);
 
         String value = envPropValues.containsKey(activeEnvProp) ? envPropValues.get(activeEnvProp) : "";
         if (envPropDto.getType().equals("boolean")) {
