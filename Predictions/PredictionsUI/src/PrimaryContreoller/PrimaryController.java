@@ -17,10 +17,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PrimaryController implements Initializable {
     private PredictionManager predictionManager;
@@ -153,5 +150,9 @@ public class PrimaryController implements Initializable {
 
         this.secondScreenBodyController.setEnvPropList(simulationTitleDto.getEnvVariableNames());
         this.secondScreenBodyController.setEntitiesPopulationList(simulationTitleDto.getEntitiesNames(),simulationTitleDto.getPopulationSpace());
+    }
+
+    public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues) {
+        predictionManager.runSimulation(entitiesPopulationMap,envPropValues);
     }
 }

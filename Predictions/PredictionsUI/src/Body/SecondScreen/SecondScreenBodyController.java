@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class SecondScreenBodyController implements Initializable {
 
@@ -229,6 +230,13 @@ public class SecondScreenBodyController implements Initializable {
 
     @FXML
     private void runSimulationOnClick(ActionEvent event) {
+        Map<String, Integer> entitiesPopulationMap = entityToTextFieldMap.entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> {return Integer.parseInt(entry.getValue().getText());}));
+
+        primaryController.runSimulation(entitiesPopulationMap, envPropValues);
+
 
     }
 }

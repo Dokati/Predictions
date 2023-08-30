@@ -192,4 +192,7 @@ public class PredictionManager {
         Range range = envProp.hasRange()? envProp.getRange():null;
         return new EnvPropDto(envPropName,envProp.getType().toString().toLowerCase(), range);
     }
+
+    public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues) {
+    }
 }
