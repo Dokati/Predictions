@@ -1,4 +1,17 @@
 
+#envPropTable .label {
+    -fx-font-size: 14px;
+    -fx-font-family: "System";
+    -fx-text-fill: -fx-text-inner-color;
+    -fx-font-weight: bold;
+    -fx-pref-width: -1;
+    -fx-pref-height: -1;
+    -fx-background-color: -fx-background;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-wrap-text: false;
+    -fx-padding: 5px;
+}
 .label {
     -fx-font-size: 15;
     -fx-font-family: "Pacifico";
