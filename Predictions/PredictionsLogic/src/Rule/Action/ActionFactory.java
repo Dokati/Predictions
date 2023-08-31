@@ -1,5 +1,6 @@
 package Rule.Action;
 
+import Entity.SecondaryEntity;
 import Entity.definition.EntityDefinition;
 import Exceptions.IllegalXmlDataInvalidActionEntityExceptions;
 import PRD.PRDAction;

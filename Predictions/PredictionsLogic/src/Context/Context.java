@@ -12,10 +12,10 @@ import java.util.Map;
 import java.util.Random;
 
 public class Context {
-    private EntityInstance activeEntityInstance;
-    private WorldInstance worldInstance;
-    final private Map<String, EnvPropertyInstance> envVariables;
-    private Integer currentTick;
+    protected EntityInstance activeEntityInstance;
+    protected WorldInstance worldInstance;
+    final protected Map<String, EnvPropertyInstance> envVariables;
+    protected Integer currentTick;
 
     public Context(EntityInstance activeEntityInstance,WorldInstance worldInstance, Map<String, EnvPropertyInstance> envVariables,Integer currentTick) {
         this.activeEntityInstance = activeEntityInstance;
@@ -27,17 +27,22 @@ public class Context {
     public EntityInstance getActiveEntityInstance(){
         return this.activeEntityInstance;
     }
-    public void removeActiveEntity() {
-        activeEntityInstance.setAlive(false);
-        activeEntityInstance = null;
-    }
 
     public WorldInstance getWorldInstance() {
         return worldInstance;
     }
 
+    public Integer getCurrentTick() {
+        return currentTick;
+    }
+
     public Map<String, EnvPropertyInstance> getEnvVariables() {
         return envVariables;
+    }
+
+    public void removeActiveEntity() {
+        activeEntityInstance.setAlive(false);
+        activeEntityInstance = null;
     }
 
     public Object environment(String envPropertyName) {
@@ -49,19 +54,15 @@ public class Context {
         }
     }
 
-    public Integer getCurrentTick() {
-        return currentTick;
-    }
-
     public Float random(Integer maxRange) {
         if (maxRange < 0) {
             throw new IllegalArgumentException("Argument must be a non-negative integer.");
         }
         int min = 0; // Minimum value of the range (inclusive)
         Random random = new Random();
-        Integer res = random.nextInt(maxRange - min + 1) + min;
+        int res = random.nextInt(maxRange - min + 1) + min;
 
-        return res.floatValue();
+        return (float) res;
     }
 
     public Object evaluate(String EntityPropertyFormat){

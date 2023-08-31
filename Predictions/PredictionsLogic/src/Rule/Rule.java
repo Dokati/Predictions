@@ -1,20 +1,17 @@
 package Rule;
 
-import Context.Context;
+import Context.*;
 import Entity.definition.EntityDefinition;
 import Entity.instance.EntityInstance;
-import Exceptions.IllegalXmlDataInvalidActionEntityExceptions;
-import Exceptions.IllegalXmlDataInvalidActionPropExceptions;
 import PRD.PRDAction;
-import PRD.PRDCondition;
+
 import PRD.PRDRule;
 import Property.definition.EnvPropertyDefinition;
 import Rule.Action.*;
-import Rule.Action.ConditionAction.ConditionAction;
-import Validation.Validation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class Rule {
@@ -76,19 +73,35 @@ public class Rule {
 
     public void RunRule(Context context){
         for (Action action: this.actions) {
-            if(CheckIfActionForTheEntityInThContext(action,context.getActiveEntityInstance())){
-                action.Activate(context);
+            if(action.IsSecondaryEntityExist()) {
+                for(EntityInstance secondaryEntity : findSuitableSecondaryEntities(context,action)){
+                    if(action.getMainEntity().equals(context.getActiveEntityInstance().getEntityDef()) ||
+                            action.getMainEntity().equals(secondaryEntity.getEntityDef())){
+                        action.Activate(new ContextSecondaryEntity(context,secondaryEntity));
+                    }
+                }
+            }
+            else {
+                if (action.getMainEntity().equals(context.getActiveEntityInstance().getEntityDef())) {
+                    action.Activate(context);
+                }
             }
         }
     }
 
-    public Boolean CheckIfActionForTheEntityInThContext(Action action,EntityInstance entityInstance)
-    {
-        if(action.getMainEntity() == null)
-        {
-            return false;
+    public List<EntityInstance> findSuitableSecondaryEntities(Context context, Action action){
+
+        List<EntityInstance> suitableSecondaryEntities = new ArrayList<>();
+
+        for(EntityInstance entityInstance : context.getWorldInstance().getEntities()){
+            if (entityInstance.getEntityDef().equals(action.getSecondaryEntity().getEntityDefinition())
+            && action.getSecondaryEntity().getCondition().conditionIsTrue(new Context(entityInstance,context.getWorldInstance(),context.getEnvVariables(),context.getCurrentTick()))
+            && suitableSecondaryEntities.size() < action.getSecondaryEntity().getCount()) {
+                suitableSecondaryEntities.add(entityInstance);
+            }
         }
-        return action.getMainEntity().equals(entityInstance.getEntityDef());
+
+        return suitableSecondaryEntities;
     }
 
     public String getName() {

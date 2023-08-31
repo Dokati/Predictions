@@ -6,6 +6,7 @@ import Entity.definition.EntityDefinition;
 import Entity.instance.EntityInstance;
 import Grid.Grid;
 import PRD.PRDWorld;
+import Property.PropertyType;
 import Property.Range;
 import Property.definition.EnvPropertyDefinition;
 import Property.definition.PropertyDefinition;
@@ -161,12 +162,14 @@ public class PredictionManager {
 
         while (!simulationFinished) {
 
-            MoveEntitiesOneStepRandomly(); // 1.move all entities one step
+            MoveEntitiesOneStepRandomly();
 
             for (EntityInstance entity : this.worldInstance.getEntities()) {
+
                 if (!entity.getAlive()) {
                     continue;
                 }
+
                 context = new Context(entity, this.worldInstance, this.worldInstance.getEnvironmentProperties(),tick);
 
                 for (Rule rule : worldInstance.getRules()) {
@@ -190,15 +193,22 @@ public class PredictionManager {
 
     private void InitializePopulation(Map<String, Integer> entitiesPopulationMap)
     {
-
+        for (Map.Entry<String, Integer> entityPopulation : entitiesPopulationMap.entrySet()) {
+            worldDefinition.getEntities().get(entityPopulation.getKey()).setPopulation(entityPopulation.getValue());
+        }
     }
 
     private void InitializeEnvVariablesValue(Map<String, String> envPropValues)
     {
+        for (Map.Entry<String, EnvPropertyInstance> entry : this.worldInstance.getEnvironmentProperties().entrySet()) {
+            entry.getValue().setValue(entry.getValue().getPropertyDef().getType().randomInitialization(entry.getValue().getPropertyDef().getRange()));
+        }
 
+        for (Map.Entry<String, String> envProperty : envPropValues.entrySet()) {
+            PropertyType type = worldDefinition.getEnvironmentProperties().get(envProperty.getKey()).getType();
+            worldInstance.getEnvironmentProperties().get(envProperty.getKey()).setValue(type.convert(envProperty.getValue()));
+        }
     }
-
-
 
     private void MoveEntitiesOneStepRandomly() {
         for (EntityInstance entity : worldInstance.getEntities()) {
@@ -207,17 +217,4 @@ public class PredictionManager {
             worldInstance.getGrid()[entity.getCoordinate().getX()][entity.getCoordinate().getY()] = entity;
         }
     }
-
-    private void InitializeEnvVariablesValue() {
-        for (Map.Entry<String, EnvPropertyInstance> entry : this.worldInstance.getEnvironmentProperties().entrySet()) {
-            entry.getValue().setValue(entry.getValue().getPropertyDef().getType().randomInitialization(entry.getValue().getPropertyDef().getRange()));
-        }
-    }
-
-    private void InitializePopulation(){
-        for (Map.Entry<String, EntityDefinition> entityDef : this.worldDefinition.getEntities().entrySet()) {
-            entityDef.getValue().setPopulation(10);
-        }
-    }
-
 }

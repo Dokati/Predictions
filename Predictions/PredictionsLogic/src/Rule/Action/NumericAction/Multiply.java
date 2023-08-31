@@ -1,8 +1,10 @@
 package Rule.Action.NumericAction;
 
-import Context.Context;
+import Context.*;
 import Dto.ActionDetailsDto;
+import Entity.SecondaryEntity;
 import Entity.definition.EntityDefinition;
+import Entity.instance.EntityInstance;
 import Expression.Expression;
 import PRD.PRDAction;
 import Property.PropertyType;
@@ -19,12 +21,12 @@ public class Multiply extends Calculation {
         super(prdAction, entities, environmentProperties);
         this.arg1 = new Expression(prdAction.getPRDMultiply().getArg1());
         this.arg2 = new Expression(prdAction.getPRDMultiply().getArg2());
-        CheckIfTypeOfArgumentsMatchesForNumericAction(this.arg1.GetTranslatedValueType(entities.get(prdAction.getEntity()),environmentProperties),this.arg2.GetTranslatedValueType(entities.get(prdAction.getEntity()),environmentProperties));
+        CheckIfTypeOfArgumentsMatchesForNumericAction(this.arg1.GetTranslatedValueType(entity,entities,environmentProperties),this.arg2.GetTranslatedValueType(entity,entities,environmentProperties));
     }
 
     @Override
     public void Activate(Context context) {
-        PropertyInstance prop = context.getActiveEntityInstance().getProperties().get(resultProp);
+        PropertyInstance prop = getEntityForAction(context).getProperties().get(resultProp);
         Float numericArg1 = PropertyType.FLOAT.convert(arg1.getTranslatedValue(context));
         Float numericArg2 = PropertyType.FLOAT.convert(arg2.getTranslatedValue(context));
         Float res = numericArg1*numericArg2;
@@ -41,6 +43,17 @@ public class Multiply extends Calculation {
     @Override
     public EntityDefinition getMainEntity() {
         return entity;
+    }
+
+    @Override
+    public EntityInstance getEntityForAction(Context context) {
+        if(context instanceof ContextSecondaryEntity &&
+                ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(entity))
+        {
+            return ((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance();
+        }
+
+        return context.getActiveEntityInstance();
     }
 
 }

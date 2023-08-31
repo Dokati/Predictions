@@ -42,8 +42,8 @@ public class SingleCondition implements Condition{
     @Override
     public Boolean conditionIsTrue(Context context) {
         EntityInstance activeEntity = context.getActiveEntityInstance();
-        Object cmpToValue =  this.expressionValue.getTranslatedValue(context);
-        Object propertyValue = this.property.getTranslatedValue(context);
+        Object cmpToValue =  this.expressionValue.getTranslatedValue(new Context(activeEntity,context.getWorldInstance(),context.getEnvVariables(),context.getCurrentTick()));
+        Object propertyValue = this.property.getTranslatedValue(new Context(activeEntity,context.getWorldInstance(),context.getEnvVariables(),context.getCurrentTick()));
 
         boolean result = false;
 

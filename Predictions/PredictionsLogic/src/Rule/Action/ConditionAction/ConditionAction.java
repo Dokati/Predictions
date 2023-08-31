@@ -1,12 +1,15 @@
 package Rule.Action.ConditionAction;
 
-import Context.Context;
+import Context.*;
 import Dto.ActionDetailsDto;
+import Entity.SecondaryEntity;
 import Entity.definition.EntityDefinition;
+import Entity.instance.EntityInstance;
 import PRD.PRDAction;
 import Property.definition.EnvPropertyDefinition;
 import Rule.Action.Action;
 import Rule.Action.Condition.Condition;
+import Rule.Action.Condition.MultipleCondition;
 import Rule.Action.Condition.SingleCondition;
 
 import java.util.HashMap;
@@ -47,9 +50,11 @@ public class ConditionAction extends Action {
 
     @Override
     public EntityDefinition getMainEntity() {
-        if (condition instanceof SingleCondition){
-            return ((SingleCondition)condition).getEntity();
-        }
+        return entity;
+    }
+
+    @Override
+    public EntityInstance getEntityForAction(Context context) {
         return null;
     }
 }

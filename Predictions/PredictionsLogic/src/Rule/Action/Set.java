@@ -1,8 +1,10 @@
 package Rule.Action;
 
-import Context.Context;
+import Context.*;
 import Dto.ActionDetailsDto;
+import Entity.SecondaryEntity;
 import Entity.definition.EntityDefinition;
+import Entity.instance.EntityInstance;
 import Expression.Expression;
 import PRD.PRDAction;
 import Property.PropertyType;
@@ -27,8 +29,8 @@ public class Set extends Action{
 
     @Override
     public void Activate(Context context) {
-        PropertyInstance prop = context.getActiveEntityInstance().getProperties().get(propertyName);
-        Object setVal = this.expressionValue.getTranslatedValue(context);
+        PropertyInstance prop = getEntityForAction(context).getProperties().get(propertyName);
+        Object setVal = this.expressionValue.getTranslatedValue(new Context(getEntityForAction(context),context.getWorldInstance(),context.getEnvVariables(),context.getCurrentTick()));
 
         if (setVal.getClass() != prop.getValue().getClass()){
             throw new Exceptions.NotSameTypeException();
@@ -48,5 +50,16 @@ public class Set extends Action{
     @Override
     public EntityDefinition getMainEntity() {
         return entity;
+    }
+
+    @Override
+    public EntityInstance getEntityForAction(Context context) {
+        if(context instanceof ContextSecondaryEntity &&
+                ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(entity))
+        {
+            return ((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance();
+        }
+
+        return context.getActiveEntityInstance();
     }
 }

@@ -127,7 +127,7 @@ public enum PropertyType
             }
             else {
                 throw new RuntimeException("Value of type " + value.getClass().getSimpleName() +
-                        "cannot be converted to Float");
+                        " cannot be converted to Float");
             }
         }
     };
