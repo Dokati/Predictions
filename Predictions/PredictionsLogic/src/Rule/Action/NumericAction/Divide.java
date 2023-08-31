@@ -36,7 +36,7 @@ public class Divide extends Calculation{
         return new ActionDetailsDto("Type: " + this.type
                 +"\narg1: " + arg1.getExpression() +
                 "\narg2: " + arg2.getExpression()+
-                "Result-prop:" + resultProp);
+                "\nResult-prop:" + resultProp);
     }
 
     @Override

@@ -120,6 +120,21 @@ public class PredictionManager {
         return new EnvPropDto(envPropName,envProp.getType().toString().toLowerCase(), range);
     }
 
+    public List<EnvPropDto> getAllEnvProps() {
+        List<EnvPropDto> envPropDtoList = new ArrayList<>();
+
+        for (Map.Entry<String, EnvPropertyDefinition> entry : this.worldDefinition.getEnvironmentProperties().entrySet()) {
+            String envPropName = entry.getKey();
+            EnvPropertyDefinition envProp = entry.getValue();
+            Range range = envProp.hasRange() ? envProp.getRange() : null;
+
+            EnvPropDto envPropDto = new EnvPropDto(envPropName, envProp.getType().toString().toLowerCase(), range);
+            envPropDtoList.add(envPropDto);
+        }
+
+        return envPropDtoList;
+    }
+
     public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues) {
 
         if(worldDefinition == null)

@@ -12,7 +12,7 @@ public class GUI extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Predictions");
         Parent load = FXMLLoader.load(getClass().getResource("PrimaryContreoller/primaryController.fxml"));
-        Scene scene = new Scene(load, 1000, 700);
+        Scene scene = new Scene(load, 1002 , 702);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

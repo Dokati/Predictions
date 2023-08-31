@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -36,6 +37,8 @@ public class SecondScreenBodyController implements Initializable {
     @FXML
     private GridPane grid;
     @FXML
+    private TableView<EnvPropTableItem> envPropTable;
+    @FXML
     private HBox hbox;
     @FXML
     private VBox vbox;
@@ -45,7 +48,6 @@ public class SecondScreenBodyController implements Initializable {
     private VBox amountVbox;
     @FXML
     private Button runSimulationButton;
-    private ListView<String> myListView;
     private Map<String, String> envPropValues;
     Map<String, TextField> entityToTextFieldMap;
     int totalPopulation = 0;
@@ -58,7 +60,10 @@ public class SecondScreenBodyController implements Initializable {
         //-----------------------------//
         numberTextField = new TextField();
         numberTextField.setPrefWidth(200); // Change this to your desired width
-        numberTextField.textProperty().addListener((observable, oldValue, newValue) -> envPropValues.put(activeEnvProp, newValue));
+        numberTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            envPropValues.put(activeEnvProp, newValue);
+            updateCellValue(activeEnvProp,"Value", newValue);
+        });
         makeNumberButtonNumericOnly();
         //-----------------------------//
         currenSliderValue = new Text();
@@ -69,14 +74,33 @@ public class SecondScreenBodyController implements Initializable {
         //-----------------------------//
         this.trueOrFalseBox = new ComboBox<>();
         trueOrFalseBox.getItems().addAll("True", "False");
-        trueOrFalseBox.setOnAction(event -> envPropValues.put(activeEnvProp, trueOrFalseBox.getValue()));
+        trueOrFalseBox.setOnAction(event -> {
+            envPropValues.put(activeEnvProp, trueOrFalseBox.getValue());
+            updateCellValue(activeEnvProp,"Value", trueOrFalseBox.getValue().toString());
+
+        });
         //-----------------------------//
         this.stringTextField = new TextField();
-        stringTextField.textProperty().addListener((observable, oldValue, newValue) -> envPropValues.put(activeEnvProp, newValue));
+        stringTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            envPropValues.put(activeEnvProp, newValue);
+            updateCellValue(activeEnvProp,"Value", newValue);
+        });
         //-----------------------------//
         entityToTextFieldMap = new HashMap<>();
     }
 
+    private void updateCellValue(String name, String columnName, String newValue) {
+        for (EnvPropTableItem item : this.envPropTable.getItems()) {
+            if (item.getName().equalsIgnoreCase(name)) {
+                if (columnName.equalsIgnoreCase("Value")) {
+                    item.setValue(newValue);
+                    break;
+                }
+            }
+        }
+        envPropTable.refresh();
+
+    }
     private void makeNumberButtonNumericOnly() {
         numberTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*(\\.\\d*)?")) {
@@ -88,11 +112,46 @@ public class SecondScreenBodyController implements Initializable {
 
     }
 
-    private void handleEnvPropListItemClick(String selectedEnvProp) {
+    public void setEnvPropTable() {
+        List<EnvPropDto> envPropDtoList = this.primaryController.getPredictionManager().getAllEnvProps();
+
+        TableColumn<EnvPropTableItem, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<EnvPropTableItem, Integer> typeColumn = new TableColumn<>("Type");
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        TableColumn<EnvPropTableItem, Integer> valueColumn = new TableColumn<>("Value");
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("Value"));
+
+        this.envPropTable.getColumns().addAll(nameColumn, typeColumn, valueColumn);
+
+        ObservableList<EnvPropTableItem> data = FXCollections.observableArrayList();
+
+        for (EnvPropDto envPropDto : envPropDtoList) {
+            data.add(new EnvPropTableItem(envPropDto.getName(), envPropDto.getType(), null));
+        }
+
+        this.envPropTable.setItems(data);
+
+        envPropTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) { // Double-click
+                EnvPropTableItem selectedItem = envPropTable.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    // Handle double-click event here
+                    handleEnvPropTableItemClick(selectedItem.getName());
+                }
+            }
+        });
+
+
+
+    }
+
+    private void handleEnvPropTableItemClick(String selectedEnvProp) {
         this.activeEnvProp = selectedEnvProp;
         this.vbox.getChildren().clear();
         EnvPropDto envPropDto = this.primaryController.getPredictionManager().getEnvProp(selectedEnvProp);
         Text text = createAskFromUserString(envPropDto.getType(), envPropDto.getName());
+        text.setWrappingWidth(260);
 
         String value = envPropValues.containsKey(activeEnvProp) ? envPropValues.get(activeEnvProp) : "";
         if (envPropDto.getType().equals("boolean")) {
@@ -141,33 +200,14 @@ public class SecondScreenBodyController implements Initializable {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 currenSliderValue.setText("Current: " + newValue);
                 envPropValues.put(activeEnvProp, newValue.toString());
+                updateCellValue(activeEnvProp,"Value", newValue.toString());
+
             }
         });
     }
 
-    public void setEnvPropList(List<String> envPropDtoList) {
-
-        this.myListView = new ListView<>();
-        myListView.getItems().addAll(envPropDtoList);
 
 
-        myListView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 1) { // Double-click
-                String selectedItem = myListView.getSelectionModel().getSelectedItem();
-                if (selectedItem != null) {
-                    // Handle double-click event here
-                    handleEnvPropListItemClick(selectedItem);
-                }
-            }
-        });
-
-        ShowEnvPropList();
-    }
-
-
-    void ShowEnvPropList() {
-        this.hbox.getChildren().add(this.myListView);
-    }
 
     public void setMainController(PrimaryController primaryController) {
         this.primaryController = primaryController;
@@ -209,10 +249,7 @@ public class SecondScreenBodyController implements Initializable {
 
             rowIndex++;
         }
-//        VBox vBox = new VBox();
-//        vBox.getChildren().addAll(totalPopulation,totalPopulation);
-//        gridPane.add(totalPopulation, 0, rowIndex+5);
-//        gridPane.add(totalPopulation, 0, rowIndex+6);
+
           this.anchorPane.getChildren().add(gridPane);
           this.amountVbox.getChildren().addAll(totalPopulation,maxPopulationLabel);
     }
@@ -230,10 +267,11 @@ public class SecondScreenBodyController implements Initializable {
 
     @FXML
     private void runSimulationOnClick(ActionEvent event) {
+        // convert the Map<String, TextField> to Map<String, Integer>. if value is empty string, put 0 population.
         Map<String, Integer> entitiesPopulationMap = entityToTextFieldMap.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        entry -> {return Integer.parseInt(entry.getValue().getText());}));
+                        entry -> {return entry.getValue().getText().equals("")? 0: Integer.parseInt(entry.getValue().getText());}));
 
         primaryController.runSimulation(entitiesPopulationMap, envPropValues);
 
