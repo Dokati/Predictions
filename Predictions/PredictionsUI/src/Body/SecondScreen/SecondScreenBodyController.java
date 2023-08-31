@@ -11,10 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
 
@@ -24,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class SecondScreenBodyController implements Initializable {
 
@@ -37,6 +36,8 @@ public class SecondScreenBodyController implements Initializable {
     @FXML
     private GridPane grid;
     @FXML
+    private GridPane populationGridPane;
+    @FXML
     private TableView<EnvPropTableItem> envPropTable;
     @FXML
     private HBox hbox;
@@ -48,8 +49,9 @@ public class SecondScreenBodyController implements Initializable {
     private VBox amountVbox;
     @FXML
     private Button runSimulationButton;
+
     private Map<String, String> envPropValues;
-    Map<String, TextField> entityToTextFieldMap;
+    Map<String, TextField> entityToPopTextFieldMap;
     int totalPopulation = 0;
 
 
@@ -61,8 +63,11 @@ public class SecondScreenBodyController implements Initializable {
         numberTextField = new TextField();
         numberTextField.setPrefWidth(200); // Change this to your desired width
         numberTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            envPropValues.put(activeEnvProp, newValue);
-            updateCellValue(activeEnvProp,"Value", newValue);
+            if(!newValue.isEmpty()){
+                envPropValues.put(activeEnvProp, newValue);
+                updateCellValue(activeEnvProp,"Value", newValue);
+            }
+
         });
         makeNumberButtonNumericOnly();
         //-----------------------------//
@@ -75,18 +80,23 @@ public class SecondScreenBodyController implements Initializable {
         this.trueOrFalseBox = new ComboBox<>();
         trueOrFalseBox.getItems().addAll("True", "False");
         trueOrFalseBox.setOnAction(event -> {
-            envPropValues.put(activeEnvProp, trueOrFalseBox.getValue());
-            updateCellValue(activeEnvProp,"Value", trueOrFalseBox.getValue().toString());
-
+            if (trueOrFalseBox.getSelectionModel().getSelectedItem() != null) {
+                envPropValues.put(activeEnvProp, trueOrFalseBox.getValue());
+                updateCellValue(activeEnvProp, "Value", trueOrFalseBox.getValue());
+            }
         });
         //-----------------------------//
         this.stringTextField = new TextField();
         stringTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            envPropValues.put(activeEnvProp, newValue);
-            updateCellValue(activeEnvProp,"Value", newValue);
+            if(!newValue.isEmpty()){
+                envPropValues.put(activeEnvProp, newValue);
+                updateCellValue(activeEnvProp,"Value", newValue);
+            }
         });
         //-----------------------------//
-        entityToTextFieldMap = new HashMap<>();
+        entityToPopTextFieldMap = new HashMap<>();
+        //-----------------------------//
+
     }
 
     private void updateCellValue(String name, String columnName, String newValue) {
@@ -114,16 +124,19 @@ public class SecondScreenBodyController implements Initializable {
 
     public void setEnvPropTable() {
         List<EnvPropDto> envPropDtoList = this.primaryController.getPredictionManager().getAllEnvProps();
+        if(this.envPropTable.getColumns().isEmpty()) {
+            TableColumn<EnvPropTableItem, String> nameColumn = new TableColumn<>("Name");
+            nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+            TableColumn<EnvPropTableItem, Integer> typeColumn = new TableColumn<>("Type");
+            typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+            TableColumn<EnvPropTableItem, Integer> valueColumn = new TableColumn<>("Value");
+            valueColumn.setCellValueFactory(new PropertyValueFactory<>("Value"));
 
-        TableColumn<EnvPropTableItem, String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn<EnvPropTableItem, Integer> typeColumn = new TableColumn<>("Type");
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        TableColumn<EnvPropTableItem, Integer> valueColumn = new TableColumn<>("Value");
-        valueColumn.setCellValueFactory(new PropertyValueFactory<>("Value"));
-
-        this.envPropTable.getColumns().addAll(nameColumn, typeColumn, valueColumn);
-
+            this.envPropTable.getColumns().addAll(nameColumn, typeColumn, valueColumn);
+        }
+        else{
+            clearSecondsScreenEnvPropPart();
+        }
         ObservableList<EnvPropTableItem> data = FXCollections.observableArrayList();
 
         for (EnvPropDto envPropDto : envPropDtoList) {
@@ -213,14 +226,16 @@ public class SecondScreenBodyController implements Initializable {
         this.primaryController = primaryController;
     }
 
-
+    ///////////------------------------------------------------------////////////////////
     ///////////----------Entities Section:---------------------------////////////////////
+
     public void setEntitiesPopulationList(List<String> entitiesNames, Integer populationSpace) {
         ObservableList<String> countries = FXCollections.observableArrayList(entitiesNames);
 
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        this.populationGridPane.getChildren().clear();
+        this.populationGridPane.setHgap(10);
+        this.populationGridPane.setVgap(10);
+
         Text totalPopulation = new Text("Total Population: ");
         Text maxPopulationLabel = new Text("Max Population: " + populationSpace);
         int rowIndex = 0;
@@ -229,29 +244,30 @@ public class SecondScreenBodyController implements Initializable {
             TextField populationTextField = new TextField();
             populationTextField.setPromptText("Population of " + country);
 
-            entityToTextFieldMap.put(country, populationTextField);
+            entityToPopTextFieldMap.put(country, populationTextField);
 
             // Add a listener to each TextField to allow only integer input
             populationTextField.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.matches("\\d*")) {
                     populationTextField.setText(oldValue);
                 }
-                updateTotalPopulationLabel(entityToTextFieldMap, totalPopulation);
+                updateTotalPopulationLabel(entityToPopTextFieldMap, totalPopulation);
                 if (this.totalPopulation>populationSpace) {
                     populationTextField.setText(oldValue);
                 }
-                updateTotalPopulationLabel(entityToTextFieldMap, totalPopulation);
+                updateTotalPopulationLabel(entityToPopTextFieldMap, totalPopulation);
 
 
             });
-            gridPane.add(countryLabel, 0, rowIndex);
-            gridPane.add(populationTextField, 1, rowIndex);
+            this.populationGridPane.add(countryLabel, 0, rowIndex);
+            this.populationGridPane.add(populationTextField, 1, rowIndex);
 
             rowIndex++;
         }
-
-          this.anchorPane.getChildren().add(gridPane);
-          this.amountVbox.getChildren().addAll(totalPopulation,maxPopulationLabel);
+        boolean VboxHasTextChildren = amountVbox.getChildren().stream().noneMatch(node -> node instanceof Text);
+        if(VboxHasTextChildren)  {// if its first time adding population text.
+              this.amountVbox.getChildren().addAll(totalPopulation,maxPopulationLabel);
+          }
     }
 
     private void updateTotalPopulationLabel(Map<String, TextField> countryToPopulationMap, Text totalPopulationLabel) {
@@ -268,13 +284,29 @@ public class SecondScreenBodyController implements Initializable {
     @FXML
     private void runSimulationOnClick(ActionEvent event) {
         // convert the Map<String, TextField> to Map<String, Integer>. if value is empty string, put 0 population.
-        Map<String, Integer> entitiesPopulationMap = entityToTextFieldMap.entrySet().stream()
+        Map<String, Integer> entitiesPopulationMap = entityToPopTextFieldMap.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        entry -> {return entry.getValue().getText().equals("")? 0: Integer.parseInt(entry.getValue().getText());}));
+                        entry -> {return entry.getValue().getText().isEmpty() ? 0: Integer.parseInt(entry.getValue().getText());}));
 
         primaryController.runSimulation(entitiesPopulationMap, envPropValues);
 
 
     }
+
+    @FXML
+    void clearSecondsScreenOnClick(ActionEvent event) {
+        clearSecondsScreenEnvPropPart();
+        this.entityToPopTextFieldMap.values().forEach(TextInputControl::clear);
+    }
+
+    private void clearSecondsScreenEnvPropPart() {
+        this.envPropValues.keySet().forEach(key -> updateCellValue(key,"Value", null));
+        this.numberTextField.clear();
+        this.trueOrFalseBox.getSelectionModel().clearSelection();
+        this.slider.setValue(this.slider.getMin());
+        this.stringTextField.clear();
+        this.envPropValues.clear();
+    }
+
 }

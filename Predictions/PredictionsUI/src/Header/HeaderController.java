@@ -63,11 +63,9 @@ public class HeaderController {
         MenuItem menuItem = (MenuItem) event.getSource();
         String SizeNFont = menuItem.getText();
         primaryController.setLabelsAppearance(SizeNFont);
-
     }
 
-    public void setMainController(PrimaryController primaryController) {
-        this.primaryController = primaryController;
+    public void setMainController(PrimaryController primaryController) {this.primaryController = primaryController;
     }
 
 }
