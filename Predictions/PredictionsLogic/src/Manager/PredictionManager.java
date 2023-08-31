@@ -75,79 +75,6 @@ public class PredictionManager {
 
     }
 
-    public void runSimulationDEMO()
-    {
-        if(worldDefinition == null)
-        {
-            throw new RuntimeException("There is no simulation loaded in the system");
-        }
-        InitializePopulationDEMO(); //every population is 10
-        worldInstance = new WorldInstance(worldDefinition);
-        InitializeEnvVariablesValueDEMO();
-        boolean simulationTermBySecond = false;
-        boolean simulationTermByTicks = false;
-        boolean simulationFinished = false;
-        Instant endTime = null;
-        Context context;
-        int tick = 1;
-
-        if(worldInstance.getTerminationConditions().containsKey(TerminationType.TICK)){
-            simulationTermByTicks = true;
-        }
-        if(worldInstance.getTerminationConditions().containsKey(TerminationType.SECOND)){
-            simulationTermBySecond = true;
-            endTime = Instant.now().plusSeconds(worldInstance.getSecTermination().getCount());
-        }
-
-        while (!simulationFinished) {
-
-            MoveEntitiesOneStepRandomly(); // 1.move all entities one step
-
-            for (EntityInstance entity : this.worldInstance.getEntities()) {
-                if (!entity.getAlive()) {
-                    continue;
-                }
-                context = new Context(entity, this.worldInstance, this.worldInstance.getEnvironmentProperties(),tick);
-
-                for (Rule rule : worldInstance.getRules()) {
-                    if (rule.RuleIsRunnable(tick)) {
-                        rule.RunRule(context);
-                    }
-                }
-            }
-
-            if (simulationTermBySecond && Instant.now().isAfter(endTime)) {
-                simulationFinished = true;
-                System.out.println("The Activation ended after " + worldDefinition.getTerminationConditions().get(TerminationType.SECOND).getCount() + " seconds");
-            }
-            if (simulationTermByTicks && tick >= worldInstance.getTicksTermination().getCount()) {
-                simulationFinished = true;
-                System.out.println("The Activation ended after " + worldDefinition.getTerminationConditions().get(TerminationType.TICK).getCount() + " ticks");
-            }
-            tick++;
-        }
-    }
-
-    private void MoveEntitiesOneStepRandomly() {
-        for (EntityInstance entity : worldInstance.getEntities()) {
-            worldInstance.getGrid()[entity.getCoordinate().getX()][entity.getCoordinate().getY()] = null;
-            entity.getCoordinate().chooseRandomNeighbor(worldInstance.getGrid());
-            worldInstance.getGrid()[entity.getCoordinate().getX()][entity.getCoordinate().getY()] = entity;
-        }
-    }
-
-    private void InitializeEnvVariablesValueDEMO() {
-        for (Map.Entry<String, EnvPropertyInstance> entry : this.worldInstance.getEnvironmentProperties().entrySet()) {
-            entry.getValue().setValue(entry.getValue().getPropertyDef().getType().randomInitialization(entry.getValue().getPropertyDef().getRange()));
-        }
-    }
-
-    private void InitializePopulationDEMO(){
-        for (Map.Entry<String, EntityDefinition> entityDef : this.worldDefinition.getEntities().entrySet()) {
-            entityDef.getValue().setPopulation(10);
-        }
-    }
-
     public EntityPropertyDetailDto getEntityPropertiesDetail(String value) {
             return new EntityPropertyDetailDto(this.worldDefinition.getEntities().get(value).getProperties().values().stream()
                     .map(PropertyDefinition::toString).collect(Collectors.toList()));
@@ -209,5 +136,88 @@ public class PredictionManager {
     }
 
     public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues) {
+
+        if(worldDefinition == null)
+        {
+            throw new RuntimeException("There is no simulation loaded in the system");
+        }
+        InitializePopulation(entitiesPopulationMap);
+        worldInstance = new WorldInstance(worldDefinition);
+        InitializeEnvVariablesValue(envPropValues);
+        boolean simulationTermBySecond = false;
+        boolean simulationTermByTicks = false;
+        boolean simulationFinished = false;
+        Instant endTime = null;
+        Context context;
+        int tick = 1;
+
+        if(worldInstance.getTerminationConditions().containsKey(TerminationType.TICK)){
+            simulationTermByTicks = true;
+        }
+        if(worldInstance.getTerminationConditions().containsKey(TerminationType.SECOND)){
+            simulationTermBySecond = true;
+            endTime = Instant.now().plusSeconds(worldInstance.getSecTermination().getCount());
+        }
+
+        while (!simulationFinished) {
+
+            MoveEntitiesOneStepRandomly(); // 1.move all entities one step
+
+            for (EntityInstance entity : this.worldInstance.getEntities()) {
+                if (!entity.getAlive()) {
+                    continue;
+                }
+                context = new Context(entity, this.worldInstance, this.worldInstance.getEnvironmentProperties(),tick);
+
+                for (Rule rule : worldInstance.getRules()) {
+                    if (rule.RuleIsRunnable(tick)) {
+                        rule.RunRule(context);
+                    }
+                }
+            }
+
+            if (simulationTermBySecond && Instant.now().isAfter(endTime)) {
+                simulationFinished = true;
+                System.out.println("The Activation ended after " + worldDefinition.getTerminationConditions().get(TerminationType.SECOND).getCount() + " seconds");
+            }
+            if (simulationTermByTicks && tick >= worldInstance.getTicksTermination().getCount()) {
+                simulationFinished = true;
+                System.out.println("The Activation ended after " + worldDefinition.getTerminationConditions().get(TerminationType.TICK).getCount() + " ticks");
+            }
+            tick++;
+        }
     }
+
+    private void InitializePopulation(Map<String, Integer> entitiesPopulationMap)
+    {
+
+    }
+
+    private void InitializeEnvVariablesValue(Map<String, String> envPropValues)
+    {
+
+    }
+
+
+
+    private void MoveEntitiesOneStepRandomly() {
+        for (EntityInstance entity : worldInstance.getEntities()) {
+            worldInstance.getGrid()[entity.getCoordinate().getX()][entity.getCoordinate().getY()] = null;
+            entity.getCoordinate().chooseRandomNeighbor(worldInstance.getGrid());
+            worldInstance.getGrid()[entity.getCoordinate().getX()][entity.getCoordinate().getY()] = entity;
+        }
+    }
+
+    private void InitializeEnvVariablesValue() {
+        for (Map.Entry<String, EnvPropertyInstance> entry : this.worldInstance.getEnvironmentProperties().entrySet()) {
+            entry.getValue().setValue(entry.getValue().getPropertyDef().getType().randomInitialization(entry.getValue().getPropertyDef().getRange()));
+        }
+    }
+
+    private void InitializePopulation(){
+        for (Map.Entry<String, EntityDefinition> entityDef : this.worldDefinition.getEntities().entrySet()) {
+            entityDef.getValue().setPopulation(10);
+        }
+    }
+
 }
