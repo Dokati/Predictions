@@ -35,10 +35,13 @@ public class Divide extends Calculation{
 
     @Override
     public ActionDetailsDto getDetails() {
+        String seconderyEntity = this.secondaryEntity!= null? "\nSecondery entity: " + this.secondaryEntity.getEntityDefinition().getName():"";
+
         return new ActionDetailsDto("Type: " + this.type
                 +"\narg1: " + arg1.getExpression() +
                 "\narg2: " + arg2.getExpression()+
-                "\nResult-prop:" + resultProp);
+                "\nResult-prop:" + resultProp+
+                seconderyEntity);
     }
 
     @Override

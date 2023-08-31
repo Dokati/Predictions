@@ -29,8 +29,10 @@ public class Kill extends Action{
 
     @Override
     public ActionDetailsDto getDetails() {
+        String seconderyEntity = this.secondaryEntity!= null? "\nSecondery entity: " + this.secondaryEntity.getEntityDefinition().getName():"";
         return new ActionDetailsDto("Type: " + this.type
-                +"\nEntity: " + entity.getName());
+                +"\nEntity: " + entity.getName()+
+                seconderyEntity);
     }
 
     @Override

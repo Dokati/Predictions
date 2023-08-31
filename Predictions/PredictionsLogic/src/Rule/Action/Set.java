@@ -41,10 +41,12 @@ public class Set extends Action{
 
     @Override
     public ActionDetailsDto getDetails() {
+        String seconderyEntity = this.secondaryEntity!= null? "\nSecondery entity: " + this.secondaryEntity.getEntityDefinition().getName():"";
         return new ActionDetailsDto("Type: " + this.type+
                 "\nEntity" + entity.getName()
                 +"\nProperty name: " + propertyName +
-                "\nValue: " + expressionValue.getExpression());
+                "\nValue: " + expressionValue.getExpression()
+                + seconderyEntity);
     }
 
     @Override

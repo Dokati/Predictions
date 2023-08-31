@@ -50,10 +50,12 @@ public class Replace extends Action{
 
     @Override
     public ActionDetailsDto getDetails() {
+        String seconderyEntity = this.secondaryEntity!= null? "\nSecondery entity: " + this.secondaryEntity.getEntityDefinition().getName():"";
         return new ActionDetailsDto("Type: " + this.type
                 +"\nCreate entity: " + createEntity.getName() +
                 "\nKill entity: " + killEntity.getName() +
-                "\nMode: " + mode);
+                "\nMode: " + mode
+                +seconderyEntity);
     }
 
     @Override
