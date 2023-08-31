@@ -229,6 +229,8 @@ public class SecondScreenBodyController implements Initializable {
     ///////////------------------------------------------------------////////////////////
     ///////////----------Entities Section:---------------------------////////////////////
 
+
+
     public void setEntitiesPopulationList(List<String> entitiesNames, Integer populationSpace) {
         ObservableList<String> countries = FXCollections.observableArrayList(entitiesNames);
 
@@ -289,9 +291,9 @@ public class SecondScreenBodyController implements Initializable {
                         Map.Entry::getKey,
                         entry -> {return entry.getValue().getText().isEmpty() ? 0: Integer.parseInt(entry.getValue().getText());}));
 
-        primaryController.runSimulation(entitiesPopulationMap, envPropValues);
+        primaryController.jumpToResultTab();
 
-
+//        primaryController.runSimulation(entitiesPopulationMap, envPropValues);
     }
 
     @FXML

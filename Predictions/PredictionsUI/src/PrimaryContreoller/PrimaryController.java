@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 
@@ -148,12 +149,16 @@ public class PrimaryController implements Initializable {
 
 //        second screen - the envprop list and entity list
 
-//        this.secondScreenBodyController.setEnvPropList(simulationTitleDto.getEnvVariableNames());
         this.secondScreenBodyController.setEnvPropTable();
         this.secondScreenBodyController.setEntitiesPopulationList(simulationTitleDto.getEntitiesNames(),simulationTitleDto.getPopulationSpace());
     }
 
     public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues) {
         predictionManager.runSimulation(entitiesPopulationMap,envPropValues);
+    }
+
+    public void jumpToResultTab() {
+        Tab selectedTab = tabPane.getTabs().get(2);
+        tabPane.getSelectionModel().select(selectedTab);
     }
 }
