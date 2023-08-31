@@ -63,6 +63,11 @@ public class WorldInstance {
         return 0;
     }
 
+    public EntityInstance getEntitYByPoint(Integer x,Integer y)
+    {
+        return grid[x][y];
+    }
+
     public Integer getGridCols()
     {
         if(grid != null){

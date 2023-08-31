@@ -1,8 +1,9 @@
 package Rule.Action;
 
-import Context.Context;
+import Context.*;
 import Dto.ActionDetailsDto;
 import Entity.definition.EntityDefinition;
+import Entity.instance.EntityInstance;
 import PRD.PRDAction;
 import Property.definition.EnvPropertyDefinition;
 import Property.definition.PropertyDefinition;
@@ -35,11 +36,11 @@ public class Replace extends Action{
     @Override
     public void Activate(Context context) {
         if(mode.equals("scratch")){
-            context.getActiveEntityInstance().initializeEntityInstanceFromScratch(createEntity,context.getCurrentTick());
+            getEntityForAction(context).initializeEntityInstanceFromScratch(createEntity,context.getCurrentTick());
         }
 
         else if(mode.equals("derived")){
-            context.getActiveEntityInstance().initializeEntityInstanceByDerived(createEntity,context.getCurrentTick());
+            getEntityForAction(context).initializeEntityInstanceByDerived(createEntity,context.getCurrentTick());
         }
     }
 
@@ -58,5 +59,16 @@ public class Replace extends Action{
     @Override
     public EntityDefinition getMainEntity() {
         return killEntity;
+    }
+
+    @Override
+    public EntityInstance getEntityForAction(Context context) {
+        if(context instanceof ContextSecondaryEntity &&
+                ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(killEntity))
+        {
+            return ((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance();
+        }
+
+        return context.getActiveEntityInstance();
     }
 }

@@ -4,7 +4,9 @@ import Context.Context;
 import Dto.ActionDetailsDto;
 import Entity.SecondaryEntity;
 import Entity.definition.EntityDefinition;
+import Entity.instance.EntityInstance;
 import Exceptions.IllegalXmlDataArgOfNumericActionAreNotNumericExceptions;
+import Expression.Expression;
 import PRD.PRDAction;
 import Property.PropertyType;
 import Property.definition.EnvPropertyDefinition;
@@ -29,8 +31,17 @@ public abstract class Action {
     {
         if (!byType.equals(PropertyType.FLOAT)){
             throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("It is not possible to perform the " + this.getClass().getSimpleName()
-                    +" by a value of type "  + byType.name().toLowerCase());
+                    +" by a value of type ");
         };
+    }
+
+    public boolean IsSecondaryEntityExist()
+    {
+        return secondaryEntity != null;
+    }
+
+    public SecondaryEntity getSecondaryEntity() {
+        return secondaryEntity;
     }
 
     public String getType() {
@@ -40,6 +51,9 @@ public abstract class Action {
     public abstract ActionDetailsDto getDetails();
 
     public abstract EntityDefinition getMainEntity();
+
+    public  abstract EntityInstance getEntityForAction(Context context);
+
     @Override
     public String toString() {
         return "type: " + type;

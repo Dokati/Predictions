@@ -1,9 +1,10 @@
 package Rule.Action.NumericAction;
 
-import Context.Context;
+import Context.*;
 import Dto.ActionDetailsDto;
+import Entity.SecondaryEntity;
 import Entity.definition.EntityDefinition;
-import Exceptions.IllegalXmlDataArgOfNumericActionAreNotNumericExceptions;
+import Entity.instance.EntityInstance;
 import Expression.Expression;
 import PRD.PRDAction;
 import Property.PropertyType;
@@ -24,12 +25,12 @@ public class Increase extends Action {
         this.entity = entities.get(prdAction.getEntity());
         this.propertyName = prdAction.getProperty();
         this.by = new Expression(prdAction.getBy());
-        CheckTypeOfBy(this.by.GetTranslatedValueType(entity,environmentProperties));
+        CheckTypeOfBy(by.GetTranslatedValueType(entity,entities,environmentProperties));
     }
 
     @Override
     public void Activate(Context context) {
-        PropertyInstance prop = context.getActiveEntityInstance().getProperties().get(propertyName);
+        PropertyInstance prop = getEntityForAction(context).getProperties().get(propertyName);
         Float val = PropertyType.FLOAT.convert(prop.getValue());
         Float increaseByValue = PropertyType.FLOAT.convert(by.getTranslatedValue(context));
         Float res = val + increaseByValue;
@@ -47,5 +48,16 @@ public class Increase extends Action {
     @Override
     public EntityDefinition getMainEntity() {
         return entity;
+    }
+
+    @Override
+    public EntityInstance getEntityForAction(Context context) {
+        if(context instanceof ContextSecondaryEntity &&
+                ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(entity))
+        {
+            return ((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance();
+        }
+
+        return context.getActiveEntityInstance();
     }
 }

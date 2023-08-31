@@ -1,9 +1,11 @@
 package Expression;
-import Context.Context;
+import Context.*;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import Entity.SecondaryEntity;
 import Entity.definition.EntityDefinition;
 import Exceptions.NotNumericValueException;
 import Property.PropertyType;
@@ -37,7 +39,7 @@ public class Expression {
         return evaluateExpression(context);
     }
 
-    public PropertyType GetTranslatedValueType(EntityDefinition entityDefinition, HashMap<String, EnvPropertyDefinition> environmentProperties){
+    public PropertyType GetTranslatedValueType(EntityDefinition entityDefinition , HashMap<String,EntityDefinition> entities, HashMap<String, EnvPropertyDefinition> environmentProperties){
         if(expressionIsSupportMethod()){
             List<String> arguments = extractArguments(this.expression);
             if(this.expression.startsWith("environment")){
@@ -48,15 +50,20 @@ public class Expression {
             }
             else if(this.expression.startsWith("evaluate")){
                 String[] parts = arguments.get(0).split("\\.");
-                if(!entityDefinition.getProperties().containsKey(parts[1])) {
+
+                if(!entities.containsKey(parts[0])) {
+                    throw new IllegalArgumentException("The entity in the expression does not exist");
+                }
+
+                if(!entities.get(parts[0]).getProperties().containsKey(parts[1])) {
                     throw new IllegalArgumentException("The evaluate operation cannot be performed because the property " + parts[1] + " does not exist in the context of the requested entity");
                 }
-                return entityDefinition.getProperties().get(parts[1]).getType();
+                return entities.get(parts[0]).getProperties().get(parts[1]).getType();
             }
 
             return PropertyType.FLOAT;
         }
-        else if (expressionIsPropertyDef(entityDefinition.getProperties())) {
+        else if (expressionIsProperty(entityDefinition.getProperties())) {
             return entityDefinition.getProperties().get(this.expression).getType();
         }
         else if(isConvertibleToFloat(this.expression)) {
@@ -75,11 +82,8 @@ public class Expression {
         if(expressionIsSupportMethod()){
             return returnValueOfSupportMethod(context);
         }
-        else if (expressionIsProperty(context.getActiveEntityInstance().getProperties())) {
-            return propertyValue(context);
-        }
-        else if(isConvertibleToInteger(this.expression)) {
-            return Integer.parseInt(this.expression);
+        else if (expressionIsProperty(context.getActiveEntityInstance().getEntityDef().getProperties())) {
+            return propertyValue(context.getActiveEntityInstance().getProperties());
         }
         else if(isConvertibleToFloat(this.expression)) {
             return Float.parseFloat(this.expression);
@@ -91,15 +95,11 @@ public class Expression {
         return expression;
     }
 
-    private Object propertyValue(Context context) {
-        return context.getActiveEntityInstance().getProperties().get(this.expression);
+    private Object propertyValue(Map<String, PropertyInstance> Properties) {
+        return Properties.get(this.expression).getValue();
     }
 
-    private Boolean expressionIsProperty(Map<String, PropertyInstance> Properties) {
-        return Properties.containsKey(this.expression);
-    }
-
-    private Boolean expressionIsPropertyDef(Map<String, PropertyDefinition> Properties) {
+    private Boolean expressionIsProperty(Map<String, PropertyDefinition> Properties) {
         return Properties.containsKey(this.expression);
     }
 
@@ -175,14 +175,12 @@ public class Expression {
 
     public List<String> extractArgumentsPercent(String input) {
         List<String> arguments = new ArrayList<>();
-
-        // Define a regex pattern to match arguments within parentheses
-        Pattern pattern = Pattern.compile("\\((.*?)\\)");
+        String regex = "\\b(evaluate|environment|percent|ticks|random)\\([^()]*\\)";
+        Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
 
-        // Find all occurrences of the pattern and add the matches to the list
         while (matcher.find()) {
-            String argument = matcher.group(1);
+            String argument = matcher.group();
             arguments.add(argument);
         }
 

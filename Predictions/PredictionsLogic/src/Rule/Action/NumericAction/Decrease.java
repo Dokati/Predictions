@@ -1,8 +1,10 @@
 package Rule.Action.NumericAction;
 
-import Context.Context;
+import Context.*;
 import Dto.ActionDetailsDto;
+import Entity.SecondaryEntity;
 import Entity.definition.EntityDefinition;
+import Entity.instance.EntityInstance;
 import Exceptions.IllegalXmlDataArgOfNumericActionAreNotNumericExceptions;
 import Expression.Expression;
 import PRD.PRDAction;
@@ -22,7 +24,7 @@ public class Decrease extends Action {
         this.entity = entities.get(prdAction.getEntity());
         this.propertyName = prdAction.getProperty();
         this.by = new Expression(prdAction.getBy());
-        CheckTypeOfBy(this.by.GetTranslatedValueType(entity,environmentProperties));
+        CheckTypeOfBy(by.GetTranslatedValueType(entity,entities,environmentProperties));
     }
 
     public String getProperty(){return propertyName;}
@@ -31,7 +33,7 @@ public class Decrease extends Action {
 
     @Override
     public void Activate(Context context) {
-        PropertyInstance prop = context.getActiveEntityInstance().getProperties().get(propertyName);
+        PropertyInstance prop = getEntityForAction(context).getProperties().get(propertyName);
         Float val = PropertyType.FLOAT.convert(prop.getValue());
         Float decreaseByValue = PropertyType.FLOAT.convert(by.getTranslatedValue(context));
         Float res = val - decreaseByValue;
@@ -49,6 +51,17 @@ public class Decrease extends Action {
     @Override
     public EntityDefinition getMainEntity() {
         return entity;
+    }
+
+    @Override
+    public EntityInstance getEntityForAction(Context context) {
+        if(context instanceof ContextSecondaryEntity &&
+                ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(entity))
+        {
+            return ((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance();
+        }
+
+        return context.getActiveEntityInstance();
     }
 
 }
