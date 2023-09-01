@@ -48,16 +48,4 @@ public class Divide extends Calculation{
         return entity;
     }
 
-    @Override
-    public EntityInstance getEntityForAction(Context context) {
-        if(context instanceof ContextSecondaryEntity &&
-                ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(entity))
-        {
-            return ((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance();
-        }
-
-        return context.getActiveEntityInstance();
-    }
-
-
 }

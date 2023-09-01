@@ -23,12 +23,6 @@ public class ContextSecondaryEntity extends Context {
         this.secondaryActiveEntityInstance = secondaryActiveEntityInstance;
     }
 
-    @Override
-    public void removeActiveEntity() {
-        secondaryActiveEntityInstance.setAlive(false);
-        secondaryActiveEntityInstance = null;
-    }
-
     public EntityInstance getSecondaryActiveEntityInstance() {
         return secondaryActiveEntityInstance;
     }

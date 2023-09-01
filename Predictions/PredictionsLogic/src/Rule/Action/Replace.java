@@ -44,10 +44,6 @@ public class Replace extends Action{
         }
     }
 
-    public EntityDefinition getKillEntity() {
-        return killEntity;
-    }
-
     @Override
     public ActionDetailsDto getDetails() {
         return new ActionDetailsDto("Type: " + this.type
@@ -62,14 +58,4 @@ public class Replace extends Action{
         return killEntity;
     }
 
-    @Override
-    public EntityInstance getEntityForAction(Context context) {
-        if(context instanceof ContextSecondaryEntity &&
-                ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(killEntity))
-        {
-            return ((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance();
-        }
-
-        return context.getActiveEntityInstance();
-    }
 }

@@ -306,8 +306,7 @@ public class SecondScreenBodyController implements Initializable {
                         entry -> {return entry.getValue().getText().isEmpty() ? 0: Integer.parseInt(entry.getValue().getText());}));
 
         primaryController.jumpToResultTab();
-
-//        primaryController.runSimulation(entitiesPopulationMap, envPropValues);
+        primaryController.runSimulation(entitiesPopulationMap, envPropValues);
     }
 
     @FXML

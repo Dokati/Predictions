@@ -41,8 +41,8 @@ public class Proximity extends Action {
 
     @Override
     public void Activate(Context context) {
-        Integer sourceEntityX = context.getActiveEntityInstance().getCoordinate().getX();
-        Integer sourceEntityY = context.getActiveEntityInstance().getCoordinate().getY();
+        Integer sourceEntityX = getEntityForAction(context).getCoordinate().getX();
+        Integer sourceEntityY = getEntityForAction(context).getCoordinate().getY();
         Integer ofValue = PropertyType.DECIMAL.convert(of.getTranslatedValue(context));
         Integer cols = context.getWorldInstance().getGridCols();
         Integer rows = context.getWorldInstance().getGridRows();
@@ -85,17 +85,5 @@ public class Proximity extends Action {
     public EntityDefinition getMainEntity() {
         return sourceEntity;
     }
-
-    @Override
-    public EntityInstance getEntityForAction(Context context) {
-        if(context instanceof ContextSecondaryEntity &&
-                ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(sourceEntity))
-        {
-            return ((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance();
-        }
-
-        return context.getActiveEntityInstance();
-    }
-
 
 }

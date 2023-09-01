@@ -40,11 +40,6 @@ public class Context {
         return envVariables;
     }
 
-    public void removeActiveEntity() {
-        activeEntityInstance.setAlive(false);
-        activeEntityInstance = null;
-    }
-
     public Object environment(String envPropertyName) {
         try {
             return this.envVariables.get(envPropertyName).getValue();

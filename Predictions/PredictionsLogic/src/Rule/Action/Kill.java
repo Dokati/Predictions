@@ -20,11 +20,7 @@ public class Kill extends Action{
 
     @Override
     public void Activate(Context context) {
-        if (context instanceof ContextSecondaryEntity &&  ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().equals(getEntityForAction(context))) {
-            ((ContextSecondaryEntity)context).removeActiveEntity();
-        }
-
-        context.removeActiveEntity();
+        getEntityForAction(context).killEntity();
     }
 
     @Override
@@ -39,14 +35,4 @@ public class Kill extends Action{
         return entity;
     }
 
-    @Override
-    public EntityInstance getEntityForAction(Context context) {
-        if(context instanceof ContextSecondaryEntity &&
-                ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(entity))
-        {
-            return ((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance();
-        }
-
-        return context.getActiveEntityInstance();
-    }
 }

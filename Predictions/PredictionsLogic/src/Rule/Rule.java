@@ -73,16 +73,17 @@ public class Rule {
 
     public void RunRule(Context context){
         for (Action action: this.actions) {
-            if(action.IsSecondaryEntityExist()) {
-                for(EntityInstance secondaryEntity : findSuitableSecondaryEntities(context,action)){
-                    if(action.getMainEntity().equals(context.getActiveEntityInstance().getEntityDef()) ||
-                            action.getMainEntity().equals(secondaryEntity.getEntityDef())){
-                        action.Activate(new ContextSecondaryEntity(context,secondaryEntity));
+            if (action.getMainEntity().equals(context.getActiveEntityInstance().getEntityDef())) {
+
+                if(action.IsSecondaryEntityExist()) {
+                    for(EntityInstance secondaryEntity : findSuitableSecondaryEntities(context,action)){
+                        if(action.getMainEntity().equals(context.getActiveEntityInstance().getEntityDef()) ||
+                                action.getMainEntity().equals(secondaryEntity.getEntityDef())){
+                            action.Activate(new ContextSecondaryEntity(context,secondaryEntity));
+                        }
                     }
                 }
-            }
-            else {
-                if (action.getMainEntity().equals(context.getActiveEntityInstance().getEntityDef())) {
+                else {
                     action.Activate(context);
                 }
             }
