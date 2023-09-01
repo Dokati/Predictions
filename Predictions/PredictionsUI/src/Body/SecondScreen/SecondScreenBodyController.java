@@ -73,6 +73,9 @@ public class SecondScreenBodyController implements Initializable {
         //-----------------------------//
         currenSliderValue = new Text();
         this.slider = new Slider();
+        this.slider.setOnMouseReleased(event -> {
+            envPropValues.put(activeEnvProp, Double.toString(slider.getValue()));
+            updateCellValue(activeEnvProp,"Value", Double.toString(slider.getValue()));});
         updateSliderCurrentValNPropVal();
         //-----------------------------//
         stringTextField = new TextField();
@@ -146,10 +149,9 @@ public class SecondScreenBodyController implements Initializable {
         this.envPropTable.setItems(data);
 
         envPropTable.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 1) { // Double-click
+            if (event.getClickCount() == 1) {
                 EnvPropTableItem selectedItem = envPropTable.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
-                    // Handle double-click event here
                     handleEnvPropTableItemClick(selectedItem.getName());
                 }
             }
@@ -173,11 +175,13 @@ public class SecondScreenBodyController implements Initializable {
         }
         if (envPropDto.getType().equals("float")) {
             if (envPropDto.hasRange()) {
-                value = value.equals("") ? envPropDto.getRange().getFrom().toString() : envPropValues.get(activeEnvProp);
-                this.slider.setValue(Double.parseDouble(value));
-                this.currenSliderValue.setText("Value:" + this.slider.getValue());
                 this.slider.setMin(envPropDto.getRange().getFrom());
                 this.slider.setMax(envPropDto.getRange().getTo());
+                value = value.equals("") ? envPropDto.getRange().getFrom().toString() : envPropValues.get(activeEnvProp);
+                double val = Double.parseDouble(value);
+                this.slider.setValue(val);
+                this.currenSliderValue.setText("Value:" + this.slider.getValue());
+
 
                 this.vbox.getChildren().addAll(text, this.slider, currenSliderValue);
             } else {
@@ -212,8 +216,8 @@ public class SecondScreenBodyController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 currenSliderValue.setText("Current: " + newValue);
-                envPropValues.put(activeEnvProp, newValue.toString());
-                updateCellValue(activeEnvProp,"Value", newValue.toString());
+//                envPropValues.put(activeEnvProp, newValue.toString());
+//                updateCellValue(activeEnvProp,"Value", newValue.toString());
 
             }
         });
