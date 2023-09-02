@@ -1,4 +1,4 @@
-package StylePaths;
+package Paths;
 
 public class StylePaths {
 //////////////------------------- BackGround -------------------------////////////////

@@ -2,7 +2,6 @@ package Manager;
 
 import Context.Context;
 import Dto.*;
-import Entity.definition.EntityDefinition;
 import Entity.instance.EntityInstance;
 import Grid.Grid;
 import PRD.PRDWorld;
@@ -19,8 +18,6 @@ import World.instance.WorldInstance;
 import javax.xml.bind.JAXB;
 import java.io.File;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -135,7 +132,7 @@ public class PredictionManager {
         return envPropDtoList;
     }
 
-    public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues) {
+    public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues, SimulationExecutionDto simulationExecutionDto) {
 
         if(worldDefinition == null)
         {

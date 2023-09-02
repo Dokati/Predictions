@@ -2,22 +2,23 @@ package PrimaryContreoller;
 
 import Body.FirstScreen.FirstScreenBodyController;
 import Body.SecondScreen.SecondScreenBodyController;
-import Dto.EnvPropDto;
-import Dto.EnvPropNEntitiesDto;
+import Body.ThirdScreen.ThirdScreenBodyController;
+import Dto.SimulationExecutionDto;
 import Dto.SimulationTitlesDetails;
 import Header.HeaderController;
 import Manager.PredictionManager;
-import StylePaths.StylePaths;
+import Paths.StylePaths;
 import World.instance.WorldInstance;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class PrimaryController implements Initializable {
@@ -31,6 +32,9 @@ public class PrimaryController implements Initializable {
     @FXML private FirstScreenBodyController firstScreenBodyController;
     @FXML private ScrollPane secondScreenBody;
     @FXML private SecondScreenBodyController secondScreenBodyController;
+    @FXML private ScrollPane thirdScreenBody;
+    @FXML private ThirdScreenBodyController thirdScreenBodyController;
+
 //    @FXML
 //    public void initialize() {
 //        if (headerComponentController != null && firstScreenBodyController != null) {
@@ -45,10 +49,12 @@ public class PrimaryController implements Initializable {
         predictionManager = new PredictionManager();
         previousActivations = new HashMap<>();
 
-        if (headerComponentController != null && firstScreenBodyController != null && secondScreenBodyController !=null) {
+        if (headerComponentController != null && firstScreenBodyController != null && secondScreenBodyController !=null
+        && thirdScreenBodyController != null) {
             headerComponentController.setMainController(this);
             firstScreenBodyController.setMainController(this);
             secondScreenBodyController.setMainController(this);
+            thirdScreenBodyController.setMainController(this);
         }
     }
     public PredictionManager getPredictionManager() {
@@ -154,7 +160,12 @@ public class PrimaryController implements Initializable {
     }
 
     public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues) {
-        predictionManager.runSimulation(entitiesPopulationMap,envPropValues);
+
+        String simulationId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy | HH.mm.ss"));
+        SimulationExecutionDto simulationExecutionDto = new SimulationExecutionDto(simulationId,"Running");
+
+        this.thirdScreenBodyController.addSimulationToTable(simulationExecutionDto);
+        predictionManager.runSimulation(entitiesPopulationMap,envPropValues,simulationExecutionDto);
     }
 
     public void jumpToResultTab() {
