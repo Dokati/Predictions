@@ -1,4 +1,4 @@
-#envPropTable .label {
+#envPropTable, #execution-list-table .label {
     -fx-font-size: 14px;
     -fx-font-family: "System";
     -fx-text-fill: -fx-text-inner-color;

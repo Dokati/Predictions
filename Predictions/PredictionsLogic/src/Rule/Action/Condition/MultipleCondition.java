@@ -58,7 +58,8 @@ public class MultipleCondition implements Condition {
     @Override
     public String getDetails() {
         return "Singularity: " + singularity+
-                "\nLogical: " + logical;
+                "\nLogical: " + logical+
+                "\nNumber sub-conditions: " +this.conditions.size();
     }
 
 }

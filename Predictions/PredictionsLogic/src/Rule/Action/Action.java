@@ -54,6 +54,10 @@ public abstract class Action {
 
     public  abstract EntityInstance getEntityForAction(Context context);
 
+    public String getSecondryEntityDetails(){
+        return  secondaryEntity!= null? "\nSecondery entity: " + this.secondaryEntity.getEntityDefinition().getName():"\nNo Secondery entity";
+    }
+
     @Override
     public String toString() {
         return "type: " + type;

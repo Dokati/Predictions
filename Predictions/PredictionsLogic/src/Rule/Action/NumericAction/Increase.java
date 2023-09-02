@@ -39,13 +39,12 @@ public class Increase extends Action {
 
     @Override
     public ActionDetailsDto getDetails() {
-        String seconderyEntity = this.secondaryEntity!= null? "\nSecondery entity: " + this.secondaryEntity.getEntityDefinition().getName():"";
 
         return new ActionDetailsDto("Type: " + this.type+
                 "\nEntity: " + entity.getName()
         +"\nProperty name: " + propertyName +
                 "\nby: " + by.getExpression()+
-                seconderyEntity);
+                getSecondryEntityDetails());
     }
 
     @Override

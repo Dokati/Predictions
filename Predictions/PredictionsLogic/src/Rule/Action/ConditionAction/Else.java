@@ -33,4 +33,7 @@ public class Else{
             action.Activate(context);
         }
     }
+    public Integer getActionListSize() {
+        return actionList.size();
+    }
 }

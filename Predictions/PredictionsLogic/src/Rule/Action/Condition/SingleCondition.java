@@ -73,10 +73,9 @@ public class SingleCondition implements Condition{
     @Override
     public String getDetails() {
         return "Singularity: " + singularity+
-                "\nEntity: "  + entity.getName()+
-                "\nProperty name: " + property+
+                "\nProperty name: " + property.getExpression()+
                 "\nOperator: " + operator+
-                "\n Value: " + expressionValue.getExpression();
+                "\nValue: " + expressionValue.getExpression();
     }
 
 }

@@ -22,8 +22,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
-
 public class SecondScreenBodyController implements Initializable {
 
     PrimaryController primaryController;
@@ -53,6 +51,8 @@ public class SecondScreenBodyController implements Initializable {
     private Map<String, String> envPropValues;
     Map<String, TextField> entityToPopTextFieldMap;
     int totalPopulation = 0;
+    Text totalPopulationTextField;
+    Text maxPopulationTexrField;
 
 
 
@@ -99,6 +99,12 @@ public class SecondScreenBodyController implements Initializable {
         //-----------------------------//
         entityToPopTextFieldMap = new HashMap<>();
         //-----------------------------//
+        totalPopulationTextField = new Text("Total Population: ");
+        maxPopulationTexrField = new Text("Max Population: ");
+        this.amountVbox.getChildren().addAll(totalPopulationTextField,maxPopulationTexrField);
+        //-----------------------------//
+
+
 
     }
 
@@ -126,13 +132,17 @@ public class SecondScreenBodyController implements Initializable {
     }
 
     public void setEnvPropTable() {
+        this.vbox.getChildren().clear();/// clear the vbox in case loading new file.
         List<EnvPropDto> envPropDtoList = this.primaryController.getPredictionManager().getAllEnvProps();
         if(this.envPropTable.getColumns().isEmpty()) {
             TableColumn<EnvPropTableItem, String> nameColumn = new TableColumn<>("Name");
             nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+            nameColumn.setPrefWidth(150);
             TableColumn<EnvPropTableItem, Integer> typeColumn = new TableColumn<>("Type");
             typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+            typeColumn.setPrefWidth(65);
             TableColumn<EnvPropTableItem, Integer> valueColumn = new TableColumn<>("Value");
+            valueColumn.setPrefWidth(110);
             valueColumn.setCellValueFactory(new PropertyValueFactory<>("Value"));
 
             this.envPropTable.getColumns().addAll(nameColumn, typeColumn, valueColumn);
@@ -236,55 +246,55 @@ public class SecondScreenBodyController implements Initializable {
 
 
     public void setEntitiesPopulationList(List<String> entitiesNames, Integer populationSpace) {
-        ObservableList<String> countries = FXCollections.observableArrayList(entitiesNames);
+        ObservableList<String> Entities = FXCollections.observableArrayList(entitiesNames);
 
+        this.entityToPopTextFieldMap.values().forEach(TextInputControl::clear);
         this.populationGridPane.getChildren().clear();
-        this.populationGridPane.setHgap(10);
-        this.populationGridPane.setVgap(10);
 
-        Text totalPopulation = new Text("Total Population: ");
-        Text maxPopulationLabel = new Text("Max Population: " + populationSpace);
+
+        this.maxPopulationTexrField.setText("Max Population: " + populationSpace);
+
         int rowIndex = 0;
-        for (String country : countries) {
-            Text countryLabel = new Text(country);
+        for (String entity : Entities) {
+            Text EntityText = new Text(entity);
             TextField populationTextField = new TextField();
-            populationTextField.setPromptText("Population of " + country);
+            populationTextField.setPromptText("Population of " + entity);
 
-            entityToPopTextFieldMap.put(country, populationTextField);
+            entityToPopTextFieldMap.put(entity, populationTextField);
 
             // Add a listener to each TextField to allow only integer input
             populationTextField.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.matches("\\d*")) {
                     populationTextField.setText(oldValue);
                 }
-                updateTotalPopulationLabel(entityToPopTextFieldMap, totalPopulation);
-                if (this.totalPopulation>populationSpace) {
-                    populationTextField.setText(oldValue);
+                else {//if its numeric number
+                    updateTotalPopulationLabel();
+                    if (this.totalPopulation>populationSpace) {
+                        populationTextField.setText(oldValue);
+                    }
+                    updateTotalPopulationLabel();
                 }
-                updateTotalPopulationLabel(entityToPopTextFieldMap, totalPopulation);
 
 
             });
-            this.populationGridPane.add(countryLabel, 0, rowIndex);
+            this.populationGridPane.add(EntityText, 0, rowIndex);
             this.populationGridPane.add(populationTextField, 1, rowIndex);
 
             rowIndex++;
         }
-        boolean VboxHasTextChildren = amountVbox.getChildren().stream().noneMatch(node -> node instanceof Text);
-        if(VboxHasTextChildren)  {// if its first time adding population text.
-              this.amountVbox.getChildren().addAll(totalPopulation,maxPopulationLabel);
-          }
+
     }
 
-    private void updateTotalPopulationLabel(Map<String, TextField> countryToPopulationMap, Text totalPopulationLabel) {
+    private void updateTotalPopulationLabel() {
         int totalPopulation = 0;
-        for (TextField populationTextField : countryToPopulationMap.values()) {
+        for (TextField populationTextField : this.entityToPopTextFieldMap.values()) {
             if (!populationTextField.getText().isEmpty()) {
                 totalPopulation += Integer.parseInt(populationTextField.getText());
             }
         }
-        totalPopulationLabel.setText("Total Population: " + totalPopulation);
-        this.totalPopulation =totalPopulation;
+        this.totalPopulationTextField.setText("Total Population: " + totalPopulation);
+
+        this.totalPopulation = totalPopulation;
     }
 
     @FXML

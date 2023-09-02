@@ -56,7 +56,6 @@ public class PredictionManager {
             throw new RuntimeException("Loading the XML file failed");
         }
 
-        ///System.out.println("The XML file has been loaded successfully\n");
 
         // create SimulationDetailsDto
 
@@ -105,9 +104,9 @@ public class PredictionManager {
                 .collect(Collectors.toList()));
     }
 
-    public ActionDetailsDto getActionDetails(String actionName, String ruleName) {
+    public ActionDetailsDto getActionDetails(int actionIndex, String ruleName) {
         return  new ActionDetailsDto(this.worldDefinition.getRules().stream().filter(rule -> rule.getName().equals(ruleName)).findFirst()
-                .get().getActions().stream().filter(action -> action.getType().equals(actionName)).findFirst().get().getDetails().getActionDetails());
+                .get().getActions().get(actionIndex).getDetails().getActionDetails());
     }
 
     public GridDto getGridDetails() {

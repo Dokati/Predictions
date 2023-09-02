@@ -73,12 +73,12 @@ public class Proximity extends Action {
 
     @Override
     public ActionDetailsDto getDetails() {
-        String seconderyEntity = this.secondaryEntity!= null? "\nSecondery entity: " + this.secondaryEntity.getEntityDefinition().getName():"";
         return new ActionDetailsDto("Type: " + this.type
                 +"\nSource entity: " + sourceEntity.getName() +
                 "\nTarget entity: " + targetEntity.getName()+
-                "\nOf: " + of.getExpression()
-                +seconderyEntity) ;
+                "\nEnv depth: " + of.getExpression()+
+                "\nNumber of actions: " + this.actions.size()
+                +getSecondryEntityDetails()) ;
     }
 
     @Override

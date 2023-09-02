@@ -1,11 +1,11 @@
 package Body.FirstScreen;
 
 import Dto.*;
-import Grid.Grid;
 import PrimaryContreoller.PrimaryController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
@@ -55,8 +55,10 @@ public class FirstScreenBodyController implements Initializable {
             MyTreeItem activationItem = new MyTreeItem("Activation" ,"Activation");
             MyTreeItem actionsItem = new MyTreeItem("Actions" ,"Actions");
             // insert actions names
+            int[] actionIndex = {0};
             ruleDto.getActionNames().forEach(action -> {
-                MyTreeItem actionItem = new MyTreeItem(action, "Action");
+                MyTreeItem actionItem = new MyActionTreeItem(action, "Action",actionIndex[0]);
+                actionIndex[0]++;
                 actionsItem.getChildren().add(actionItem);
             });
 
@@ -69,12 +71,6 @@ public class FirstScreenBodyController implements Initializable {
                 .map(envName -> new MyTreeItem(envName, "Env name")).collect(Collectors.toList()));
 
 
-//        Set<String> mainItems = new HashSet<String>() {{
-//            add("Entities");// those items are not actionable!
-//            add("Rules");
-//            add("Termination");
-//            add("Enviorment Variables");}};
-
         this.TreeView.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -83,7 +79,7 @@ public class FirstScreenBodyController implements Initializable {
                         if(((MyTreeItem)newValue).getName().equals("Activation")) setRuleActivaionDetails(newValue.getParent().getValue());
                         if(((MyTreeItem)newValue).getName().equals("Termination")) setTerminationDetails();
                         if(((MyTreeItem)newValue).getName().equals("Env name")) setEnvVariablesDetails(newValue.getValue());
-                        if(((MyTreeItem)newValue).getName().equals("Action")) setActionDetails(newValue.getValue(), newValue.getParent().getParent().getValue());
+                        if(((MyTreeItem)newValue).getName().equals("Action")) setActionDetails(newValue, newValue.getParent().getParent().getValue());
                         if(((MyTreeItem)newValue).getName().equals("Grid")) setGridDetails();
                     }
                 });
@@ -99,9 +95,9 @@ public class FirstScreenBodyController implements Initializable {
         this.tilePane.getChildren().add(label);
     }
 
-    private void setActionDetails(String actionName, String ruleName) {
+    private void setActionDetails(TreeItem<String> action, String ruleName) {
         this.tilePane.getChildren().clear();
-        ActionDetailsDto actionDetailsDto = primaryController.getPredictionManager().getActionDetails(actionName, ruleName);
+        ActionDetailsDto actionDetailsDto = primaryController.getPredictionManager().getActionDetails(((MyActionTreeItem)action).getactionIndex(), ruleName);
         DetailLabel label = new DetailLabel(actionDetailsDto.getActionDetails());
         this.tilePane.getChildren().add(label);
 

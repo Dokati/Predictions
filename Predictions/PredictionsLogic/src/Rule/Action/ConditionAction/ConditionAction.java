@@ -11,6 +11,7 @@ import Rule.Action.Action;
 import Rule.Action.Condition.Condition;
 import Rule.Action.Condition.MultipleCondition;
 import Rule.Action.Condition.SingleCondition;
+import javafx.application.Platform;
 
 import java.util.HashMap;
 
@@ -43,11 +44,13 @@ public class ConditionAction extends Action {
 
     @Override
     public ActionDetailsDto getDetails() {
-        String seconderyEntity = this.secondaryEntity!= null? "\nSecondery entity: " + this.secondaryEntity.getEntityDefinition().getName():"";
+        String amountOfElseActions = elseAct.getActionList() != null? this.elseAct.getActionListSize().toString():"";
         return new ActionDetailsDto("Type: " + this.type +
                 "\nEntity: " + entity.getName()+ "\n"
                 + condition.getDetails()+
-                seconderyEntity);
+                getSecondryEntityDetails()+
+                "\nAmount of then actions:" + then.getActionListSize().toString()+
+                amountOfElseActions);
     }
 
     @Override
