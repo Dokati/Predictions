@@ -57,9 +57,4 @@ public class ConditionAction extends Action {
     public EntityDefinition getMainEntity() {
         return entity;
     }
-
-    @Override
-    public EntityInstance getEntityForAction(Context context) {
-        return null;
-    }
 }

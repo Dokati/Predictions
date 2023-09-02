@@ -5,12 +5,8 @@ import Entity.instance.EntityInstance;
 import Exceptions.IllegalXmlDataArgOfNumericActionAreNotNumericExceptions;
 import Expression.Expression;
 import PRD.PRDCondition;
-import Property.PropertyType;
-import Context.Context;
+import Context.*;
 import Property.definition.EnvPropertyDefinition;
-import Rule.Action.Action;
-import Validation.Validation;
-
 import java.util.HashMap;
 
 
@@ -41,9 +37,8 @@ public class SingleCondition implements Condition{
 
     @Override
     public Boolean conditionIsTrue(Context context) {
-        EntityInstance activeEntity = context.getActiveEntityInstance();
-        Object cmpToValue =  this.expressionValue.getTranslatedValue(new Context(activeEntity,context.getWorldInstance(),context.getEnvVariables(),context.getCurrentTick()));
-        Object propertyValue = this.property.getTranslatedValue(new Context(activeEntity,context.getWorldInstance(),context.getEnvVariables(),context.getCurrentTick()));
+        Object cmpToValue =  this.expressionValue.getTranslatedValue(context);
+        Object propertyValue = this.property.getTranslatedValue(getEntityForAction(context));
 
         boolean result = false;
 
@@ -64,6 +59,17 @@ public class SingleCondition implements Condition{
         }
 
         return result;
+    }
+
+    public Context getEntityForAction(Context context) {
+
+        if(context instanceof ContextSecondaryEntity &&
+                ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(this.entity)) {
+            return new ContextSecondaryEntity(((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance(),context.getActiveEntityInstance(),
+            context.getWorldInstance(),context.getEnvVariables(),context.getCurrentTick());
+        }
+
+        return context;
     }
 
     public EntityDefinition getEntity() {

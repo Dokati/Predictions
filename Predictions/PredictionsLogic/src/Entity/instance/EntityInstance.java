@@ -70,6 +70,10 @@ public class EntityInstance {
         return this.properties;
     }
 
+    public void killEntity(){
+        this.isAlive = false;
+    }
+
     public void setEntityDef(EntityDefinition entityDef) {
         this.entityDef = entityDef;
     }

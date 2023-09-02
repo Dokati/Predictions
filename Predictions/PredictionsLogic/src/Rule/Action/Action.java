@@ -1,6 +1,6 @@
 package Rule.Action;
 
-import Context.Context;
+import Context.*;
 import Dto.ActionDetailsDto;
 import Entity.SecondaryEntity;
 import Entity.definition.EntityDefinition;
@@ -52,7 +52,15 @@ public abstract class Action {
 
     public abstract EntityDefinition getMainEntity();
 
-    public  abstract EntityInstance getEntityForAction(Context context);
+    public EntityInstance getEntityForAction(Context context) {
+        if(context instanceof ContextSecondaryEntity &&
+                ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(getMainEntity()))
+        {
+            return ((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance();
+        }
+
+        return context.getActiveEntityInstance();
+    }
 
     public String getSecondryEntityDetails(){
         return  secondaryEntity!= null? "\nSecondery entity: " + this.secondaryEntity.getEntityDefinition().getName():"\nNo Secondery entity";

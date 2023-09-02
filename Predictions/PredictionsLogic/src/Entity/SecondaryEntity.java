@@ -19,10 +19,7 @@ public class SecondaryEntity {
 
         this.condition = ConditionFactory.ConditionCreator(secondaryEntity.getPRDSelection().getPRDCondition(),entities,environmentProperties);
 
-        if(secondaryEntity.getPRDSelection().getCount().equals("all")) {
-            this.count = entityDefinition.getPopulation();
-        }
-        else{
+        if(!secondaryEntity.getPRDSelection().getCount().equals("all")) {
             this.count = Integer.getInteger(secondaryEntity.getPRDSelection().getCount());
         }
     }
@@ -31,16 +28,12 @@ public class SecondaryEntity {
         return entityDefinition;
     }
 
-    public void setEntityDefinition(EntityDefinition entityDefinition) {
-        this.entityDefinition = entityDefinition;
-    }
-
     public Integer getCount() {
-        return count;
-    }
+        if(count == null) {
+            return entityDefinition.getPopulation();
+        }
 
-    public void setCount(Integer count) {
-        this.count = count;
+        return count;
     }
 
     public Condition getCondition() {

@@ -30,7 +30,7 @@ public class Set extends Action{
     @Override
     public void Activate(Context context) {
         PropertyInstance prop = getEntityForAction(context).getProperties().get(propertyName);
-        Object setVal = this.expressionValue.getTranslatedValue(new Context(getEntityForAction(context),context.getWorldInstance(),context.getEnvVariables(),context.getCurrentTick()));
+        Object setVal = this.expressionValue.getTranslatedValue(context);
 
         if (setVal.getClass() != prop.getValue().getClass()){
             throw new Exceptions.NotSameTypeException();
@@ -53,14 +53,4 @@ public class Set extends Action{
         return entity;
     }
 
-    @Override
-    public EntityInstance getEntityForAction(Context context) {
-        if(context instanceof ContextSecondaryEntity &&
-                ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(entity))
-        {
-            return ((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance();
-        }
-
-        return context.getActiveEntityInstance();
-    }
 }
