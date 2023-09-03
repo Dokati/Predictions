@@ -1,6 +1,5 @@
 package Dto;
 
-import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -22,6 +21,18 @@ public class SimulationExecutionDto {
         runningTimeInSeconds = new SimpleIntegerProperty(0);
     }
 
+    public IntegerProperty getTickProperty() {
+        return tick;
+    }
+    public IntegerProperty getTimeProperty() {
+        return runningTimeInSeconds;
+    }
+
+
+    public IntegerProperty tickProperty() {
+        return tick;
+    }
+
     public String getId() {
         return id;
     }
@@ -31,11 +42,11 @@ public class SimulationExecutionDto {
     }
 
     public void IncrementTick(){
-        Platform.runLater(() -> this.tick.set(this.tick.get()+1));
+        this.tick.set(this.tick.get()+1);
     }
     public void DecrementEntityPopulation(String entity){
         IntegerProperty population = this.entitiesPopulation.get(entity);
-        Platform.runLater(() -> population.set(population.get()-1));
+        population.set(population.get()-1);
     }
     public void UpdateEntitiesPopulation(Map<String, Integer> entitiesPopulation2){
         for (Map.Entry<String, Integer> entry : entitiesPopulation2.entrySet()) {
@@ -48,6 +59,9 @@ public class SimulationExecutionDto {
         }
     }
 
+    public Map<String, IntegerProperty> getEntitiesPopulation() {
+        return entitiesPopulation;
+    }
 
     public void startTimer() {
         if (timerThread == null || !timerThread.isAlive()) {

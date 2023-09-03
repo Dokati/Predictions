@@ -65,19 +65,19 @@
                         <Insets bottom="10.0" top="10.0" />
                      </HBox.margin>
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ticks:" wrappingWidth="141.6708984375">
+                        <Text fx:id="ticksText" strokeType="OUTSIDE" strokeWidth="0.0" text="Ticks:" wrappingWidth="141.6708984375">
                            <font>
                               <Font size="21.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seconds:" wrappingWidth="143.6708984375">
+                        <Text fx:id="secondText" strokeType="OUTSIDE" strokeWidth="0.0" text="Seconds:" wrappingWidth="143.6708984375">
                            <font>
                               <Font size="21.0" />
                            </font>
                         </Text>
                      </children>
                   </VBox>
-                  <TableView id="entity-population-table" prefHeight="189.0" prefWidth="296.0">
+                  <TableView id="entity-population-table" fx:id="entityPopulationTable" prefHeight="189.0" prefWidth="296.0">
                     <columns>
                       <TableColumn prefWidth="130.0" text="Entity" />
                       <TableColumn prefWidth="163.0" text="Population" />
