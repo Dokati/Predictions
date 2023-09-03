@@ -27,7 +27,7 @@ public class ThirdScreenBodyController implements Initializable {
 
     @FXML
     private VBox buttonVbox;
-    ObservableList<SimulationExecutionDto> data;
+    ObservableList<SimulationExecutionDto> simulationsData;
     private PrimaryController primaryController;
 
     Button playButton;
@@ -39,8 +39,8 @@ public class ThirdScreenBodyController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         executionListTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         executionListTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("status"));
-        data = FXCollections.observableArrayList();
-        executionListTable.setItems(data);
+        simulationsData = FXCollections.observableArrayList();
+        executionListTable.setItems(simulationsData);
         setControlButtons();
         this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton);
 
@@ -66,15 +66,21 @@ public class ThirdScreenBodyController implements Initializable {
     }
 
     public void addSimulationToTable(String id, String status){
-        data.add(new SimulationExecutionDto(id, status));
+        simulationsData.add(new SimulationExecutionDto(id, status));
         executionListTable.refresh();
     }
     public void addSimulationToTable(SimulationExecutionDto simulationExecutionDto) {
-        data.add(simulationExecutionDto);
+        simulationsData.add(simulationExecutionDto);
         executionListTable.refresh();
     }
 
-
+    public UiAdapter CreateUiAdapter(String simulationId){
+        SimulationExecutionDto simulationExecutionDto = simulationsData.stream().filter(data-> data.getId().equals(simulationId)).findFirst().get();
+        return new UiAdapter(
+                simulationExecutionDto::IncrementTick,
+                entitiesPopulation ->{simulationExecutionDto.UpdateEntitiesPopulation(entitiesPopulation);}
+        );
+    }
     public void setMainController(PrimaryController primaryController) {
         this.primaryController = primaryController;
     }

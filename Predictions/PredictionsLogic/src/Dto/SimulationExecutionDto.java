@@ -13,7 +13,7 @@ public class SimulationExecutionDto {
     IntegerProperty tick;
     IntegerProperty runningTimeInSeconds;
     private Thread timerThread;
-    Map<String, IntegerProperty> EntitiesPopulation;
+    Map<String, IntegerProperty> entitiesPopulation;
 
     public SimulationExecutionDto(String id, String status) {
         this.id = id;
@@ -34,8 +34,18 @@ public class SimulationExecutionDto {
         Platform.runLater(() -> this.tick.set(this.tick.get()+1));
     }
     public void DecrementEntityPopulation(String entity){
-        IntegerProperty population = this.EntitiesPopulation.get(entity);
+        IntegerProperty population = this.entitiesPopulation.get(entity);
         Platform.runLater(() -> population.set(population.get()-1));
+    }
+    public void UpdateEntitiesPopulation(Map<String, Integer> entitiesPopulation2){
+        for (Map.Entry<String, Integer> entry : entitiesPopulation2.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+
+            if (this.entitiesPopulation.containsKey(key)) {
+                entitiesPopulation.get(key).set(value);
+            }
+        }
     }
 
 

@@ -132,7 +132,11 @@ public class PredictionManager {
         return envPropDtoList;
     }
 
-    public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues, SimulationExecutionDto simulationExecutionDto) {
+    public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues) {
+
+        //insteadOfAllThis Code:
+        //RunSimulationTask runSimulationTask = new RunSimulationTask();
+        //new Thread(runSimulationTask).start(); ---- something like this probably.
 
         if(worldDefinition == null)
         {

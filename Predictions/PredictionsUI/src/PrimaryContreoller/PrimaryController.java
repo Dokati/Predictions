@@ -165,7 +165,7 @@ public class PrimaryController implements Initializable {
         SimulationExecutionDto simulationExecutionDto = new SimulationExecutionDto(simulationId,"Running");
 
         this.thirdScreenBodyController.addSimulationToTable(simulationExecutionDto);
-        predictionManager.runSimulation(entitiesPopulationMap,envPropValues,simulationExecutionDto);
+        predictionManager.runSimulation(entitiesPopulationMap,envPropValues);
     }
 
     public void jumpToResultTab() {
