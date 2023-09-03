@@ -13,12 +13,18 @@ public class SimulationExecutionDto {
     IntegerProperty runningTimeInSeconds;
     private Thread timerThread;
     Map<String, IntegerProperty> entitiesPopulation;
+    boolean isRunning;
 
     public SimulationExecutionDto(String id, String status) {
         this.id = id;
         Status = status;
         tick = new SimpleIntegerProperty(0);
         runningTimeInSeconds = new SimpleIntegerProperty(0);
+        isRunning = true;
+    }
+
+    public boolean isRunning() {
+        return isRunning;
     }
 
     public IntegerProperty getTickProperty() {

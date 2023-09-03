@@ -1,5 +1,4 @@
 package Body.ThirdScreen;
-import Body.SecondScreen.EnvPropTableItem;
 import Dto.SimulationExecutionDto;
 import Paths.ButtonsImagePath;
 import PrimaryContreoller.PrimaryController;
@@ -60,7 +59,6 @@ public class ThirdScreenBodyController implements Initializable {
         ///////-----------------------------------///////////////////
 
         setControlButtons();
-        this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton);
 
 
     }
@@ -74,12 +72,20 @@ public class ThirdScreenBodyController implements Initializable {
     private void createTheDetailsArea() {
 
         ObservableList<EntityPopulation> entityPopulationList = FXCollections.observableArrayList();
-        SimulationExecutionDto simulationExecutionDto = this.simulationsData.stream().filter(simulation -> simulation.getId().equals(chosenSimulationId)).findFirst().get();
-        simulationExecutionDto.getEntitiesPopulation().forEach((key, valueProperty) -> entityPopulationList.add(new EntityPopulation(key,valueProperty)));
+        SimulationExecutionDto simulationDetails = this.simulationsData.stream().filter(simulation -> simulation.getId().equals(chosenSimulationId)).findFirst().get();
+        simulationDetails.getEntitiesPopulation().forEach((key, valueProperty) -> entityPopulationList.add(new EntityPopulation(key,valueProperty)));
         entityPopulationTable.setItems(entityPopulationList);
 
-        this.ticksText.textProperty().bind(Bindings.concat("Ticks: ", simulationExecutionDto.getTickProperty().asString()));
-        this.secondText.textProperty().bind(Bindings.concat("Seconds: ", simulationExecutionDto.getTimeProperty().asString()));
+        this.ticksText.textProperty().unbind();
+        this.ticksText.textProperty().bind(Bindings.concat("Ticks: ", simulationDetails.getTickProperty().asString()));
+        this.secondText.textProperty().unbind();
+        this.secondText.textProperty().bind(Bindings.concat("Seconds: ", simulationDetails.getTimeProperty().asString()));
+
+        if (simulationDetails.isRunning()){
+            this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton);
+        }
+
+
     }
 
     private void setControlButtons() {
