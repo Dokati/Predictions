@@ -59,6 +59,7 @@ public class ThirdScreenBodyController implements Initializable {
         ///////-----------------------------------///////////////////
 
         setControlButtons();
+        this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton);
 
 
     }
