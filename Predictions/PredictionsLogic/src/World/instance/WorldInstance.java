@@ -276,6 +276,18 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
         return endSimulationDetails;
     }
 
+    public void StopSimulation() {
+        status = SimulationStatusType.Stop;
+    }
+
+    public void PauseSimulation() {
+        status = SimulationStatusType.Pause;
+    }
+
+    public void ChangeSimulationStatusToRunning() {
+        status = SimulationStatusType.Running;
+    }
+
     @Override
     public String toString() {
         return "";

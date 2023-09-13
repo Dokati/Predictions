@@ -2,6 +2,8 @@ package Body.ThirdScreen;
 import Dto.SimulationExecutionDto;
 import Paths.ButtonsImagePath;
 import PrimaryContreoller.PrimaryController;
+import World.instance.SimulationStatusType;
+import World.instance.WorldInstance;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +21,7 @@ import javafx.scene.text.Text;
 
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class ThirdScreenBodyController implements Initializable {
@@ -31,7 +34,6 @@ public class ThirdScreenBodyController implements Initializable {
     @FXML private Text secondText;
     ObservableList<SimulationExecutionDto> simulationsDataList;
     ObservableList<EntityPopulation> entityPopulationList;
-
     private PrimaryController primaryController;
     Integer chosenSimulationId;
     SimulationExecutionDto chosenSimulation;
@@ -132,7 +134,46 @@ public class ThirdScreenBodyController implements Initializable {
         disablePauseimage.setFitWidth(30);
         disablePauseimage.setFitHeight(30);
         enableControlButtons();
+
     }
+
+    private void setControlButtonsListeners() {
+        HashMap<Integer, WorldInstance> simulatiosnMap =
+                primaryController.getPredictionManager().getSimulationList();
+
+        playButton.setOnAction(event -> {
+            SimulationStatusType simulationStatus = simulatiosnMap.get(chosenSimulationId).getStatus();
+            if(simulationStatus.equals(SimulationStatusType.Pause)){
+                simulatiosnMap.get(chosenSimulationId).ChangeSimulationStatusToRunning();}
+        });
+
+        pauseButton.setOnAction(event -> {
+            SimulationStatusType simulationStatus = simulatiosnMap.get(chosenSimulationId).getStatus();
+            if(simulationStatus.equals(SimulationStatusType.Running)){
+                simulatiosnMap.get(chosenSimulationId).PauseSimulation();}
+        });
+
+        stopButton.setOnAction(event -> {
+            SimulationStatusType simulationStatus = simulatiosnMap.get(chosenSimulationId).getStatus();
+            if(simulationStatus.equals(SimulationStatusType.Running) ||
+                    simulationStatus.equals(SimulationStatusType.Pause)){
+                simulatiosnMap.get(chosenSimulationId).StopSimulation();}
+        });
+    }
+
+    private void stopSimulation(SimulationStatusType simulationStatus) {
+        simulationStatus = SimulationStatusType.Stop;
+
+    }
+
+    private void PauseSimulation(SimulationStatusType simulationStatus) {
+        simulationStatus = SimulationStatusType.Pause;
+    }
+
+    private void changeSimulationStatusToRunning(SimulationStatusType simulationStatus) {
+        simulationStatus = SimulationStatusType.Running;
+    }
+
     private void enableControlButtons(){
         playButton.setGraphic(playimage);
         playButton.setDisable(false);
@@ -160,6 +201,11 @@ public class ThirdScreenBodyController implements Initializable {
 
     public void setMainController(PrimaryController primaryController) {
         this.primaryController = primaryController;
+        initializeThatDependsOnPrimaryInit();
+    }
+
+    private void initializeThatDependsOnPrimaryInit() {
+        setControlButtonsListeners();
     }
 
     public void chosenSimulationFinished(Integer id) {
@@ -171,6 +217,5 @@ public class ThirdScreenBodyController implements Initializable {
 
     public void RefreshEntityPopTable() {
         this.entityPopulationTable.refresh();
-        this.entityPopulationList.forEach(entityPopulation -> System.out.println(entityPopulation.population));
     }
 }

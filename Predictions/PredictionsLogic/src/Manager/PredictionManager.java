@@ -9,10 +9,12 @@ import Property.definition.PropertyDefinition;
 import Rule.Rule;
 import Terminition.TerminationType;
 import World.definition.WorldDefinition;
+import World.instance.WorldInstance;
 
 import javax.xml.bind.JAXB;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -23,10 +25,24 @@ public class PredictionManager {
 
     WorldDefinition worldDefinition;
     public ExecutorService threadPool;
-
+    HashMap<Integer, WorldInstance> simulationList;
+    Integer simulationIdNumber;
 
     public PredictionManager() {
+        simulationList = new HashMap<>();
+        simulationIdNumber = 1;
         worldDefinition = null;
+    }
+    public HashMap<Integer, WorldInstance> getSimulationList() {
+        return simulationList;
+    }
+
+    public Integer getSimulationIdNumber() {
+        return simulationIdNumber;
+    }
+
+    public void setSimulationIdNumber(Integer simulationIdNumber) {
+        this.simulationIdNumber = simulationIdNumber;
     }
 
     public SimulationTitlesDetails loadSimulation(String filePath)

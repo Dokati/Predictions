@@ -27,8 +27,6 @@ import java.util.concurrent.Future;
 
 public class PrimaryController implements Initializable {
     private PredictionManager predictionManager;
-    HashMap<Integer, WorldInstance> simulationList;
-    Integer simulationIdNumber = 1;
 
     @FXML private BorderPane borderPane;
     @FXML private TabPane tabPane;
@@ -53,7 +51,6 @@ public class PrimaryController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         predictionManager = new PredictionManager();
-        simulationList = new HashMap<>();
 
         if (headerComponentController != null && firstScreenBodyController != null && secondScreenBodyController !=null
         && thirdScreenBodyController != null) {
@@ -163,6 +160,8 @@ public class PrimaryController implements Initializable {
     }
 
     public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues) {
+        HashMap<Integer, WorldInstance> simulationList = this.predictionManager.getSimulationList();
+        int simulationIdNumber = this.predictionManager.getSimulationIdNumber();
         String simulationId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy | HH.mm.ss"));
 
         predictionManager.InitializePopulation(entitiesPopulationMap);
@@ -177,9 +176,7 @@ public class PrimaryController implements Initializable {
         Thread thread = new Thread(runSimulationTask);
         thread.start();
 
-        simulationIdNumber++;
-
-
+        this.predictionManager.setSimulationIdNumber(simulationIdNumber+1);
     }
 
     public void jumpToResultTab() {

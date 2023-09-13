@@ -28,7 +28,13 @@ public class RunSimulationTask extends Task<Boolean> {
     protected Boolean call() throws Exception {
 
 
-        while(worldInstance.getStatus().equals(SimulationStatusType.Running)){
+        while(worldInstance.getStatus().equals(SimulationStatusType.Running) ||
+                worldInstance.getStatus().equals(SimulationStatusType.Pause )){
+
+            while(worldInstance.getStatus().equals(SimulationStatusType.Pause)){
+                Thread.sleep(200);
+                System.out.println("im stuck");
+            }
 
             Integer tick = worldInstance.getTick();
             Integer time = Math.toIntExact(worldInstance.getRunningTimeInSeconds());
@@ -52,6 +58,8 @@ public class RunSimulationTask extends Task<Boolean> {
                 // Handle the InterruptedException if needed
                 e.printStackTrace();
             }
+
+
         }
 
         Platform.runLater(this::ToDoWhenSimulationHasFinished);
