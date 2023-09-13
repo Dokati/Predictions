@@ -161,7 +161,7 @@ public class PrimaryController implements Initializable {
     private void showAlertToUser(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
-        alert.setHeaderText("An error occurred");
+        alert.setHeaderText("Ho no, an error occurred!");
         alert.setContentText("Error message: " + message);
         ButtonType closeButton = new ButtonType("Close", ButtonBar.ButtonData.OK_DONE);
         alert.getButtonTypes().setAll(closeButton);
