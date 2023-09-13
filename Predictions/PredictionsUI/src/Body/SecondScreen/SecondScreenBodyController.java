@@ -217,15 +217,9 @@ public class SecondScreenBodyController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 currenSliderValue.setText("Current: " + newValue);
-//                envPropValues.put(activeEnvProp, newValue.toString());
-//                updateCellValue(activeEnvProp,"Value", newValue.toString());
-
             }
         });
     }
-
-
-
 
     public void setMainController(PrimaryController primaryController) {
         this.primaryController = primaryController;
@@ -238,10 +232,6 @@ public class SecondScreenBodyController implements Initializable {
 
     public void setEntitiesPopulationList(List<String> entitiesNames, Integer populationSpace) {
         ObservableList<String> Entities = FXCollections.observableArrayList(entitiesNames);
-
-        //this.entityToPopTextFieldMap.values().forEach(TextInputControl::clear);
-
-
 
         this.maxPopulationTexrField.setText("Max Population: " + populationSpace);
 
@@ -302,8 +292,8 @@ public class SecondScreenBodyController implements Initializable {
 
     @FXML
     void clearSecondsScreenOnClick(ActionEvent event) {
-        clearSecondsScreenEnvPropPart();
         this.envPropValues.keySet().forEach(key -> updateCellValue(key,"Value", null));
+        clearSecondsScreenEnvPropPart();
         this.entityToPopTextFieldMap.values().forEach(TextInputControl::clear);
     }
 
