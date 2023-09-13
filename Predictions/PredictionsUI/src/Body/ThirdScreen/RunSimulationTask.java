@@ -70,6 +70,6 @@ public class RunSimulationTask extends Task<Boolean> {
 
     private void ToDoWhenSimulationHasFinished() {
         this.simulationExecutionDto.FinishRunning();
-        this.thirdScreenBodyController.chosenSimulationFinished(simulationExecutionDto.getNumberId());
+        this.thirdScreenBodyController.SimulationFinished(simulationExecutionDto.getNumberId());
     }
 }

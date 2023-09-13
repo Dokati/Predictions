@@ -22,6 +22,7 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ThirdScreenBodyController implements Initializable {
@@ -208,11 +209,20 @@ public class ThirdScreenBodyController implements Initializable {
         setControlButtonsListeners();
     }
 
-    public void chosenSimulationFinished(Integer id) {
+    public void SimulationFinished(Integer id) {
         if(chosenSimulationId != null && chosenSimulationId == id){
             disableControlButtons();
         }
+        updateSimulationStatusInTable(id);
 
+    }
+
+    private void updateSimulationStatusInTable(Integer id) {
+        Optional<SimulationExecutionDto> optionalDto = simulationsDataList.stream()
+                .filter(dto -> dto.getNumberId().equals(id))
+                .findFirst();
+        optionalDto.get().setStatus("Finished");
+        this.executionListTable.refresh();
     }
 
     public void RefreshEntityPopTable() {

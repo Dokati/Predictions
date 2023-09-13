@@ -31,6 +31,11 @@ public class SimulationExecutionDto {
                 ));
 
     }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
+
     public void FinishRunning(){
         this.isRunning = false;
     }
