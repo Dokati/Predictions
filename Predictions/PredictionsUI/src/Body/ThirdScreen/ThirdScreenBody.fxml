@@ -30,14 +30,14 @@
                   <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                </GridPane.margin>
                <content>
-                  <VBox prefHeight="463.0" prefWidth="295.0">
+                  <VBox prefHeight="463.0" prefWidth="317.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Execution List" textAlignment="CENTER" underline="true" wrappingWidth="319.6708984375">
                            <font>
                               <Font name="Gabriola" size="35.0" />
                            </font>
                         </Text>
-                        <TableView id="execution-list-table" fx:id="executionListTable" prefHeight="420.0" prefWidth="320.0">
+                        <TableView id="execution-list-table" fx:id="executionListTable" prefHeight="420.0" prefWidth="311.0">
                           <columns>
                             <TableColumn prefWidth="208.0" style="-fx-alignment: CENTER;" text="Simulation Id" />
                             <TableColumn prefWidth="117.0" style="-fx-alignment: CENTER;" text="Status" />

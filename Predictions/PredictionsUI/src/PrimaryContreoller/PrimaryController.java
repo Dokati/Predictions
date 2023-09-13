@@ -172,22 +172,13 @@ public class PrimaryController implements Initializable {
         Future<SimulationEndDetailsDto> futureResult = predictionManager.threadPool.submit(simulationList.get(simulationIdNumber));
 
         SimulationExecutionDto simulationExecutionDto = new SimulationExecutionDto(simulationId,"Running", simulationIdNumber, entitiesPopulationMap);
-        RunSimulationTask runSimulationTask = new RunSimulationTask(simulationList.get(simulationIdNumber), simulationExecutionDto);
+        this.thirdScreenBodyController.addSimulationToTable(simulationExecutionDto);
+        RunSimulationTask runSimulationTask = new RunSimulationTask(simulationList.get(simulationIdNumber), simulationExecutionDto, this.thirdScreenBodyController);
         Thread thread = new Thread(runSimulationTask);
         thread.start();
-        this.thirdScreenBodyController.addSimulationToTable(simulationExecutionDto);
+
         simulationIdNumber++;
 
-
-//        while(true){
-//            System.out.println("ticks:" + simulationList.get(simulationIdNumber-1).getTick());
-//            try {
-//                // Sleep for 2 seconds (2000 milliseconds)
-//                Thread.sleep(200);
-//            } catch (InterruptedException e) {
-//                // Handle the InterruptedException if needed
-//                e.printStackTrace();
-//            }        }
 
     }
 

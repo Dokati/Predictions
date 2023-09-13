@@ -29,14 +29,22 @@ public class ThirdScreenBodyController implements Initializable {
     @FXML private TableView<EntityPopulation> entityPopulationTable;
     @FXML private Text ticksText;
     @FXML private Text secondText;
-    ObservableList<SimulationExecutionDto> simulationsData;
+    ObservableList<SimulationExecutionDto> simulationsDataList;
     ObservableList<EntityPopulation> entityPopulationList;
 
     private PrimaryController primaryController;
-    String chosenSimulationId;
+    Integer chosenSimulationId;
+    SimulationExecutionDto chosenSimulation;
     Button playButton;
     Button pauseButton;
     Button stopButton;
+
+    ImageView playimage;
+    ImageView stopimage;
+    ImageView pauseimage;
+    ImageView disableplayimage;
+    ImageView disableStopimage;
+    ImageView disablePauseimage;
 
 
     @Override
@@ -44,14 +52,11 @@ public class ThirdScreenBodyController implements Initializable {
         ///////---------SimulationsTable------------///////////////////
         executionListTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         executionListTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("status"));
-        simulationsData = FXCollections.observableArrayList();
-        executionListTable.setItems(simulationsData);
+        simulationsDataList = FXCollections.observableArrayList();
+        executionListTable.setItems(simulationsDataList);
         executionListTable.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
-                SimulationExecutionDto selectedItem = executionListTable.getSelectionModel().getSelectedItem();
-                if (selectedItem != null) {
-                    handleSimulationChosenClick(selectedItem);
-                }
+                simulationGotSelected();
             }
         });
         ///////-----------------------------------///////////////////
@@ -66,16 +71,25 @@ public class ThirdScreenBodyController implements Initializable {
         setControlButtons();
         //this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton);
 
+        chosenSimulationId = null;
 
+    }
+
+    private void simulationGotSelected() {
+        SimulationExecutionDto selectedItem = executionListTable.getSelectionModel().getSelectedItem();
+        chosenSimulation = selectedItem;
+        chosenSimulationId = selectedItem.getNumberId();
+        if (selectedItem != null) {
+            handleSimulationChosenClick(selectedItem);
+        }
     }
 
     private void handleSimulationChosenClick(SimulationExecutionDto selectedSimulationDetails) {
-
         createTheDetailsArea(selectedSimulationDetails);
-
     }
-
     private void createTheDetailsArea(SimulationExecutionDto selectedSimulationDetails) {
+        entityPopulationList.clear();
+        this.buttonVbox.getChildren().clear();
         selectedSimulationDetails.getEntitiesPopulation().forEach((key, valueProperty) -> entityPopulationList.add(new EntityPopulation(key,valueProperty)));
 
         this.ticksText.textProperty().unbind();
@@ -83,8 +97,13 @@ public class ThirdScreenBodyController implements Initializable {
         this.secondText.textProperty().unbind();
         this.secondText.textProperty().bind(Bindings.concat("Seconds: ", selectedSimulationDetails.getTimeProperty().asString()));
 
+        this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton);
+
         if (selectedSimulationDetails.isRunning()){
-            this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton);
+            enableControlButtons();
+        }
+        else {
+            disableControlButtons();
         }
 
 
@@ -94,23 +113,48 @@ public class ThirdScreenBodyController implements Initializable {
         playButton = new Button();
         pauseButton = new Button();
         stopButton = new Button();
-        ImageView playimage = new ImageView(new Image(ButtonsImagePath.PLAY));
+        playimage = new ImageView(new Image(ButtonsImagePath.PLAY));
         playimage.setFitWidth(30);
         playimage.setFitHeight(30);
-        ImageView stopimage = new ImageView(new Image(ButtonsImagePath.STOP));
+        stopimage = new ImageView(new Image(ButtonsImagePath.STOP));
         stopimage.setFitWidth(30);
         stopimage.setFitHeight(30);
-        ImageView pauseimage = new ImageView(new Image(ButtonsImagePath.PAUSE));
+        pauseimage = new ImageView(new Image(ButtonsImagePath.PAUSE));
         pauseimage.setFitWidth(30);
         pauseimage.setFitHeight(30);
+        disableplayimage = new ImageView(new Image(ButtonsImagePath.DISABLE_PLAY));
+        disableplayimage.setFitWidth(30);
+        disableplayimage.setFitHeight(30);
+        disableStopimage = new ImageView(new Image(ButtonsImagePath.DISABLE_STOP));
+        disableStopimage.setFitWidth(30);
+        disableStopimage.setFitHeight(30);
+        disablePauseimage = new ImageView(new Image(ButtonsImagePath.DISABLE_PAUSE));
+        disablePauseimage.setFitWidth(30);
+        disablePauseimage.setFitHeight(30);
+        enableControlButtons();
+    }
+    private void enableControlButtons(){
         playButton.setGraphic(playimage);
+        playButton.setDisable(false);
         pauseButton.setGraphic(pauseimage);
+        pauseButton.setDisable(false);
         stopButton.setGraphic(stopimage);
+        stopButton.setDisable(false);
+    }
+    private void disableControlButtons(){
+        playButton.setGraphic(disableplayimage);
+        playButton.setDisable(true);
+        pauseButton.setGraphic(disablePauseimage);
+        pauseButton.setDisable(true);
+        stopButton.setGraphic(disableStopimage);
+        stopButton.setDisable(true);
     }
 
 
     public void addSimulationToTable(SimulationExecutionDto simulationExecutionDto) {
-        simulationsData.add(simulationExecutionDto);
+        simulationsDataList.add(simulationExecutionDto);
+        this.executionListTable.getSelectionModel().select(simulationsDataList.size()-1);
+        simulationGotSelected();
         executionListTable.refresh();
     }
 
@@ -118,4 +162,15 @@ public class ThirdScreenBodyController implements Initializable {
         this.primaryController = primaryController;
     }
 
+    public void chosenSimulationFinished(Integer id) {
+        if(chosenSimulationId != null && chosenSimulationId == id){
+            disableControlButtons();
+        }
+
+    }
+
+    public void RefreshEntityPopTable() {
+        this.entityPopulationTable.refresh();
+        this.entityPopulationList.forEach(entityPopulation -> System.out.println(entityPopulation.population));
+    }
 }

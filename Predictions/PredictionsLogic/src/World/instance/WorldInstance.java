@@ -121,6 +121,7 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
             }
 
             tick++;
+
         }
 
         getEndSimulationDetails();

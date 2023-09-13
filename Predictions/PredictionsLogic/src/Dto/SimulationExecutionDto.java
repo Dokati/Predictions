@@ -31,9 +31,16 @@ public class SimulationExecutionDto {
                 ));
 
     }
+    public void FinishRunning(){
+        this.isRunning = false;
+    }
 
     public void setTick(int tick) {
         this.tick.set(tick);
+    }
+
+    public Integer getNumberId() {
+        return numberId;
     }
 
     public void setRunningTimeInSeconds(int runningTimeInSeconds) {
@@ -43,10 +50,9 @@ public class SimulationExecutionDto {
     public void UpdateEntitiesPopulation(Map<String, IntegerProperty> entitiesPopulation2) {
         for (Map.Entry<String, IntegerProperty> entry : entitiesPopulation2.entrySet()) {
             String key = entry.getKey();
-            IntegerProperty value = entry.getValue();
-
-            this.entitiesPopulation.put(key,value);
-
+            IntegerProperty Newvalue = entry.getValue();
+            IntegerProperty oldValue = this.entitiesPopulation.get(key);
+            oldValue.set(Newvalue.get());
         }
     }
 
@@ -85,6 +91,7 @@ public class SimulationExecutionDto {
     public Map<String, IntegerProperty> getEntitiesPopulation() {
         return entitiesPopulation;
     }
+
 
 
 }
