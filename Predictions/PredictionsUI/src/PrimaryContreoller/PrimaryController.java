@@ -13,9 +13,7 @@ import Paths.StylePaths;
 import World.instance.WorldInstance;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
@@ -143,13 +141,36 @@ public class PrimaryController implements Initializable {
 
     public void initFirstNSecondScrean(String FilePath) {
         //first screen
-        SimulationTitlesDetails simulationTitleDto = getPredictionManager().loadSimulation(FilePath);
-        SetTitleDetailsOnFirstScreen(simulationTitleDto);
-
+        SimulationTitlesDetails simulationTitleDto = null;
+        try {
+            simulationTitleDto = getPredictionManager().loadSimulation(FilePath);
+            SetTitleDetailsOnFirstScreen(simulationTitleDto);
+        }
+        catch (IllegalArgumentException exception){
+            showAlertToUser(exception.getMessage());
+        }
+        catch (RuntimeException e) {
+            showAlertToUser("Loading the XML file failed");
+        }
 //      second screen - the envprop list and entity list
 
         this.secondScreenBodyController.setEnvPropTable();
         this.secondScreenBodyController.setEntitiesPopulationList(simulationTitleDto.getEntitiesNames(),simulationTitleDto.getPopulationSpace());
+    }
+
+    private void showAlertToUser(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("An error occurred");
+        alert.setContentText("Error message: " + message);
+        ButtonType closeButton = new ButtonType("Close", ButtonBar.ButtonData.OK_DONE);
+        alert.getButtonTypes().setAll(closeButton);
+
+        // Show the dialog and wait for user interaction
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == closeButton) {
+            // User clicked "Close" or closed the dialog
+        }
     }
 
     public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues) {
