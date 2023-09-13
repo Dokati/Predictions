@@ -39,14 +39,7 @@ public class PrimaryController implements Initializable {
     @FXML private ScrollPane thirdScreenBody;
     @FXML private ThirdScreenBodyController thirdScreenBodyController;
 
-//    @FXML
-//    public void initialize() {
-//        if (headerComponentController != null && firstScreenBodyController != null) {
-//            headerComponentController.setMainController(this);
-//            firstScreenBodyController.setMainController(this);
-//            secondScreenBodyController.setMainController(this);
-//        }
-//    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -153,7 +146,7 @@ public class PrimaryController implements Initializable {
         SimulationTitlesDetails simulationTitleDto = getPredictionManager().loadSimulation(FilePath);
         SetTitleDetailsOnFirstScreen(simulationTitleDto);
 
-//        second screen - the envprop list and entity list
+//      second screen - the envprop list and entity list
 
         this.secondScreenBodyController.setEnvPropTable();
         this.secondScreenBodyController.setEntitiesPopulationList(simulationTitleDto.getEntitiesNames(),simulationTitleDto.getPopulationSpace());
@@ -182,5 +175,10 @@ public class PrimaryController implements Initializable {
     public void jumpToResultTab() {
         Tab selectedTab = tabPane.getTabs().get(2);
         tabPane.getSelectionModel().select(selectedTab);
+    }
+
+    public void clearAllScreens() {
+         firstScreenBodyController.clearFirstScren();
+         secondScreenBodyController.clearSecondScreen();
     }
 }

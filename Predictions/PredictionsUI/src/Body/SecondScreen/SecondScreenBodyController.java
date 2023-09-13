@@ -103,6 +103,17 @@ public class SecondScreenBodyController implements Initializable {
         maxPopulationTexrField = new Text("Max Population: ");
         this.amountVbox.getChildren().addAll(totalPopulationTextField,maxPopulationTexrField);
         //-----------------------------//
+        TableColumn<EnvPropTableItem, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.setPrefWidth(150);
+        TableColumn<EnvPropTableItem, Integer> typeColumn = new TableColumn<>("Type");
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        typeColumn.setPrefWidth(65);
+        TableColumn<EnvPropTableItem, Integer> valueColumn = new TableColumn<>("Value");
+        valueColumn.setPrefWidth(110);
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("Value"));
+        this.envPropTable.getColumns().addAll(nameColumn, typeColumn, valueColumn);
+        //-----------------------------//
 
 
 
@@ -132,24 +143,7 @@ public class SecondScreenBodyController implements Initializable {
     }
 
     public void setEnvPropTable() {
-        this.vbox.getChildren().clear();/// clear the vbox in case loading new file.
         List<EnvPropDto> envPropDtoList = this.primaryController.getPredictionManager().getAllEnvProps();
-        if(this.envPropTable.getColumns().isEmpty()) {
-            TableColumn<EnvPropTableItem, String> nameColumn = new TableColumn<>("Name");
-            nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-            nameColumn.setPrefWidth(150);
-            TableColumn<EnvPropTableItem, Integer> typeColumn = new TableColumn<>("Type");
-            typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-            typeColumn.setPrefWidth(65);
-            TableColumn<EnvPropTableItem, Integer> valueColumn = new TableColumn<>("Value");
-            valueColumn.setPrefWidth(110);
-            valueColumn.setCellValueFactory(new PropertyValueFactory<>("Value"));
-
-            this.envPropTable.getColumns().addAll(nameColumn, typeColumn, valueColumn);
-        }
-        else{
-            clearSecondsScreenEnvPropPart();
-        }
         ObservableList<EnvPropTableItem> data = FXCollections.observableArrayList();
 
         for (EnvPropDto envPropDto : envPropDtoList) {
@@ -166,8 +160,6 @@ public class SecondScreenBodyController implements Initializable {
                 }
             }
         });
-
-
 
     }
 
@@ -191,7 +183,6 @@ public class SecondScreenBodyController implements Initializable {
                 double val = Double.parseDouble(value);
                 this.slider.setValue(val);
                 this.currenSliderValue.setText("Value:" + this.slider.getValue());
-
 
                 this.vbox.getChildren().addAll(text, this.slider, currenSliderValue);
             } else {
@@ -248,8 +239,8 @@ public class SecondScreenBodyController implements Initializable {
     public void setEntitiesPopulationList(List<String> entitiesNames, Integer populationSpace) {
         ObservableList<String> Entities = FXCollections.observableArrayList(entitiesNames);
 
-        this.entityToPopTextFieldMap.values().forEach(TextInputControl::clear);
-        this.populationGridPane.getChildren().clear();
+        //this.entityToPopTextFieldMap.values().forEach(TextInputControl::clear);
+
 
 
         this.maxPopulationTexrField.setText("Max Population: " + populationSpace);
@@ -312,11 +303,11 @@ public class SecondScreenBodyController implements Initializable {
     @FXML
     void clearSecondsScreenOnClick(ActionEvent event) {
         clearSecondsScreenEnvPropPart();
+        this.envPropValues.keySet().forEach(key -> updateCellValue(key,"Value", null));
         this.entityToPopTextFieldMap.values().forEach(TextInputControl::clear);
     }
 
     private void clearSecondsScreenEnvPropPart() {
-        this.envPropValues.keySet().forEach(key -> updateCellValue(key,"Value", null));
         this.numberTextField.clear();
         this.trueOrFalseBox.getSelectionModel().clearSelection();
         this.slider.setValue(this.slider.getMin());
@@ -324,4 +315,11 @@ public class SecondScreenBodyController implements Initializable {
         this.envPropValues.clear();
     }
 
+    public void clearSecondScreen() {
+        clearSecondsScreenEnvPropPart();
+        this.vbox.getChildren().clear();/// clear the vbox in case loading new file.
+        this.entityToPopTextFieldMap.clear();
+        this.populationGridPane.getChildren().clear();
+
+    }
 }

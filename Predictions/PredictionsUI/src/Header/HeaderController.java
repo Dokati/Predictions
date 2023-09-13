@@ -40,6 +40,7 @@ public class HeaderController {
         if (selectedFile != null) {
             filePathTextField.setText(selectedFile.getAbsolutePath());
         }
+        primaryController.clearAllScreens();
         primaryController.initFirstNSecondScrean(filePathTextField.getText());
 
     }
