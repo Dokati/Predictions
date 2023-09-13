@@ -96,7 +96,7 @@ public class Rule {
 
         for(EntityInstance entityInstance : context.getWorldInstance().getEntities()){
             if (entityInstance.getEntityDef().equals(action.getSecondaryEntity().getEntityDefinition())
-            && action.getSecondaryEntity().getCondition().conditionIsTrue(new Context(entityInstance,context.getWorldInstance(),context.getEnvVariables(),context.getCurrentTick()))
+            && action.getSecondaryEntity().getCondition().conditionIsTrue(new Context(entityInstance,context.getWorldInstance(),context.getCurrentTick()))
             && suitableSecondaryEntities.size() < action.getSecondaryEntity().getCount()) {
                 suitableSecondaryEntities.add(entityInstance);
             }

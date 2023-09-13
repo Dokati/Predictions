@@ -2,7 +2,9 @@ package PrimaryContreoller;
 
 import Body.FirstScreen.FirstScreenBodyController;
 import Body.SecondScreen.SecondScreenBodyController;
+import Body.ThirdScreen.RunSimulationTask;
 import Body.ThirdScreen.ThirdScreenBodyController;
+import Dto.SimulationEndDetailsDto;
 import Dto.SimulationExecutionDto;
 import Dto.SimulationTitlesDetails;
 import Header.HeaderController;
@@ -20,10 +22,14 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class PrimaryController implements Initializable {
     private PredictionManager predictionManager;
-    private HashMap<String, WorldInstance> previousActivations;
+    HashMap<Integer, WorldInstance> simulationList;
+    Integer simulationIdNumber = 1;
+
     @FXML private BorderPane borderPane;
     @FXML private TabPane tabPane;
     @FXML private ScrollPane headerComponent;
@@ -47,7 +53,7 @@ public class PrimaryController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         predictionManager = new PredictionManager();
-        previousActivations = new HashMap<>();
+        simulationList = new HashMap<>();
 
         if (headerComponentController != null && firstScreenBodyController != null && secondScreenBodyController !=null
         && thirdScreenBodyController != null) {
@@ -61,9 +67,6 @@ public class PrimaryController implements Initializable {
         return predictionManager;
     }
 
-    public HashMap<String, WorldInstance> getPreviousActivations() {
-        return previousActivations;
-    }
 
 
     public void SetTitleDetailsOnFirstScreen(SimulationTitlesDetails simulationTitleDto) {
@@ -160,12 +163,32 @@ public class PrimaryController implements Initializable {
     }
 
     public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues) {
-
         String simulationId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy | HH.mm.ss"));
-        SimulationExecutionDto simulationExecutionDto = new SimulationExecutionDto(simulationId,"Running");
 
+        predictionManager.InitializePopulation(entitiesPopulationMap);
+
+        simulationList.put(simulationIdNumber,new WorldInstance(predictionManager.getWorldDefinition(),envPropValues));
+
+        Future<SimulationEndDetailsDto> futureResult = predictionManager.threadPool.submit(simulationList.get(simulationIdNumber));
+
+        SimulationExecutionDto simulationExecutionDto = new SimulationExecutionDto(simulationId,"Running", simulationIdNumber, entitiesPopulationMap);
+        RunSimulationTask runSimulationTask = new RunSimulationTask(simulationList.get(simulationIdNumber), simulationExecutionDto);
+        Thread thread = new Thread(runSimulationTask);
+        thread.start();
         this.thirdScreenBodyController.addSimulationToTable(simulationExecutionDto);
-        predictionManager.runSimulation(entitiesPopulationMap,envPropValues);
+        simulationIdNumber++;
+
+
+//        while(true){
+//            System.out.println("ticks:" + simulationList.get(simulationIdNumber-1).getTick());
+//            try {
+//                // Sleep for 2 seconds (2000 milliseconds)
+//                Thread.sleep(200);
+//            } catch (InterruptedException e) {
+//                // Handle the InterruptedException if needed
+//                e.printStackTrace();
+//            }        }
+
     }
 
     public void jumpToResultTab() {

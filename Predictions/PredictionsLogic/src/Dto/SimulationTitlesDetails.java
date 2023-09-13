@@ -7,7 +7,6 @@ public class SimulationTitlesDetails {
     List<String> entitiesNames;
     List<RuleTitleDto> rulesTitleDto;
     List<String> envVariableNames;
-
     Integer populationSpace;
 
     public SimulationTitlesDetails(List<String> entitiesNames, List<RuleTitleDto> rulesDto, List<String> envVariableNames,Integer populationSpace) {

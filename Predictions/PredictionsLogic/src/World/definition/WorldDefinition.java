@@ -23,7 +23,7 @@ public class WorldDefinition {
     private ArrayList<Rule> rules;
     private HashMap<TerminationType,Termination> terminationConditions;
     private Grid grid;
-    private Integer threadCount;
+    private final Integer threadCount;
 
     public WorldDefinition(PRDWorld pRDworld) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 
@@ -65,7 +65,7 @@ public class WorldDefinition {
         //Get grid
         grid = new Grid(pRDworld.getPRDGrid());
 
-        //get thread count
+        //Get thread count
         threadCount = pRDworld.getPRDThreadCount();
     }
 

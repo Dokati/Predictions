@@ -21,6 +21,7 @@ public class Kill extends Action{
     @Override
     public void Activate(Context context) {
         getEntityForAction(context).killEntity();
+        context.getWorldInstance().getGrid()[getEntityForAction(context).getCoordinate().getX()][getEntityForAction(context).getCoordinate().getY()] = null;
     }
 
     @Override

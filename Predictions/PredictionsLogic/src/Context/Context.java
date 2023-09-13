@@ -14,13 +14,11 @@ import java.util.Random;
 public class Context {
     protected EntityInstance activeEntityInstance;
     protected WorldInstance worldInstance;
-    final protected Map<String, EnvPropertyInstance> envVariables;
     protected Integer currentTick;
 
-    public Context(EntityInstance activeEntityInstance,WorldInstance worldInstance, Map<String, EnvPropertyInstance> envVariables,Integer currentTick) {
+    public Context(EntityInstance activeEntityInstance,WorldInstance worldInstance,Integer currentTick) {
         this.activeEntityInstance = activeEntityInstance;
         this.worldInstance = worldInstance;
-        this.envVariables = envVariables;
         this.currentTick = currentTick;
     }
 
@@ -37,12 +35,12 @@ public class Context {
     }
 
     public Map<String, EnvPropertyInstance> getEnvVariables() {
-        return envVariables;
+        return worldInstance.getEnvironmentProperties();
     }
 
     public Object environment(String envPropertyName) {
         try {
-            return this.envVariables.get(envPropertyName).getValue();
+            return this.worldInstance.getEnvironmentProperties().get(envPropertyName).getValue();
         } catch (Exception e) {
             System.out.println("Invalid Input");
             throw new RuntimeException(e);

@@ -6,6 +6,7 @@ import Exceptions.IllegalXmlDataArgOfNumericActionAreNotNumericExceptions;
 import Expression.Expression;
 import PRD.PRDCondition;
 import Context.*;
+import Property.PropertyType;
 import Property.definition.EnvPropertyDefinition;
 import java.util.HashMap;
 
@@ -20,18 +21,28 @@ public class SingleCondition implements Condition{
 
     public SingleCondition(PRDCondition prdCondition, HashMap<String,EntityDefinition> entities, HashMap<String, EnvPropertyDefinition> environmentProperties) {
         this.expressionValue = new Expression(prdCondition.getValue());
-        CheckOperator(prdCondition.getOperator());
         this.operator = prdCondition.getOperator();
         this.singularity = prdCondition.getSingularity();
         this.property = new Expression(prdCondition.getProperty());
         this.entity = entities.get(prdCondition.getEntity());
+        CheckCondition(entities,environmentProperties);
     }
 
-    private void CheckOperator(String pRDoperator)
-    {
-        if(!pRDoperator.equals("bt") && !pRDoperator.equals("lt") && !pRDoperator.equals("!=") && !pRDoperator.equals("="))
+    private void CheckCondition(HashMap<String,EntityDefinition> entities, HashMap<String, EnvPropertyDefinition> environmentProperties){
+
+        if(!operator.equals("bt") && !operator.equals("lt") && !operator.equals("!=") && !operator.equals("="))
         {
-            throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("The XML file contains " +  pRDoperator + " operator. The system does not support this operator");
+            throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("The XML file contains " +  operator + " operator. The system does not support this operator");
+        }
+
+        if ((!expressionValue.GetTranslatedValueType(entity,entities,environmentProperties).equals(PropertyType.FLOAT)
+            || !property.GetTranslatedValueType(entity,entities,environmentProperties).equals(PropertyType.FLOAT))
+            && (operator.equals("bt") || operator.equals("lt"))){
+            throw new IllegalArgumentException("The "+ operator +" operation cannot be performed on non-numeric values");
+        }
+
+        if(!expressionValue.GetTranslatedValueType(entity,entities,environmentProperties).equals(property.GetTranslatedValueType(entity,entities,environmentProperties))){
+            throw new IllegalArgumentException("The "+ operator +" operation cannot be performed on values of different types");
         }
     }
 
@@ -39,6 +50,15 @@ public class SingleCondition implements Condition{
     public Boolean conditionIsTrue(Context context) {
         Object cmpToValue =  this.expressionValue.getTranslatedValue(context);
         Object propertyValue = this.property.getTranslatedValue(getEntityForAction(context));
+
+        if ((!(cmpToValue instanceof Float) || !(propertyValue instanceof Float))
+        && (operator.equals("bt") || operator.equals("lt"))) {
+            throw new IllegalArgumentException("The "+ operator +" operation cannot be performed on non-numeric values");
+        }
+
+        if(!cmpToValue.getClass().getSimpleName().equals(propertyValue.getClass().getSimpleName())){
+            throw new IllegalArgumentException("The "+ operator +" operation cannot be performed on values of different types");
+        }
 
         boolean result = false;
 
@@ -63,10 +83,8 @@ public class SingleCondition implements Condition{
 
     public Context getEntityForAction(Context context) {
 
-        if(context instanceof ContextSecondaryEntity &&
-                ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(this.entity)) {
-            return new ContextSecondaryEntity(((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance(),context.getActiveEntityInstance(),
-            context.getWorldInstance(),context.getEnvVariables(),context.getCurrentTick());
+        if(context instanceof ContextSecondaryEntity && ((ContextSecondaryEntity)context).getSecondaryActiveEntityInstance().getEntityDef().equals(this.entity)) {
+            return new ContextSecondaryEntity(((ContextSecondaryEntity) context).getSecondaryActiveEntityInstance(),context.getActiveEntityInstance(), context.getWorldInstance(), context.getCurrentTick());
         }
 
         return context;

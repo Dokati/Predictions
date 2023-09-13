@@ -8,6 +8,7 @@ public class PropertyInstance {
     private final PropertyDefinition propertyDef;
     private Object value;
     private Integer changeTick = 0;
+    private Integer timesChanged = 1;
 
     public PropertyInstance(PropertyDefinition propertyDef) {
         this.propertyDef = propertyDef;
@@ -25,6 +26,7 @@ public class PropertyInstance {
        }
 
        changeTick = 0;
+       timesChanged = 1;
     }
 
     public PropertyInstance(PropertyDefinition propertyDef,Integer tick) {
@@ -43,10 +45,15 @@ public class PropertyInstance {
         }
 
         changeTick = tick;
+        timesChanged = 1;
     }
 
     public Integer getChangeTick() {
         return changeTick;
+    }
+
+    public Integer getTimesChanged() {
+        return timesChanged;
     }
 
     public Object getName() {
@@ -85,9 +92,14 @@ public class PropertyInstance {
         }
 
         this.changeTick = tick;
+        this.timesChanged += 1;
     }
 
     public PropertyType getType() {
         return propertyDef.getType();
+    }
+
+    public void setChangeTick(Integer changeTick) {
+        this.changeTick = changeTick;
     }
 }

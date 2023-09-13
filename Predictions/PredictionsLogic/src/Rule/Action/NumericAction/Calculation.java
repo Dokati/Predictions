@@ -21,6 +21,14 @@ public abstract class Calculation extends Action {
         super(prdAction, entities, environmentProperties);
         this.entity = entities.get(prdAction.getEntity());
         this.resultProp = prdAction.getResultProp();
+        CheckIfResultPropertyNumeric();
+    }
+
+    public void CheckIfResultPropertyNumeric()
+    {
+        if(!entity.getProperties().get(resultProp).getType().equals(PropertyType.FLOAT)){
+            throw new IllegalArgumentException("The result property: "+ resultProp +" of the entity: " + entity.getName()+ " is not a numeric type");
+        }
     }
 
     public void CheckIfTypeOfArgumentsMatchesForNumericAction(PropertyType arg1Type, PropertyType arg2Type) {
@@ -32,9 +40,5 @@ public abstract class Calculation extends Action {
             throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("It is not possible to perform the " + this.getClass().getSimpleName() +
                     "operation because The variable arg2 is not of numeric value type");
         }
-    }
-
-    public static boolean BothArgsAreNumeric(Object arg1, Object arg2) {
-        return (arg2 instanceof Integer || arg2 instanceof Float) && (arg1 instanceof Integer || arg1 instanceof Float);
     }
 }

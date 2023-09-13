@@ -47,8 +47,8 @@ public class Proximity extends Action {
         Integer cols = context.getWorldInstance().getGridCols();
         Integer rows = context.getWorldInstance().getGridRows();
 
-        int startX = (sourceEntityX - ofValue + rows) % rows;
-        int startY = (sourceEntityY - ofValue + cols) % cols;
+        int startX = (sourceEntityX - Math.min(ofValue,rows) + rows) % rows;
+        int startY = (sourceEntityY - Math.min(ofValue,cols) + cols) % cols;
         int searchSize = ofValue * 2 + 1;
 
         for (int i = 0; i < searchSize; i++) {
@@ -56,9 +56,9 @@ public class Proximity extends Action {
                 Integer currentX = (startX + i) % rows;
                 Integer currentY = (startY + j) % cols;
                 if(context.getWorldInstance().getEntitYByPoint(currentX,currentY) != null &&
-                   context.getWorldInstance().getEntitYByPoint(currentX,currentY).getEntityDef() == targetEntity)
+                   context.getWorldInstance().getEntitYByPoint(currentX,currentY).getEntityDef().equals(targetEntity))
                 {
-                    Context newContext = new ContextSecondaryEntity(context.getActiveEntityInstance(),context.getWorldInstance().getGrid()[currentX][currentY], context.getWorldInstance(), context.getEnvVariables(), context.getCurrentTick());
+                    Context newContext = new ContextSecondaryEntity(context.getActiveEntityInstance(), context.getWorldInstance().getEntitYByPoint(currentX,currentY), context.getWorldInstance(), context.getCurrentTick());
                     for (Action action: this.actions)
                             action.Activate(newContext);
                     }

@@ -14,12 +14,12 @@ public class ContextSecondaryEntity extends Context {
     private EntityInstance secondaryActiveEntityInstance;
 
     public ContextSecondaryEntity(Context context,EntityInstance secondaryActiveEntityInstance) {
-        super(context.getActiveEntityInstance(), context.getWorldInstance(), context.getEnvVariables(), context.getCurrentTick());
+        super(context.getActiveEntityInstance(), context.getWorldInstance(), context.getCurrentTick());
         this.secondaryActiveEntityInstance = secondaryActiveEntityInstance;
     }
 
-    public ContextSecondaryEntity(EntityInstance activeEntityInstance,EntityInstance secondaryActiveEntityInstance, WorldInstance worldInstance, Map<String, EnvPropertyInstance> envVariables, Integer currentTick) {
-        super(activeEntityInstance, worldInstance, envVariables, currentTick);
+    public ContextSecondaryEntity(EntityInstance activeEntityInstance,EntityInstance secondaryActiveEntityInstance, WorldInstance worldInstance, Integer currentTick) {
+        super(activeEntityInstance, worldInstance, currentTick);
         this.secondaryActiveEntityInstance = secondaryActiveEntityInstance;
     }
 

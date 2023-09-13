@@ -41,9 +41,10 @@ public class Coordinate {
     public void chooseRandomNeighbor(EntityInstance[][] grid) {
         boolean found = false;
         Random random = new Random();
-        int choice = random.nextInt(5); // Generate a random number between 0 and 3
 
         while(!found) {
+            int choice = random.nextInt(5); // Generate a random number between 0 and 4
+
             switch (choice) {
                 case 0:
                     if (x == 0) {

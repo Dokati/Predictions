@@ -17,11 +17,6 @@ public class Validation {
 
         //Check If Property Exist In Entity
         switch (actionDef.getType()) {
-            case "condition":
-                for (PRDCondition condition : actionDef.getPRDCondition().getPRDCondition()) {
-                    CheckConditionProperty(condition, entities);
-                }
-                break;
             case "calculation":
                 if (!entities.get(actionDef.getEntity()).getProperties().containsKey(actionDef.getResultProp())) {
                     throw new IllegalXmlDataInvalidActionPropExceptions("Xml contain Action that its property: " +
@@ -39,6 +34,7 @@ public class Validation {
             case "proximity":
             case "replace":
             case "kill":
+            case "condition":
                 break;
             default:
                 throw new IllegalXmlDataInvalidActionPropExceptions("The XML file contains an action of the "+ actionDef.getType() +" type." +

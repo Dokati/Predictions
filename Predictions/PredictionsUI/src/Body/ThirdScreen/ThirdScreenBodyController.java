@@ -30,6 +30,8 @@ public class ThirdScreenBodyController implements Initializable {
     @FXML private Text ticksText;
     @FXML private Text secondText;
     ObservableList<SimulationExecutionDto> simulationsData;
+    ObservableList<EntityPopulation> entityPopulationList;
+
     private PrimaryController primaryController;
     String chosenSimulationId;
     Button playButton;
@@ -48,41 +50,40 @@ public class ThirdScreenBodyController implements Initializable {
             if (event.getClickCount() == 1) {
                 SimulationExecutionDto selectedItem = executionListTable.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
-                    handleSimulationChosenClick();
+                    handleSimulationChosenClick(selectedItem);
                 }
             }
         });
         ///////-----------------------------------///////////////////
         entityPopulationTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("entityName"));
         entityPopulationTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("population"));
+        entityPopulationList = FXCollections.observableArrayList();
+        entityPopulationTable.setItems(entityPopulationList);
+
         //setting the table items will be on run time.
         ///////-----------------------------------///////////////////
 
         setControlButtons();
-        this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton);
+        //this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton);
 
 
     }
 
-    private void handleSimulationChosenClick() {
+    private void handleSimulationChosenClick(SimulationExecutionDto selectedSimulationDetails) {
 
-        createTheDetailsArea();
+        createTheDetailsArea(selectedSimulationDetails);
 
     }
 
-    private void createTheDetailsArea() {
-
-        ObservableList<EntityPopulation> entityPopulationList = FXCollections.observableArrayList();
-        SimulationExecutionDto simulationDetails = this.simulationsData.stream().filter(simulation -> simulation.getId().equals(chosenSimulationId)).findFirst().get();
-        simulationDetails.getEntitiesPopulation().forEach((key, valueProperty) -> entityPopulationList.add(new EntityPopulation(key,valueProperty)));
-        entityPopulationTable.setItems(entityPopulationList);
+    private void createTheDetailsArea(SimulationExecutionDto selectedSimulationDetails) {
+        selectedSimulationDetails.getEntitiesPopulation().forEach((key, valueProperty) -> entityPopulationList.add(new EntityPopulation(key,valueProperty)));
 
         this.ticksText.textProperty().unbind();
-        this.ticksText.textProperty().bind(Bindings.concat("Ticks: ", simulationDetails.getTickProperty().asString()));
+        this.ticksText.textProperty().bind(Bindings.concat("Ticks: ", selectedSimulationDetails.getTickProperty().asString()));
         this.secondText.textProperty().unbind();
-        this.secondText.textProperty().bind(Bindings.concat("Seconds: ", simulationDetails.getTimeProperty().asString()));
+        this.secondText.textProperty().bind(Bindings.concat("Seconds: ", selectedSimulationDetails.getTimeProperty().asString()));
 
-        if (simulationDetails.isRunning()){
+        if (selectedSimulationDetails.isRunning()){
             this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton);
         }
 
@@ -107,22 +108,12 @@ public class ThirdScreenBodyController implements Initializable {
         stopButton.setGraphic(stopimage);
     }
 
-    public void addSimulationToTable(String id, String status){
-        simulationsData.add(new SimulationExecutionDto(id, status));
-        executionListTable.refresh();
-    }
+
     public void addSimulationToTable(SimulationExecutionDto simulationExecutionDto) {
         simulationsData.add(simulationExecutionDto);
         executionListTable.refresh();
     }
 
-    public UiAdapter CreateUiAdapter(String simulationId){
-        SimulationExecutionDto simulationExecutionDto = simulationsData.stream().filter(data-> data.getId().equals(simulationId)).findFirst().get();
-        return new UiAdapter(
-                simulationExecutionDto::IncrementTick,
-                entitiesPopulation ->{simulationExecutionDto.UpdateEntitiesPopulation(entitiesPopulation);}
-        );
-    }
     public void setMainController(PrimaryController primaryController) {
         this.primaryController = primaryController;
     }
