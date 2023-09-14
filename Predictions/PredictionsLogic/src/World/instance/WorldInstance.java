@@ -91,6 +91,11 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
         Instant startTime = Instant.now();
 
         while (!status.equals(SimulationStatusType.Stop)) {
+
+            while(status.equals(SimulationStatusType.Pause)){
+                System.out.println("pause");
+            }
+
             runningTimeInSeconds = Duration.between(startTime, Instant.now()).getSeconds();
             updateEntitiesPopulation();
             MoveEntitiesOneStepRandomly();
