@@ -4,7 +4,7 @@
 	<PRD-environment>
 		<PRD-env-property type="float">
 			<PRD-name>infection-proximity</PRD-name>
-			<PRD-range from="1" to="5"/>			
+			<PRD-range from="1" to="5"/>
 		</PRD-env-property>
 	</PRD-environment>
 	<PRD-grid rows="50" columns="30"/>
@@ -66,7 +66,6 @@
 		</PRD-rule>
 	</PRD-rules>
 	<PRD-termination>
-		<PRD-by-ticks count="840"/>
-		<PRD-by-second count="10"/>
+		<PRD-by-user/>
 	</PRD-termination>
 </PRD-world>

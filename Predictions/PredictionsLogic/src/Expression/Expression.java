@@ -44,7 +44,7 @@ public class Expression {
             if(this.expression.startsWith("environment")){
                 List<String> arguments = extractArguments(this.expression);
                 if(!environmentProperties.containsKey(arguments.get(0))) {
-                    throw new IllegalArgumentException("The evaluate operation cannot be performed because the environment property " + arguments.get(0) + " does not exist");
+                    throw new IllegalArgumentException("The environment operation cannot be performed on environment property " + arguments.get(0) + " that does not exist");
                 }
                 return environmentProperties.get(arguments.get(0)).getType();
             }
@@ -54,13 +54,13 @@ public class Expression {
                 String[] parts = arguments.get(0).split("\\.");
 
                 if (parts.length < 2){
-                    throw new IllegalArgumentException("The function ticks accepts one and only argument of the following format <entity>.<property name>");
+                    throw new IllegalArgumentException("The evaluate function accepts one and only argument of the following format <entity>.<property name>");
                 }
                 if(!entities.containsKey(parts[0])){
-                    throw new IllegalArgumentException("The entity passed in the format to the ticks function does not exist");
+                    throw new IllegalArgumentException("The entity passed in the format to the evaluate function does not exist");
                 }
                 if(!entities.get(parts[0]).getProperties().containsKey(parts[1])){
-                    throw new IllegalArgumentException("The property passed in the format to the ticks function does not exist in the context of the " + parts[0] + " entity");
+                    throw new IllegalArgumentException("The property passed in the format to the evaluate function does not exist in the context of the " + parts[0] + " entity");
                 }
 
                 return entities.get(parts[0]).getProperties().get(parts[1]).getType();
@@ -71,7 +71,7 @@ public class Expression {
                 String[] parts = arguments.get(0).split("\\.");
 
                 if (parts.length < 2){
-                    throw new IllegalArgumentException("The function ticks accepts one and only argument of the following format <entity>.<property name>");
+                    throw new IllegalArgumentException("The ticks function accepts one and only argument of the following format <entity>.<property name>");
                 }
                 if(!entities.containsKey(parts[0])){
                     throw new IllegalArgumentException("The entity passed in the format to the ticks function does not exist");
@@ -87,7 +87,7 @@ public class Expression {
                 List<String> arguments = extractArgumentsPercent(this.expression);
 
                 if(arguments.size() < 2){
-                    throw new IllegalArgumentException("The percentage function should accept 2 arguments");
+                    throw new IllegalArgumentException("The percent function should accept 2 arguments");
                 }
 
                 if(!new Expression(arguments.get(0)).GetTranslatedValueType(entityDefinition,entities,environmentProperties).equals(PropertyType.FLOAT) ||
@@ -109,7 +109,7 @@ public class Expression {
 
                 return PropertyType.FLOAT;
             }
-            
+
             return PropertyType.FLOAT;
         }
         else if (expressionIsProperty(entityDefinition.getProperties())) {

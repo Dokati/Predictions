@@ -31,10 +31,10 @@ public class Validation {
                             actionDef.getProperty() + " unexisted in related entity");
                 }
                 break;
+            case "condition":
             case "proximity":
             case "replace":
             case "kill":
-            case "condition":
                 break;
             default:
                 throw new IllegalXmlDataInvalidActionPropExceptions("The XML file contains an action of the "+ actionDef.getType() +" type." +
@@ -67,6 +67,9 @@ public class Validation {
                 throw new IllegalXmlDataInvalidActionEntityExceptions("Xml contain Action that related to unexisted entity: " + actionDef.getPRDBetween().getTargetEntity());
             }
         } else if (actionDef.getType().equals("condition")) {
+            if (!entities.containsKey(actionDef.getEntity())) {
+                throw new IllegalXmlDataInvalidActionEntityExceptions("Xml contain Action that related to unexisted entity: " + actionDef.getEntity());
+            }
              if (actionDef.getPRDCondition().getSingularity().equals("single") && !entities.containsKey(actionDef.getPRDCondition().getEntity())) {
                 throw new IllegalXmlDataInvalidActionEntityExceptions("Xml contain Action that related to unexisted entity: " + actionDef.getPRDCondition().getEntity());
             }
@@ -78,17 +81,4 @@ public class Validation {
         }
     }
 
-    public static void CheckConditionProperty(PRDCondition condition, HashMap<String, EntityDefinition> entities) {
-
-        if (condition.getSingularity().equals("multiple")) {
-            for (PRDCondition cond : condition.getPRDCondition()) {
-                CheckConditionProperty(cond, entities);
-            }
-        } else if (condition.getSingularity().equals("single")) {
-            CheckPRDConditionEntity(condition.getEntity(),entities);
-            if(!entities.get(condition.getEntity()).getProperties().containsKey(condition.getProperty()) && !condition.getProperty().contains("ticks")){
-                throw new IllegalXmlDataInvalidActionPropExceptions("Xml contain Action that its property: " + condition.getProperty()+ " unexisted in related entity");
-            }
-        }
-    }
 }
