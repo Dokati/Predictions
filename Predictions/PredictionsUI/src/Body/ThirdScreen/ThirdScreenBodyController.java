@@ -192,6 +192,7 @@ public class ThirdScreenBodyController implements Initializable {
         });
     }
 
+    
     private void enableControlButtons(){
         playButton.setGraphic(playimage);
         playButton.setDisable(false);
