@@ -42,17 +42,18 @@ public class WorldDefinition {
 
         //Get termination
         terminationConditions = new HashMap<>();
-        if(pRDworld.getPRDTermination() != null)
-        {
+        if(pRDworld.getPRDTermination().getPRDByUser() != null) {
             this.terminationConditions.put(TerminationType.BYUSER,new Termination(pRDworld.getPRDTermination()));
         }
-        for(Object termination : pRDworld.getPRDTermination().getPRDBySecondOrPRDByTicks()) {
-            if (termination instanceof PRDBySecond) {
-                this.terminationConditions.put(TerminationType.SECOND,new Termination((PRDBySecond) termination));
-            }
+        else{
+            for(Object termination : pRDworld.getPRDTermination().getPRDBySecondOrPRDByTicks()) {
+                if (termination instanceof PRDBySecond) {
+                    this.terminationConditions.put(TerminationType.SECOND,new Termination((PRDBySecond) termination));
+                }
 
-            if (termination instanceof PRDByTicks) {
-                this.terminationConditions.put(TerminationType.TICK,new Termination((PRDByTicks) termination));
+                if (termination instanceof PRDByTicks) {
+                    this.terminationConditions.put(TerminationType.TICK,new Termination((PRDByTicks) termination));
+                }
             }
         }
 
@@ -66,6 +67,9 @@ public class WorldDefinition {
         grid = new Grid(pRDworld.getPRDGrid());
 
         //Get thread count
+        if(pRDworld.getPRDThreadCount() < 0){
+            throw new IllegalArgumentException("The thread pool size should be positive");
+        }
         threadCount = pRDworld.getPRDThreadCount();
     }
 

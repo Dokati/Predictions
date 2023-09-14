@@ -17,7 +17,7 @@ public class EnvPropertyDefinition {
         try {
             this.type = PropertyType.valueOf(envPropertyDef.getType().toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid property type. A property cannot be of type " + envPropertyDef.getType());
+            throw new IllegalArgumentException("Invalid property type. Environment property cannot be of type " + envPropertyDef.getType());
         }
 
         this.name = envPropertyDef.getPRDName();

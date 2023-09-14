@@ -14,6 +14,10 @@ public class Grid {
     public Grid(PRDWorld.PRDGrid pRDgrid) {
         this.columns = pRDgrid.getColumns();
         this.rows = pRDgrid.getRows();
+
+        if(this.columns < 0 || this.rows < 0){
+            throw new IllegalArgumentException("The number of rows and columns of the grid should be positive integers");
+        }
     }
 
     public Integer getColumns() {
