@@ -1,10 +1,12 @@
 package Dto;
 
+import EndSimulationDetails.EntitySimulationEndDetails;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -19,6 +21,8 @@ public class SimulationExecutionDto {
     DoubleProperty progress;
     boolean isRunning;
     boolean isProgressable;
+    private HashMap<String, EntitySimulationEndDetails> endSimulationDetails;
+
 
     public SimulationExecutionDto(String id, String status, int numberId, Map<String, Integer> entitiesPopulationMap, boolean isProgressable) {
         this.id = id;
@@ -35,6 +39,14 @@ public class SimulationExecutionDto {
         progress = new SimpleDoubleProperty(0);
         this.isProgressable = isProgressable;
 
+    }
+
+    public HashMap<String, EntitySimulationEndDetails> getEndSimulationDetails() {
+        return endSimulationDetails;
+    }
+
+    public void setEndSimulationDetails(HashMap<String, EntitySimulationEndDetails> endSimulationDetails) {
+        this.endSimulationDetails = endSimulationDetails;
     }
 
     public DoubleProperty getProgress() {

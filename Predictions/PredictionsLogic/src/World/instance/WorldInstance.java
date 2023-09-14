@@ -92,7 +92,13 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
 
         while (!status.equals(SimulationStatusType.Stop)) {
 
-            while(status.equals(SimulationStatusType.Pause)) {}
+            while(status.equals(SimulationStatusType.Pause)) {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
 
             runningTimeInSeconds = Duration.between(startTime, Instant.now()).getSeconds();
             updateEntitiesPopulation();

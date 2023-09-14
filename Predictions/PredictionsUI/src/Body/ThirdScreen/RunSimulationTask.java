@@ -35,7 +35,6 @@ public class RunSimulationTask extends Task<Boolean> {
 
             while(worldInstance.getStatus().equals(SimulationStatusType.Pause)){
                 Thread.sleep(200);
-                System.out.println("im stuck");
             }
 
             sampleEngineAndUpdateUi();
@@ -51,7 +50,7 @@ public class RunSimulationTask extends Task<Boolean> {
 
         }
         sampleEngineAndUpdateUi();
-
+        simulationExecutionDto.setEndSimulationDetails(worldInstance.getSimulationDetailsMap());
         Platform.runLater(this::ToDoWhenSimulationHasFinished);
 
 

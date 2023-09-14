@@ -1,5 +1,6 @@
 package Body.ThirdScreen;
 import Dto.SimulationExecutionDto;
+import EndSimulationDetails.EntitySimulationEndDetails;
 import Paths.ButtonsImagePath;
 import PrimaryContreoller.PrimaryController;
 import World.instance.SimulationStatusType;
@@ -11,8 +12,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -26,6 +31,7 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -38,6 +44,8 @@ public class ThirdScreenBodyController implements Initializable {
     @FXML private Text ticksText;
     @FXML private Text secondText;
     @FXML private HBox progressHbox;
+    @FXML private TabPane resultTabPane;
+    @FXML private LineChart<Number, Number> lineChart;
     ObservableList<SimulationExecutionDto> simulationsDataList;
     ObservableList<EntityPopulation> entityPopulationList;
     private PrimaryController primaryController;
@@ -87,10 +95,13 @@ public class ThirdScreenBodyController implements Initializable {
         progressPrecent = new Text();
         progressPrecent.setFont(new Font(19));
         ///////-----------------------------------///////////////////
+        resultTabPane.setVisible(false);
+        ///////-----------------------------------///////////////////
 
         chosenSimulationId = null;
 
     }
+
 
     private void simulationGotSelected() {
         SimulationExecutionDto selectedItem = executionListTable.getSelectionModel().getSelectedItem();
@@ -136,6 +147,7 @@ public class ThirdScreenBodyController implements Initializable {
             progressHbox.getChildren().clear();
         }
 
+        resultTabPane.setVisible(false);
 
     }
 
@@ -192,7 +204,7 @@ public class ThirdScreenBodyController implements Initializable {
         });
     }
 
-    
+
     private void enableControlButtons(){
         playButton.setGraphic(playimage);
         playButton.setDisable(false);
@@ -225,9 +237,45 @@ public class ThirdScreenBodyController implements Initializable {
     public void SimulationFinished(Integer id) {
         if(chosenSimulationId != null && chosenSimulationId == id){
             disableControlButtons();
+            this.resultTabPane.setVisible(true);
+            loadSimulationResult();
         }
         updateSimulationStatusInTable(id);
+
     }
+
+    private void loadSimulationResult() {
+        loadEntityAmountGraph();
+
+
+
+    }
+
+    private void loadEntityAmountGraph() {
+        lineChart.getData().clear();
+        // Iterate through the map and create a series for each key
+        for (Map.Entry<String, EntitySimulationEndDetails> entry : chosenSimulation.getEndSimulationDetails().entrySet()) {
+            String key = entry.getKey();
+            EntitySimulationEndDetails details = entry.getValue();
+
+            // Create a new series with the key as the name
+            XYChart.Series<Number, Number> series = new XYChart.Series<>();
+            series.setName(key);
+
+            // Iterate through populationByTick and add data points to the series
+            for (Map.Entry<Integer, Integer> populationEntry : details.getPopulationByTick().entrySet()) {
+                Integer tick = populationEntry.getKey();
+                Integer population = populationEntry.getValue();
+
+                // Create an XYChart.Data point and add it to the series
+                series.getData().add(new XYChart.Data<>(tick, population));
+            }
+
+            // Add the series to the chart
+            lineChart.getData().add(series);
+        }
+    }
+
     private void updateSimulationStatusInTable(Integer id) {
         Optional<SimulationExecutionDto> optionalDto = simulationsDataList.stream()
                 .filter(dto -> dto.getNumberId().equals(id))
