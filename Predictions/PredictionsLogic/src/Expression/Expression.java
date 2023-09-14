@@ -41,26 +41,75 @@ public class Expression {
 
     public PropertyType GetTranslatedValueType(EntityDefinition entityDefinition , HashMap<String,EntityDefinition> entities, HashMap<String, EnvPropertyDefinition> environmentProperties){
         if(expressionIsSupportMethod()){
-            List<String> arguments = extractArguments(this.expression);
             if(this.expression.startsWith("environment")){
+                List<String> arguments = extractArguments(this.expression);
                 if(!environmentProperties.containsKey(arguments.get(0))) {
                     throw new IllegalArgumentException("The evaluate operation cannot be performed because the environment property " + arguments.get(0) + " does not exist");
                 }
                 return environmentProperties.get(arguments.get(0)).getType();
             }
+
             else if(this.expression.startsWith("evaluate")){
+                List<String> arguments = extractArguments(this.expression);
                 String[] parts = arguments.get(0).split("\\.");
 
-                if(!entities.containsKey(parts[0])) {
-                    throw new IllegalArgumentException("The entity in the expression does not exist");
+                if (parts.length < 2){
+                    throw new IllegalArgumentException("The function ticks accepts one and only argument of the following format <entity>.<property name>");
+                }
+                if(!entities.containsKey(parts[0])){
+                    throw new IllegalArgumentException("The entity passed in the format to the ticks function does not exist");
+                }
+                if(!entities.get(parts[0]).getProperties().containsKey(parts[1])){
+                    throw new IllegalArgumentException("The property passed in the format to the ticks function does not exist in the context of the " + parts[0] + " entity");
                 }
 
-                if(!entities.get(parts[0]).getProperties().containsKey(parts[1])) {
-                    throw new IllegalArgumentException("The evaluate operation cannot be performed because the property " + parts[1] + " does not exist in the context of the requested entity");
-                }
                 return entities.get(parts[0]).getProperties().get(parts[1]).getType();
             }
 
+            else if(this.expression.startsWith("ticks")){
+                List<String> arguments = extractArguments(this.expression);
+                String[] parts = arguments.get(0).split("\\.");
+
+                if (parts.length < 2){
+                    throw new IllegalArgumentException("The function ticks accepts one and only argument of the following format <entity>.<property name>");
+                }
+                if(!entities.containsKey(parts[0])){
+                    throw new IllegalArgumentException("The entity passed in the format to the ticks function does not exist");
+                }
+                if(!entities.get(parts[0]).getProperties().containsKey(parts[1])){
+                    throw new IllegalArgumentException("The property passed in the format to the ticks function does not exist in the context of the " + parts[0] + " entity");
+                }
+
+                return PropertyType.FLOAT;
+            }
+
+            else if(this.expression.startsWith("percent")) {
+                List<String> arguments = extractArgumentsPercent(this.expression);
+
+                if(arguments.size() < 2){
+                    throw new IllegalArgumentException("The percentage function should accept 2 arguments");
+                }
+
+                if(!new Expression(arguments.get(0)).GetTranslatedValueType(entityDefinition,entities,environmentProperties).equals(PropertyType.FLOAT) ||
+                        !new Expression(arguments.get(1)).GetTranslatedValueType(entityDefinition,entities,environmentProperties).equals(PropertyType.FLOAT)){
+                    throw new IllegalArgumentException("The percent function accepts only numeric arguments");
+                }
+
+                return PropertyType.FLOAT;
+            }
+
+            else if(this.expression.startsWith("random")) {
+                List<String> arguments = extractArguments(this.expression);
+
+                try {
+                    PropertyType.DECIMAL.convert(arguments.get(0));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+                return PropertyType.FLOAT;
+            }
+            
             return PropertyType.FLOAT;
         }
         else if (expressionIsProperty(entityDefinition.getProperties())) {
