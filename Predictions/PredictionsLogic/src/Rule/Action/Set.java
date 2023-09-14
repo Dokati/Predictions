@@ -25,6 +25,10 @@ public class Set extends Action{
         this.entity =  entities.get(prdAction.getEntity());
         this.propertyName = prdAction.getProperty();
         this.expressionValue = new Expression(prdAction.getValue());
+
+        if(!entity.getProperties().get(propertyName).getType().equals(expressionValue.GetTranslatedValueType(entity,entities,environmentProperties))){
+            throw new IllegalArgumentException("The set operation cannot be performed with values of different types");
+        }
     }
 
     @Override

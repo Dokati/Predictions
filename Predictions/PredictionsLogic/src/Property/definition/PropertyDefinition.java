@@ -17,7 +17,7 @@ public class PropertyDefinition {
         try {
             this.type = PropertyType.valueOf(propertyDef.getType().toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid property type. A property cannot be of type " + propertyDef.getType());
+            throw new IllegalArgumentException("Invalid property type. Property cannot be of type " + propertyDef.getType());
         }
 
         if(!propertyDef.getPRDValue().isRandomInitialize()) {
