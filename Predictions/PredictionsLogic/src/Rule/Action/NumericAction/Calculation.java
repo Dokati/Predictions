@@ -34,11 +34,11 @@ public abstract class Calculation extends Action {
     public void CheckIfTypeOfArgumentsMatchesForNumericAction(PropertyType arg1Type, PropertyType arg2Type) {
         if (!arg1Type.equals(PropertyType.FLOAT)) {
             throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("It is not possible to perform the " + this.getClass().getSimpleName() +
-                    "operation because The variable arg1 is not of numeric value type");
+                    " operation because The variable arg1 is not of numeric value type");
         }
         if (!arg2Type.equals(PropertyType.FLOAT)) {
             throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("It is not possible to perform the " + this.getClass().getSimpleName() +
-                    "operation because The variable arg2 is not of numeric value type");
+                    " operation because The variable arg2 is not of numeric value type");
         }
     }
 }

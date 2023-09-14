@@ -100,11 +100,10 @@ public class Expression {
 
             else if(this.expression.startsWith("random")) {
                 List<String> arguments = extractArguments(this.expression);
-
-                try {
+                try{
                     PropertyType.DECIMAL.convert(arguments.get(0));
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
+                } catch (IllegalArgumentException e) {
+                    throw new IllegalArgumentException("The random function accepts only positive integers");
                 }
 
                 return PropertyType.FLOAT;
