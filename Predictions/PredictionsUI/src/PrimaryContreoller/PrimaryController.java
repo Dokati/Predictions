@@ -181,12 +181,13 @@ public class PrimaryController implements Initializable {
         predictionManager.InitializePopulation(entitiesPopulationMap);
 
         simulationList.put(simulationIdNumber,new WorldInstance(predictionManager.getWorldDefinition(),envPropValues));
-
         Future<SimulationEndDetailsDto> futureResult = predictionManager.threadPool.submit(simulationList.get(simulationIdNumber));
-
-        SimulationExecutionDto simulationExecutionDto = new SimulationExecutionDto(simulationId,"Running", simulationIdNumber, entitiesPopulationMap);
+        SimulationExecutionDto simulationExecutionDto =
+                new SimulationExecutionDto(simulationId,"Running", simulationIdNumber, entitiesPopulationMap,
+                        !predictionManager.getSimulationList().get(simulationIdNumber).SimulationEndsByUser());
         this.thirdScreenBodyController.addSimulationToTable(simulationExecutionDto);
         RunSimulationTask runSimulationTask = new RunSimulationTask(simulationList.get(simulationIdNumber), simulationExecutionDto, this.thirdScreenBodyController);
+
         Thread thread = new Thread(runSimulationTask);
         thread.start();
 

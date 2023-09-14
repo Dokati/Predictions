@@ -288,6 +288,10 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
         status = SimulationStatusType.Running;
     }
 
+    public boolean SimulationEndsByUser(){
+        return this.terminationConditions.containsKey(TerminationType.BYUSER);
+    }
+
     @Override
     public String toString() {
         return "";

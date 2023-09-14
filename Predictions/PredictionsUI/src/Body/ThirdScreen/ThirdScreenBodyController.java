@@ -5,17 +5,21 @@ import PrimaryContreoller.PrimaryController;
 import World.instance.SimulationStatusType;
 import World.instance.WorldInstance;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 
@@ -33,6 +37,7 @@ public class ThirdScreenBodyController implements Initializable {
     @FXML private TableView<EntityPopulation> entityPopulationTable;
     @FXML private Text ticksText;
     @FXML private Text secondText;
+    @FXML private HBox progressHbox;
     ObservableList<SimulationExecutionDto> simulationsDataList;
     ObservableList<EntityPopulation> entityPopulationList;
     private PrimaryController primaryController;
@@ -41,13 +46,15 @@ public class ThirdScreenBodyController implements Initializable {
     Button playButton;
     Button pauseButton;
     Button stopButton;
-
     ImageView playimage;
     ImageView stopimage;
     ImageView pauseimage;
     ImageView disableplayimage;
     ImageView disableStopimage;
     ImageView disablePauseimage;
+    ProgressBar progressBar;
+    Text progressText;
+    Text progressPrecent;
 
 
     @Override
@@ -72,7 +79,14 @@ public class ThirdScreenBodyController implements Initializable {
         ///////-----------------------------------///////////////////
 
         setControlButtons();
-        //this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton);
+        ///////-----------------------------------///////////////////
+        progressBar = new ProgressBar();
+        progressBar.setPrefSize(200,25);
+        progressText = new Text("Simulation Progress:");
+        progressText.setFont(new Font(19));
+        progressPrecent = new Text();
+        progressPrecent.setFont(new Font(19));
+        ///////-----------------------------------///////////////////
 
         chosenSimulationId = null;
 
@@ -107,6 +121,19 @@ public class ThirdScreenBodyController implements Initializable {
         }
         else {
             disableControlButtons();
+        }
+        if(selectedSimulationDetails.isProgressable()){
+            progressBar.setDisable(false);
+            progressBar.progressProperty().unbind();
+            progressBar.progressProperty().bind(selectedSimulationDetails.getProgress());
+            progressPrecent.textProperty().unbind();
+            IntegerProperty percent = new SimpleIntegerProperty();
+            percent.bind(selectedSimulationDetails.getProgress().multiply(100));
+            progressPrecent.textProperty().bind(Bindings.concat(percent.asString(),"%"));
+            if(progressHbox.getChildren().isEmpty()) progressHbox.getChildren().addAll(progressText,progressBar,progressPrecent);
+        }
+        else {
+            progressHbox.getChildren().clear();
         }
 
 
@@ -158,21 +185,11 @@ public class ThirdScreenBodyController implements Initializable {
             SimulationStatusType simulationStatus = simulatiosnMap.get(chosenSimulationId).getStatus();
             if(simulationStatus.equals(SimulationStatusType.Running) ||
                     simulationStatus.equals(SimulationStatusType.Pause)){
-                simulatiosnMap.get(chosenSimulationId).StopSimulation();}
+                simulatiosnMap.get(chosenSimulationId).StopSimulation();
+                progressBar.setDisable(true);
+                simulationsDataList.get(chosenSimulationId-1).FinishRunning();
+            }
         });
-    }
-
-    private void stopSimulation(SimulationStatusType simulationStatus) {
-        simulationStatus = SimulationStatusType.Stop;
-
-    }
-
-    private void PauseSimulation(SimulationStatusType simulationStatus) {
-        simulationStatus = SimulationStatusType.Pause;
-    }
-
-    private void changeSimulationStatusToRunning(SimulationStatusType simulationStatus) {
-        simulationStatus = SimulationStatusType.Running;
     }
 
     private void enableControlButtons(){
@@ -191,32 +208,25 @@ public class ThirdScreenBodyController implements Initializable {
         stopButton.setGraphic(disableStopimage);
         stopButton.setDisable(true);
     }
-
-
     public void addSimulationToTable(SimulationExecutionDto simulationExecutionDto) {
         simulationsDataList.add(simulationExecutionDto);
         this.executionListTable.getSelectionModel().select(simulationsDataList.size()-1);
         simulationGotSelected();
         executionListTable.refresh();
     }
-
     public void setMainController(PrimaryController primaryController) {
         this.primaryController = primaryController;
         initializeThatDependsOnPrimaryInit();
     }
-
     private void initializeThatDependsOnPrimaryInit() {
         setControlButtonsListeners();
     }
-
     public void SimulationFinished(Integer id) {
         if(chosenSimulationId != null && chosenSimulationId == id){
             disableControlButtons();
         }
         updateSimulationStatusInTable(id);
-
     }
-
     private void updateSimulationStatusInTable(Integer id) {
         Optional<SimulationExecutionDto> optionalDto = simulationsDataList.stream()
                 .filter(dto -> dto.getNumberId().equals(id))
@@ -224,7 +234,6 @@ public class ThirdScreenBodyController implements Initializable {
         optionalDto.get().setStatus("Finished");
         this.executionListTable.refresh();
     }
-
     public void RefreshEntityPopTable() {
         this.entityPopulationTable.refresh();
     }

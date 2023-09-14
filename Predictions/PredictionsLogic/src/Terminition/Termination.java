@@ -50,7 +50,7 @@ public class Termination {
         this.type = type;
     }
 
-    public int getCount() {
+    public Integer getCount() {
         return count;
     }
 

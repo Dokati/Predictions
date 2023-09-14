@@ -1,9 +1,10 @@
 package Dto;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -15,9 +16,11 @@ public class SimulationExecutionDto {
     IntegerProperty tick;
     IntegerProperty runningTimeInSeconds;
     Map<String, IntegerProperty> entitiesPopulation;
+    DoubleProperty progress;
     boolean isRunning;
+    boolean isProgressable;
 
-    public SimulationExecutionDto(String id, String status, int numberId, Map<String, Integer> entitiesPopulationMap) {
+    public SimulationExecutionDto(String id, String status, int numberId, Map<String, Integer> entitiesPopulationMap, boolean isProgressable) {
         this.id = id;
         Status = status;
         tick = new SimpleIntegerProperty(0);
@@ -29,7 +32,17 @@ public class SimulationExecutionDto {
                         Map.Entry::getKey,
                         entry -> new SimpleIntegerProperty(entry.getValue())
                 ));
+        progress = new SimpleDoubleProperty(0);
+        this.isProgressable = isProgressable;
 
+    }
+
+    public DoubleProperty getProgress() {
+        return progress;
+    }
+
+    public DoubleProperty progressProperty() {
+        return progress;
     }
 
     public void setStatus(String status) {
@@ -98,5 +111,11 @@ public class SimulationExecutionDto {
     }
 
 
+    public boolean isProgressable() {
+        return isProgressable;
+    }
 
+    public void UpdateProgress(double progress) {
+        this.progress.set(progress);
+    }
 }

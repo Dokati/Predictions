@@ -29,30 +29,19 @@ public class RunSimulationTask extends Task<Boolean> {
 
 
         while(worldInstance.getStatus().equals(SimulationStatusType.Running) ||
-                worldInstance.getStatus().equals(SimulationStatusType.Pause )){
+                worldInstance.getStatus().equals(SimulationStatusType.Pause ) ||
+                (!simulationExecutionDto.isProgressable() && simulationExecutionDto.isRunning())){
+
 
             while(worldInstance.getStatus().equals(SimulationStatusType.Pause)){
                 Thread.sleep(200);
                 System.out.println("im stuck");
             }
 
-            Integer tick = worldInstance.getTick();
-            Integer time = Math.toIntExact(worldInstance.getRunningTimeInSeconds());
-
-            Map<String, IntegerProperty> entitiesPopulation = new HashMap<>();
-            worldInstance.getSimulationDetailsMap().entrySet().stream().forEach(entry -> {
-                entitiesPopulation.put(entry.getKey(),new SimpleIntegerProperty(entry.getValue().getCurrentPopulation()));
-            });
-
-
-            Platform.runLater(()->simulationExecutionDto.setTick(tick));
-            Platform.runLater(()->simulationExecutionDto.setRunningTimeInSeconds(time));
-            Platform.runLater(()->simulationExecutionDto.UpdateEntitiesPopulation(entitiesPopulation));
-            Platform.runLater(()->thirdScreenBodyController.RefreshEntityPopTable());
-
+            sampleEngineAndUpdateUi();
 
             try {
-                // Sleep for 2 seconds (2000 milliseconds)
+                // Sleep for 0.2 seconds (200 milliseconds)
                 Thread.sleep(200);
             } catch (InterruptedException e) {
                 // Handle the InterruptedException if needed
@@ -61,11 +50,37 @@ public class RunSimulationTask extends Task<Boolean> {
 
 
         }
+        sampleEngineAndUpdateUi();
 
         Platform.runLater(this::ToDoWhenSimulationHasFinished);
 
 
         return null;
+    }
+
+    private void sampleEngineAndUpdateUi() {
+        Integer tick = worldInstance.getTick();
+        Integer time = Math.toIntExact(worldInstance.getRunningTimeInSeconds());
+
+        Map<String, IntegerProperty> entitiesPopulation = new HashMap<>();
+        worldInstance.getSimulationDetailsMap().entrySet().stream().forEach(entry -> {
+            entitiesPopulation.put(entry.getKey(),new SimpleIntegerProperty(entry.getValue().getCurrentPopulation()));
+        });
+
+
+        Platform.runLater(()->simulationExecutionDto.setTick(tick));
+        Platform.runLater(()->simulationExecutionDto.setRunningTimeInSeconds(time));
+        Platform.runLater(()->simulationExecutionDto.UpdateEntitiesPopulation(entitiesPopulation));
+        Platform.runLater(()->thirdScreenBodyController.RefreshEntityPopTable());
+
+        if(simulationExecutionDto.isProgressable()){
+            Integer maxTick = worldInstance.getTicksTermination().getCount();
+            Integer maxSeconds = worldInstance.getSecTermination().getCount();
+            double tickProgress = maxTick!=null? (double)tick/maxTick:0.0;
+            double secondsProgress = maxSeconds!=null? (double)time/maxSeconds:0.0;
+            double progress = Math.max(tickProgress,secondsProgress);
+            Platform.runLater(()->simulationExecutionDto.UpdateProgress(progress));
+        }
     }
 
     private void ToDoWhenSimulationHasFinished() {
