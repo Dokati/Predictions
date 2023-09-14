@@ -18,7 +18,7 @@ public enum PropertyType
                     return Boolean.parseBoolean((String) value);
                 }
                 else {
-                    throw new RuntimeException("Value of type " + value.getClass().getSimpleName() +
+                    throw new IllegalArgumentException("Value of type " + value.getClass().getSimpleName() +
                             "cannot be converted to Boolean");
                 }
             }
@@ -26,7 +26,7 @@ public enum PropertyType
                 return (Boolean)value;
             }
             else {
-                throw new RuntimeException("Value of type " + value.getClass().getSimpleName() +
+                throw new IllegalArgumentException("Value of type " + value.getClass().getSimpleName() +
                         "cannot be converted to Boolean");
             }
         }
@@ -61,7 +61,7 @@ public enum PropertyType
                 return (String) value;
             }
             else  {
-                throw new RuntimeException("Value of type " + value.getClass().getSimpleName() +
+                throw new IllegalArgumentException("Value of type " + value.getClass().getSimpleName() +
                         "cannot be converted to String");
             }
         }
@@ -94,7 +94,7 @@ public enum PropertyType
                 return (Integer) value;
             }
             else {
-                throw new RuntimeException("Value of type " + value.getClass().getSimpleName() +
+                throw new IllegalArgumentException("Value of type " + value.getClass().getSimpleName() +
                         "cannot be converted to Integer");
             }
         }
@@ -126,7 +126,7 @@ public enum PropertyType
                 return (Float) value;
             }
             else {
-                throw new RuntimeException("Value of type " + value.getClass().getSimpleName() +
+                throw new IllegalArgumentException("Value of type " + value.getClass().getSimpleName() +
                         " cannot be converted to Float");
             }
         }

@@ -31,7 +31,7 @@ public abstract class Action {
     {
         if (!byType.equals(PropertyType.FLOAT)){
             throw new IllegalXmlDataArgOfNumericActionAreNotNumericExceptions("It is not possible to perform the " + this.getClass().getSimpleName()
-                    +" by a value of type ");
+                    +" by a value of type: " + byType.name().toLowerCase());
         };
     }
 
