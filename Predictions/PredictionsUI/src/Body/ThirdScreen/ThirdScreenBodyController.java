@@ -147,7 +147,15 @@ public class ThirdScreenBodyController implements Initializable {
             progressHbox.getChildren().clear();
         }
 
-        resultTabPane.setVisible(false);
+        if (!selectedSimulationDetails.isRunning()){
+            loadSimulationResult();
+            resultTabPane.setVisible(true);
+        }
+        else {
+            resultTabPane.setVisible(false);
+
+        }
+
 
     }
 
@@ -253,6 +261,8 @@ public class ThirdScreenBodyController implements Initializable {
 
     private void loadEntityAmountGraph() {
         lineChart.getData().clear();
+        int iterationLimit = 2000; // Set the desired iteration limit
+        int iterationCount = 0; // Initialize the counter
         // Iterate through the map and create a series for each key
         for (Map.Entry<String, EntitySimulationEndDetails> entry : chosenSimulation.getEndSimulationDetails().entrySet()) {
             String key = entry.getKey();
@@ -261,14 +271,18 @@ public class ThirdScreenBodyController implements Initializable {
             // Create a new series with the key as the name
             XYChart.Series<Number, Number> series = new XYChart.Series<>();
             series.setName(key);
-
+            iterationCount = 0;
             // Iterate through populationByTick and add data points to the series
             for (Map.Entry<Integer, Integer> populationEntry : details.getPopulationByTick().entrySet()) {
+                if (iterationCount >= iterationLimit) {
+                    break; // Exit the loop when the limit is reached
+                }
                 Integer tick = populationEntry.getKey();
                 Integer population = populationEntry.getValue();
 
                 // Create an XYChart.Data point and add it to the series
                 series.getData().add(new XYChart.Data<>(tick, population));
+                iterationCount++; // Increment the counter
             }
 
             // Add the series to the chart

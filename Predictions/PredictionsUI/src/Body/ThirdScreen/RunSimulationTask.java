@@ -51,6 +51,7 @@ public class RunSimulationTask extends Task<Boolean> {
         }
         sampleEngineAndUpdateUi();
         simulationExecutionDto.setEndSimulationDetails(worldInstance.getSimulationDetailsMap());
+        Thread.sleep(200);
         Platform.runLater(this::ToDoWhenSimulationHasFinished);
 
 
