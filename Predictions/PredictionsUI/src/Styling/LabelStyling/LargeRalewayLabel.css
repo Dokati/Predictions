@@ -11,7 +11,7 @@
     -fx-wrap-text: false;
     -fx-padding: 5px;
 }
-.label {
+#tilePane .label {
     -fx-font-size: 25;
     -fx-font-family: "Raleway";
     -fx-text-fill: #333333;

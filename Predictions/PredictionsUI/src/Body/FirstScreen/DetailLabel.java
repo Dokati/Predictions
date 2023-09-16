@@ -1,6 +1,8 @@
 package Body.FirstScreen;
 
 import javafx.scene.control.Label;
+import Paths.StylePaths;
+
 
 public class DetailLabel extends Label {
 

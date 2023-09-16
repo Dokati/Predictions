@@ -12,7 +12,7 @@
     -fx-padding: 5px;
 }
 
-.label {
+#tilePane .label {
     -fx-font-size: 20;
     -fx-font-family: "Montserrat";
     -fx-text-fill: #333333;

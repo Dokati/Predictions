@@ -1,6 +1,7 @@
 package Body.ThirdScreen;
 import Dto.SimulationExecutionDto;
 import EndSimulationDetails.EntitySimulationEndDetails;
+import EndSimulationDetails.PropertySimulationEndDetails;
 import Paths.ButtonsImagePath;
 import PrimaryContreoller.PrimaryController;
 import World.instance.SimulationStatusType;
@@ -15,10 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,6 +44,11 @@ public class ThirdScreenBodyController implements Initializable {
     @FXML private HBox progressHbox;
     @FXML private TabPane resultTabPane;
     @FXML private LineChart<Number, Number> lineChart;
+    @FXML private ComboBox<String> entitiesComboBox;
+    @FXML private ListView<String> propertiesListView;
+    @FXML private TableView<PropertyHistPair> propertyHistogramTable;
+    @FXML private Label oconsistencyLabel;
+    @FXML private Label avgValOfPropLabel;
     ObservableList<SimulationExecutionDto> simulationsDataList;
     ObservableList<EntityPopulation> entityPopulationList;
     private PrimaryController primaryController;
@@ -97,6 +100,13 @@ public class ThirdScreenBodyController implements Initializable {
         ///////-----------------------------------///////////////////
         resultTabPane.setVisible(false);
         ///////-----------------------------------///////////////////
+        propertyHistogramTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("property"));
+        propertyHistogramTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("amount"));
+        propertyHistogramTable.setPlaceholder(new Label("No instance with\n this property"));
+
+        ///////-----------------------------------///////////////////
+
+
 
         chosenSimulationId = null;
 
@@ -253,10 +263,54 @@ public class ThirdScreenBodyController implements Initializable {
     }
 
     private void loadSimulationResult() {
-        loadEntityAmountGraph();
+        //loadEntityAmountGraph();
+        loadEntitiesComboBoxAndPropList();
+
+    }
 
 
 
+    private void loadEntitiesComboBoxAndPropList() {
+        entitiesComboBox.getItems().clear();
+        entitiesComboBox.getItems().addAll(chosenSimulation.getEndSimulationDetails().keySet());
+        entitiesComboBox.getSelectionModel().selectFirst();
+        entitiesComboBox.setOnAction(event -> {
+            String selectedEntity = entitiesComboBox.getSelectionModel().getSelectedItem();
+            loadPropertiesListView(selectedEntity);
+        });
+        loadPropertiesListView(entitiesComboBox.getSelectionModel().getSelectedItem());
+    }
+
+    private void loadPropertiesListView(String selectedEntity) {
+        propertiesListView.getItems().clear();
+        if(selectedEntity == null) return;
+        propertiesListView.getItems().addAll(chosenSimulation.getEndSimulationDetails().get(selectedEntity).getEndSimulationPropertiesDetails().keySet());
+        propertiesListView.getSelectionModel().selectFirst();
+        propertiesListView.setOnMouseClicked(event -> {
+            String selectedProperty = propertiesListView.getSelectionModel().getSelectedItem();
+            loadPropertyHistogramTable(selectedProperty,selectedEntity);
+            loadStatisticsLabels(selectedProperty,selectedEntity);
+        });
+        loadPropertyHistogramTable(propertiesListView.getSelectionModel().getSelectedItem(),selectedEntity);
+    }
+
+    private void loadStatisticsLabels(String selectedProperty, String selectedEntity) {
+        PropertySimulationEndDetails propertySimulationEndDetails = chosenSimulation.getEndSimulationDetails()
+                .get(selectedEntity).getEndSimulationPropertiesDetails().get(selectedProperty);
+        String oconsistencyLabeltext = "Consistency: ";
+        oconsistencyLabel.setText(oconsistencyLabeltext+propertySimulationEndDetails.getConsistency().toString());
+        String avgValOfPropLabelText = propertySimulationEndDetails.getAverage() != null ? propertySimulationEndDetails.getAverage().toString() : null;
+        if (avgValOfPropLabelText != null) {
+            avgValOfPropLabelText = "Average value of property: " + avgValOfPropLabelText;
+            avgValOfPropLabel.setText(avgValOfPropLabelText);
+        }
+    }
+
+    private void loadPropertyHistogramTable(String selectedProperty,String selectedEntity) {
+        propertyHistogramTable.getItems().clear();
+        if(selectedProperty == null || selectedEntity == null) return;
+        Map<Object,Integer> propertyHistogram = chosenSimulation.getEndSimulationDetails().get(selectedEntity).getEndSimulationPropertiesDetails().get(selectedProperty).getPropertyHistogram();
+        propertyHistogram.forEach((key, value) -> propertyHistogramTable.getItems().add(new PropertyHistPair(key.toString(),value)));
     }
 
     private void loadEntityAmountGraph() {
