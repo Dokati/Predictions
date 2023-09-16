@@ -263,7 +263,7 @@ public class ThirdScreenBodyController implements Initializable {
     }
 
     private void loadSimulationResult() {
-        //loadEntityAmountGraph();
+        loadEntityAmountGraph();
         loadEntitiesComboBoxAndPropList();
 
     }
@@ -292,13 +292,17 @@ public class ThirdScreenBodyController implements Initializable {
             loadStatisticsLabels(selectedProperty,selectedEntity);
         });
         loadPropertyHistogramTable(propertiesListView.getSelectionModel().getSelectedItem(),selectedEntity);
+        loadStatisticsLabels(propertiesListView.getSelectionModel().getSelectedItem(),selectedEntity);
     }
 
     private void loadStatisticsLabels(String selectedProperty, String selectedEntity) {
+        oconsistencyLabel.setText("");
+        avgValOfPropLabel.setText("");
         PropertySimulationEndDetails propertySimulationEndDetails = chosenSimulation.getEndSimulationDetails()
                 .get(selectedEntity).getEndSimulationPropertiesDetails().get(selectedProperty);
         String oconsistencyLabeltext = "Consistency: ";
         oconsistencyLabel.setText(oconsistencyLabeltext+propertySimulationEndDetails.getConsistency().toString());
+
         String avgValOfPropLabelText = propertySimulationEndDetails.getAverage() != null ? propertySimulationEndDetails.getAverage().toString() : null;
         if (avgValOfPropLabelText != null) {
             avgValOfPropLabelText = "Average value of property: " + avgValOfPropLabelText;
