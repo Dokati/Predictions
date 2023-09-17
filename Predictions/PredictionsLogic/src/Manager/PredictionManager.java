@@ -143,6 +143,10 @@ public class PredictionManager {
         return worldDefinition;
     }
 
+    public void setWorldDefinition(WorldDefinition worldDefinition) {
+        this.worldDefinition = worldDefinition;
+    }
+
     public void InitializePopulation(Map<String, Integer> entitiesPopulationMap)
     {
         for (Map.Entry<String, Integer> entityPopulation : entitiesPopulationMap.entrySet()) {

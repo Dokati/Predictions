@@ -1,6 +1,7 @@
 package PrimaryContreoller;
 
 import Body.FirstScreen.FirstScreenBodyController;
+import Body.SecondScreen.EnvPropTableItem;
 import Body.SecondScreen.SecondScreenBodyController;
 import Body.ThirdScreen.RunSimulationTask;
 import Body.ThirdScreen.ThirdScreenBodyController;
@@ -11,6 +12,7 @@ import Header.HeaderController;
 import Manager.PredictionManager;
 import Paths.StylePaths;
 import World.instance.WorldInstance;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -20,7 +22,6 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class PrimaryController implements Initializable {
@@ -153,7 +154,6 @@ public class PrimaryController implements Initializable {
             showAlertToUser("Loading the XML file failed");
         }
 //      second screen - the envprop list and entity list
-
         this.secondScreenBodyController.setEnvPropTable();
         this.secondScreenBodyController.setEntitiesPopulationList(simulationTitleDto.getEntitiesNames(),simulationTitleDto.getPopulationSpace());
     }
@@ -173,18 +173,21 @@ public class PrimaryController implements Initializable {
         }
     }
 
-    public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues) {
+    public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues, ObservableList<EnvPropTableItem> items) {
+
         HashMap<Integer, WorldInstance> simulationList = this.predictionManager.getSimulationList();
         int simulationIdNumber = this.predictionManager.getSimulationIdNumber();
         String simulationId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy | HH.mm.ss"));
 
         predictionManager.InitializePopulation(entitiesPopulationMap);
-
         simulationList.put(simulationIdNumber,new WorldInstance(predictionManager.getWorldDefinition(),envPropValues));
+
         Future<SimulationEndDetailsDto> futureResult = predictionManager.threadPool.submit(simulationList.get(simulationIdNumber));
         SimulationExecutionDto simulationExecutionDto =
                 new SimulationExecutionDto(simulationId,"Running", simulationIdNumber, entitiesPopulationMap,
-                        !predictionManager.getSimulationList().get(simulationIdNumber).SimulationEndsByUser());
+                        !predictionManager.getSimulationList().get(simulationIdNumber).SimulationEndsByUser(),
+                        predictionManager.getWorldDefinition(), items, envPropValues, entitiesPopulationMap);
+
         this.thirdScreenBodyController.addSimulationToTable(simulationExecutionDto);
         RunSimulationTask runSimulationTask = new RunSimulationTask(simulationList.get(simulationIdNumber), simulationExecutionDto, this.thirdScreenBodyController);
 
@@ -198,9 +201,23 @@ public class PrimaryController implements Initializable {
         Tab selectedTab = tabPane.getTabs().get(2);
         tabPane.getSelectionModel().select(selectedTab);
     }
+    public  void jumpToNewExcecutionTab() {
+        Tab selectedTab = tabPane.getTabs().get(1);
+        tabPane.getSelectionModel().select(selectedTab);
+    }
 
     public void clearAllScreens() {
          firstScreenBodyController.clearFirstScren();
          secondScreenBodyController.clearSecondScreen();
+    }
+
+    public void setEnvPropTableItemsAndValues(ObservableList<EnvPropTableItem> envPropTableItemList, Map<String, String> envPropValues) {
+        this.secondScreenBodyController.setEnvPropTableItemsAndValues(envPropTableItemList, envPropValues);
+    }
+
+
+    public void restartSimulation(SimulationExecutionDto chosenSimulation) {
+        this.secondScreenBodyController.restartSimulation(chosenSimulation);
+
     }
 }

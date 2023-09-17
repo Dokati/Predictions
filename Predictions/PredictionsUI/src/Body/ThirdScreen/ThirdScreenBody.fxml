@@ -87,12 +87,13 @@
                         </Text>
                      </children>
                   </VBox>
-                  <TableView id="entity-population-table" fx:id="entityPopulationTable" prefHeight="189.0" prefWidth="296.0">
+                  <TableView id="entity-population-table" fx:id="entityPopulationTable" prefHeight="170.0" prefWidth="257.0">
                     <columns>
                       <TableColumn prefWidth="130.0" text="Entity" />
                       <TableColumn prefWidth="163.0" text="Population" />
                     </columns>
                   </TableView>
+                  <HBox fx:id="restartHbox" alignment="CENTER" prefHeight="170.0" prefWidth="76.0" />
                </children>
             </HBox>
             <HBox fx:id="progressHbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />

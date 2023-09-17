@@ -14,7 +14,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -24,8 +23,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
-
 
 import java.net.URL;
 import java.util.HashMap;
@@ -49,6 +46,7 @@ public class ThirdScreenBodyController implements Initializable {
     @FXML private TableView<PropertyHistPair> propertyHistogramTable;
     @FXML private Label oconsistencyLabel;
     @FXML private Label avgValOfPropLabel;
+    @FXML private HBox restartHbox;
     ObservableList<SimulationExecutionDto> simulationsDataList;
     ObservableList<EntityPopulation> entityPopulationList;
     private PrimaryController primaryController;
@@ -57,12 +55,15 @@ public class ThirdScreenBodyController implements Initializable {
     Button playButton;
     Button pauseButton;
     Button stopButton;
+    Button restartButton;
     ImageView playimage;
     ImageView stopimage;
     ImageView pauseimage;
+    ImageView restartimage;
     ImageView disableplayimage;
     ImageView disableStopimage;
     ImageView disablePauseimage;
+    ImageView disableRestartImage;
     ProgressBar progressBar;
     Text progressText;
     Text progressPrecent;
@@ -90,6 +91,7 @@ public class ThirdScreenBodyController implements Initializable {
         ///////-----------------------------------///////////////////
 
         setControlButtons();
+        setRestartButton();
         ///////-----------------------------------///////////////////
         progressBar = new ProgressBar();
         progressBar.setPrefSize(200,25);
@@ -105,12 +107,11 @@ public class ThirdScreenBodyController implements Initializable {
         propertyHistogramTable.setPlaceholder(new Label("No instance with\n this property"));
 
         ///////-----------------------------------///////////////////
-
-
-
         chosenSimulationId = null;
 
     }
+
+
 
 
     private void simulationGotSelected() {
@@ -128,21 +129,55 @@ public class ThirdScreenBodyController implements Initializable {
     private void createTheDetailsArea(SimulationExecutionDto selectedSimulationDetails) {
         entityPopulationList.clear();
         this.buttonVbox.getChildren().clear();
-        selectedSimulationDetails.getEntitiesPopulation().forEach((key, valueProperty) -> entityPopulationList.add(new EntityPopulation(key,valueProperty)));
+        this.restartHbox.getChildren().clear();
 
+        selectedSimulationDetails.getEntitiesPopulation().
+                forEach((key, valueProperty) -> entityPopulationList.add(new EntityPopulation(key,valueProperty)));
+
+        createAndBindTickAndSeconds(selectedSimulationDetails);
+
+        enableOrDisableControlButtons(selectedSimulationDetails);
+
+        progressBarCreationOrDeletion(selectedSimulationDetails);
+
+        resultSimulationShowOrHide(selectedSimulationDetails);
+
+
+
+    }
+
+    private void createAndBindTickAndSeconds(SimulationExecutionDto selectedSimulationDetails) {
         this.ticksText.textProperty().unbind();
         this.ticksText.textProperty().bind(Bindings.concat("Ticks: ", selectedSimulationDetails.getTickProperty().asString()));
         this.secondText.textProperty().unbind();
         this.secondText.textProperty().bind(Bindings.concat("Seconds: ", selectedSimulationDetails.getTimeProperty().asString()));
+    }
 
+    private void enableOrDisableControlButtons(SimulationExecutionDto selectedSimulationDetails) {
         this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton);
+        restartHbox.getChildren().add(restartButton);
 
         if (selectedSimulationDetails.isRunning()){
             enableControlButtons();
+            disableRestratButton();
         }
         else {
             disableControlButtons();
+            enableRestratButton();
         }
+    }
+
+    private void resultSimulationShowOrHide(SimulationExecutionDto selectedSimulationDetails) {
+        if (!selectedSimulationDetails.isRunning()){
+            loadSimulationResult();
+            resultTabPane.setVisible(true);
+        }
+        else {
+            resultTabPane.setVisible(false);
+        }
+    }
+
+    private void progressBarCreationOrDeletion(SimulationExecutionDto selectedSimulationDetails) {
         if(selectedSimulationDetails.isProgressable()){
             progressBar.setDisable(false);
             progressBar.progressProperty().unbind();
@@ -156,19 +191,34 @@ public class ThirdScreenBodyController implements Initializable {
         else {
             progressHbox.getChildren().clear();
         }
-
-        if (!selectedSimulationDetails.isRunning()){
-            loadSimulationResult();
-            resultTabPane.setVisible(true);
-        }
-        else {
-            resultTabPane.setVisible(false);
-
-        }
-
-
     }
 
+    private void setRestartButton() {
+        restartButton = new Button();
+        restartimage = new ImageView(new Image(ButtonsImagePath.RESTART));
+        disableRestartImage = new ImageView(new Image(ButtonsImagePath.DISABLE_RESTART));
+        restartimage.setFitWidth(35);
+        restartimage.setFitHeight(35);
+        disableRestartImage.setFitWidth(35);
+        disableRestartImage.setFitHeight(35);
+        restartButton.setOnAction(event -> {
+            restartSimulation();
+        });
+        disableRestratButton();
+    }
+    private void restartSimulation() {
+        primaryController.jumpToNewExcecutionTab();
+        primaryController.getPredictionManager().setWorldDefinition(chosenSimulation.getSimulationWorldDefinition());
+        primaryController.restartSimulation(chosenSimulation);
+    }
+    private void enableRestratButton() {
+        restartButton.setGraphic(restartimage);
+        restartButton.setDisable(false);
+    }
+    private void disableRestratButton() {
+        restartButton.setGraphic(disableRestartImage);
+        restartButton.setDisable(true);
+    }
     private void setControlButtons() {
         playButton = new Button();
         pauseButton = new Button();
@@ -194,7 +244,6 @@ public class ThirdScreenBodyController implements Initializable {
         enableControlButtons();
 
     }
-
     private void setControlButtonsListeners() {
         HashMap<Integer, WorldInstance> simulatiosnMap =
                 primaryController.getPredictionManager().getSimulationList();
@@ -221,8 +270,6 @@ public class ThirdScreenBodyController implements Initializable {
             }
         });
     }
-
-
     private void enableControlButtons(){
         playButton.setGraphic(playimage);
         playButton.setDisable(false);
@@ -253,13 +300,14 @@ public class ThirdScreenBodyController implements Initializable {
         setControlButtonsListeners();
     }
     public void SimulationFinished(Integer id) {
+        updateSimulationStatusInTable(id);
+
         if(chosenSimulationId != null && chosenSimulationId == id){
             disableControlButtons();
+            enableRestratButton();
             this.resultTabPane.setVisible(true);
             loadSimulationResult();
         }
-        updateSimulationStatusInTable(id);
-
     }
 
     private void loadSimulationResult() {

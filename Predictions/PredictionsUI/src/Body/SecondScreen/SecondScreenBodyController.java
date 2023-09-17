@@ -1,6 +1,7 @@
 package Body.SecondScreen;
 
 import Dto.EnvPropDto;
+import Dto.SimulationExecutionDto;
 import PrimaryContreoller.PrimaryController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,10 +17,7 @@ import javafx.scene.text.Text;
 
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class SecondScreenBodyController implements Initializable {
@@ -53,7 +51,6 @@ public class SecondScreenBodyController implements Initializable {
     int totalPopulation = 0;
     Text totalPopulationTextField;
     Text maxPopulationTexrField;
-
 
 
     @Override
@@ -118,6 +115,7 @@ public class SecondScreenBodyController implements Initializable {
 
 
     }
+
 
     private void updateCellValue(String name, String columnName, String newValue) {
         for (EnvPropTableItem item : this.envPropTable.getItems()) {
@@ -287,7 +285,7 @@ public class SecondScreenBodyController implements Initializable {
                         entry -> {return entry.getValue().getText().isEmpty() ? 0: Integer.parseInt(entry.getValue().getText());}));
 
         primaryController.jumpToResultTab();
-        primaryController.runSimulation(entitiesPopulationMap, envPropValues);
+        primaryController.runSimulation(entitiesPopulationMap, envPropValues, envPropTable.getItems());
     }
 
     @FXML
@@ -311,5 +309,38 @@ public class SecondScreenBodyController implements Initializable {
         this.entityToPopTextFieldMap.clear();
         this.populationGridPane.getChildren().clear();
 
+    }
+
+    public void setEnvPropTableItemsAndValues(ObservableList<EnvPropTableItem> envPropTableItemList, Map<String, String> envPropValues) {
+        this.envPropTable.setItems(envPropTableItemList);
+        this.envPropValues.putAll(envPropValues);
+    }
+
+    public void restartSimulation(SimulationExecutionDto chosenSimulation) {
+        clearSecondScreen();
+        setEnvPropTableItemsAndValues( chosenSimulation.getEnvPropTableItemList(), chosenSimulation.getEnvPropValues());
+        setEntitiesPopulationList(new ArrayList<>(chosenSimulation.getPopulationMap().keySet()), chosenSimulation.getSpace());
+        insertPopulationValues(chosenSimulation.getPopulationMap());
+
+    }
+
+    private void insertPopulationValues(Map<String, Integer> populationMap) {
+        // Iterate over populationMap
+        for (Map.Entry<String, Integer> entry : populationMap.entrySet()) {
+            String entity = entry.getKey();
+            int population = entry.getValue();
+
+            // Check if population is not equal to 0
+            if (population != 0) {
+                // Get the corresponding TextField from entityToPopTextFieldMap
+                TextField textField = entityToPopTextFieldMap.get(entity);
+
+                // Check if the TextField exists (not null)
+                if (textField != null) {
+                    // Set the text of the TextField
+                    textField.setText(String.valueOf(population));
+                }
+            }
+        }
     }
 }

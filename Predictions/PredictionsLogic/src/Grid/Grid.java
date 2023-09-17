@@ -35,4 +35,8 @@ public class Grid {
     public void setRows(Integer rows) {
         this.rows = rows;
     }
+    public Integer getSpace()
+    {
+        return this.columns*this.rows;
+    }
 }
