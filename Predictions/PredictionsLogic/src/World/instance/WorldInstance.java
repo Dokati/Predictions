@@ -170,7 +170,7 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
                                 entityEndSimulationPropertiesDetails.get(property.getKey()).getPropertyHistogram().get(property.getValue().getValue()) + 1);
                     }
 
-                    else {
+                    if(!entityEndSimulationPropertiesDetails.get(property.getKey()).getPropertyHistogram().containsKey(property.getValue().getValue())) {
                         entityEndSimulationPropertiesDetails.get(property.getKey()).getPropertyHistogram().put(property.getValue().getValue(), 1);
                     }
 

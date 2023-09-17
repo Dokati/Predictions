@@ -37,8 +37,9 @@ public class PropertySimulationEndDetails {
         if(numOfEntitiesForAverageCalc.equals(1)){
             this.consistency = consistency;
         }
+
         else{
-            Float temp = this.consistency * numOfEntitiesForAverageCalc;
+            Float temp = this.consistency * (numOfEntitiesForAverageCalc - 1);
             this.consistency = (temp + consistency)/numOfEntitiesForAverageCalc;
         }
 
@@ -50,10 +51,9 @@ public class PropertySimulationEndDetails {
             this.average = average;
         }
         else{
-            Float temp = this.average * numOfEntitiesForAverageCalc;
+            Float temp = this.average * (numOfEntitiesForAverageCalc - 1);
             this.average = (temp + average)/numOfEntitiesForAverageCalc;
         }
-
     }
 
     public void setConsistency(Float consistency) {
