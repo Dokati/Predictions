@@ -152,5 +152,6 @@ public class FirstScreenBodyController implements Initializable {
         this.TreeView.getRoot().getChildren().get(0).getChildren().clear();
         this.TreeView.getRoot().getChildren().get(1).getChildren().clear();
         this.TreeView.getRoot().getChildren().get(3).getChildren().clear();
+        tilePane.getChildren().clear();
     }
 }

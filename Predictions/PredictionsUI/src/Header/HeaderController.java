@@ -34,7 +34,6 @@ public class HeaderController {
         if (selectedFile != null) {
             filePathTextField.setText(selectedFile.getAbsolutePath());
         }
-        primaryController.clearAllScreens();
         primaryController.loadSimulation(filePathTextField.getText());
 
     }

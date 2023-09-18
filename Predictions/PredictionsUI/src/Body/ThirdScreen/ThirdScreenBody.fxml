@@ -140,8 +140,8 @@
                                     </TableView>
                                  </content>
                               </ScrollPane>
-                              <Label fx:id="oconsistencyLabel" layoutX="181.0" layoutY="28.0" prefHeight="63.0" prefWidth="162.0" style="-fx-wrap-text: true;" />
-                              <Label fx:id="avgValOfPropLabel" layoutX="181.0" layoutY="102.0" prefHeight="63.0" prefWidth="162.0" style="-fx-wrap-text: true;" />
+                              <Label fx:id="oconsistencyLabel" layoutX="181.0" layoutY="28.0" prefHeight="63.0" prefWidth="162.0" style="-fx-wrap-text: true; -fx-background-color: white; -fx-border-color: black;" />
+                              <Label fx:id="avgValOfPropLabel" layoutX="181.0" layoutY="102.0" prefHeight="63.0" prefWidth="162.0" style="-fx-wrap-text: true; -fx-background-color: white; -fx-border-color: black;" />
                            </children></AnchorPane>
                   </content>
                 </Tab>

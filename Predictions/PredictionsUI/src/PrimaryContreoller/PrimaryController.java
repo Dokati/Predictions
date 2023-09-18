@@ -143,7 +143,8 @@ public void loadSimulation(String FilePath) {
     SimulationTitlesDetails simulationTitleDto = null;
     try {
         simulationTitleDto = getPredictionManager().loadSimulation(FilePath);
-        SetTitleDetailsOnFirstScreen(simulationTitleDto);
+        clearAllScreens();
+        initFirstNSecondScrean(simulationTitleDto);
     }
     catch (IllegalArgumentException exception){
         showAlertToUser(exception.getMessage());
@@ -151,12 +152,11 @@ public void loadSimulation(String FilePath) {
     catch (RuntimeException e) {
         showAlertToUser("Loading the XML file failed");
     }
-    initFirstNSecondScrean(simulationTitleDto);
+
 
 }
     public void initFirstNSecondScrean(SimulationTitlesDetails simulationTitleDto) {
-
-
+        SetTitleDetailsOnFirstScreen(simulationTitleDto);
 //      second screen - the envprop list and entity list
         this.secondScreenBodyController.setEnvPropTable();
         this.secondScreenBodyController.setEntitiesPopulationList(simulationTitleDto.getEntitiesNames(),simulationTitleDto.getPopulationSpace());
