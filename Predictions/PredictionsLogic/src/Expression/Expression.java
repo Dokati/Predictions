@@ -43,6 +43,10 @@ public class Expression {
         if(expressionIsSupportMethod()){
             if(this.expression.startsWith("environment")){
                 List<String> arguments = extractArguments(this.expression);
+
+                if(arguments.isEmpty()){
+                    return PropertyType.STRING;
+                }
                 if(!environmentProperties.containsKey(arguments.get(0))) {
                     throw new IllegalArgumentException("The environment operation cannot be performed on environment property " + arguments.get(0) + " that does not exist");
                 }
@@ -51,6 +55,11 @@ public class Expression {
 
             else if(this.expression.startsWith("evaluate")){
                 List<String> arguments = extractArguments(this.expression);
+
+                if(arguments.isEmpty()){
+                    return PropertyType.STRING;
+                }
+
                 String[] parts = arguments.get(0).split("\\.");
 
                 if (parts.length < 2){
@@ -68,6 +77,11 @@ public class Expression {
 
             else if(this.expression.startsWith("ticks")){
                 List<String> arguments = extractArguments(this.expression);
+
+                if(arguments.isEmpty()){
+                    return PropertyType.STRING;
+                }
+
                 String[] parts = arguments.get(0).split("\\.");
 
                 if (parts.length < 2){
@@ -86,10 +100,12 @@ public class Expression {
             else if(this.expression.startsWith("percent")) {
                 List<String> arguments = extractArgumentsPercent(this.expression);
 
+                if(arguments.isEmpty()){
+                    return PropertyType.STRING;
+                }
                 if(arguments.size() < 2){
                     throw new IllegalArgumentException("The percent function should accept 2 arguments");
                 }
-
                 if(!new Expression(arguments.get(0)).GetTranslatedValueType(entityDefinition,entities,environmentProperties).equals(PropertyType.FLOAT) ||
                         !new Expression(arguments.get(1)).GetTranslatedValueType(entityDefinition,entities,environmentProperties).equals(PropertyType.FLOAT)){
                     throw new IllegalArgumentException("The percent function accepts only numeric arguments");
@@ -100,6 +116,10 @@ public class Expression {
 
             else if(this.expression.startsWith("random")) {
                 List<String> arguments = extractArguments(this.expression);
+
+                if(arguments.isEmpty()){
+                    return PropertyType.STRING;
+                }
                 try{
                     PropertyType.DECIMAL.convert(arguments.get(0));
                 } catch (IllegalArgumentException e) {
@@ -166,10 +186,16 @@ public class Expression {
         switch (Objects.requireNonNull(methodName)){
             case "environment":
                 arguments = extractArguments(this.expression);
+                if(arguments.isEmpty()){
+                    return this.expression;
+                }
                 result = context.environment(arguments.get(0));
                 break;
             case  "random":
                 arguments = extractArguments(this.expression);
+                if(arguments.isEmpty()){
+                    return this.expression;
+                }
                 if(!isConvertibleToNumber(arguments.get(0))){
                     throw new NotNumericValueException();
                 }
@@ -177,17 +203,25 @@ public class Expression {
                 break;
             case "evaluate":
                 arguments = extractArguments(this.expression);
+                if(arguments.isEmpty()){
+                    return this.expression;
+                }
                 result = context.evaluate(arguments.get(0));
                 break;
             case "percent":
                 arguments = extractArgumentsPercent(this.expression);
+                if(arguments.isEmpty()){
+                    return this.expression;
+                }
                 result = context.percent(new Expression(arguments.get(0)),new Expression(arguments.get(1)));
                 break;
             case "ticks":
                 arguments = extractArguments(this.expression);
+                if(arguments.isEmpty()){
+                    return this.expression;
+                }
                 result = context.ticks(arguments.get(0));
                 break;
-
         }
         return result;
     }

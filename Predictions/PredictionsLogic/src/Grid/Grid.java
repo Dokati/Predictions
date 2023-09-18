@@ -15,8 +15,8 @@ public class Grid {
         this.columns = pRDgrid.getColumns();
         this.rows = pRDgrid.getRows();
 
-        if(this.columns < 0 || this.rows < 0){
-            throw new IllegalArgumentException("The number of rows and columns of the grid should be positive integers");
+        if(this.columns < 10 || this.rows < 10 || this.columns > 100 || this.rows > 100){
+            throw new IllegalArgumentException("The number of rows and columns of the grid should be between 10 and 100");
         }
     }
 
