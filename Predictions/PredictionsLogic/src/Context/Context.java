@@ -72,7 +72,7 @@ public class Context {
             throw new IllegalArgumentException("The evaluate operation cannot be performed because the property " + propertyName +" does not exist in the context of the requested entity");
         }
 
-        return activeEntityInstance.getProperties().get(propertyName);
+        return activeEntityInstance.getProperties().get(propertyName).getValue();
     }
 
     public Float percent(Expression arg1,Expression arg2){
