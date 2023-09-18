@@ -18,18 +18,12 @@ public class HeaderController {
 
     PrimaryController primaryController;
 
-    @FXML
-    private TextField filePathTextField;
-    @FXML
-    private Button loadFileButton;
-    @FXML
-    private HBox hBox;
-    @FXML
-    private MenuBar menuBar;
-    @FXML
-    private Button queueMmanagementButton;
-    @FXML
-    public void HandleLoadFileButton(ActionEvent event) {
+    @FXML private TextField filePathTextField;
+    @FXML private Button loadFileButton;
+    @FXML private HBox hBox;
+    @FXML private MenuBar menuBar;
+    @FXML private Button queueMmanagementButton;
+    @FXML public void HandleLoadFileButton(ActionEvent event) {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose a File");
@@ -41,7 +35,7 @@ public class HeaderController {
             filePathTextField.setText(selectedFile.getAbsolutePath());
         }
         primaryController.clearAllScreens();
-        primaryController.initFirstNSecondScrean(filePathTextField.getText());
+        primaryController.loadSimulation(filePathTextField.getText());
 
     }
     @FXML

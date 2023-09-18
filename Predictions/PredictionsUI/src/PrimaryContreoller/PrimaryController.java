@@ -139,20 +139,24 @@ public class PrimaryController implements Initializable {
 
         tabPane.getStylesheets().removeAll(stylesheetsToRemove);
     }
+public void loadSimulation(String FilePath) {
+    SimulationTitlesDetails simulationTitleDto = null;
+    try {
+        simulationTitleDto = getPredictionManager().loadSimulation(FilePath);
+        SetTitleDetailsOnFirstScreen(simulationTitleDto);
+    }
+    catch (IllegalArgumentException exception){
+        showAlertToUser(exception.getMessage());
+    }
+    catch (RuntimeException e) {
+        showAlertToUser("Loading the XML file failed");
+    }
+    initFirstNSecondScrean(simulationTitleDto);
 
-    public void initFirstNSecondScrean(String FilePath) {
-        //first screen
-        SimulationTitlesDetails simulationTitleDto = null;
-        try {
-            simulationTitleDto = getPredictionManager().loadSimulation(FilePath);
-            SetTitleDetailsOnFirstScreen(simulationTitleDto);
-        }
-        catch (IllegalArgumentException exception){
-            showAlertToUser(exception.getMessage());
-        }
-        catch (RuntimeException e) {
-            showAlertToUser("Loading the XML file failed");
-        }
+}
+    public void initFirstNSecondScrean(SimulationTitlesDetails simulationTitleDto) {
+
+
 //      second screen - the envprop list and entity list
         this.secondScreenBodyController.setEnvPropTable();
         this.secondScreenBodyController.setEntitiesPopulationList(simulationTitleDto.getEntitiesNames(),simulationTitleDto.getPopulationSpace());
@@ -209,10 +213,7 @@ public class PrimaryController implements Initializable {
     public void clearAllScreens() {
          firstScreenBodyController.clearFirstScren();
          secondScreenBodyController.clearSecondScreen();
-    }
-
-    public void setEnvPropTableItemsAndValues(ObservableList<EnvPropTableItem> envPropTableItemList, Map<String, String> envPropValues) {
-        this.secondScreenBodyController.setEnvPropTableItemsAndValues(envPropTableItemList, envPropValues);
+         thirdScreenBodyController.clearThirdScreen();
     }
 
 

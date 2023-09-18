@@ -308,12 +308,22 @@ public class SecondScreenBodyController implements Initializable {
         this.vbox.getChildren().clear();/// clear the vbox in case loading new file.
         this.entityToPopTextFieldMap.clear();
         this.populationGridPane.getChildren().clear();
-
     }
 
     public void setEnvPropTableItemsAndValues(ObservableList<EnvPropTableItem> envPropTableItemList, Map<String, String> envPropValues) {
-        this.envPropTable.setItems(envPropTableItemList);
-        this.envPropValues.putAll(envPropValues);
+
+        ObservableList<EnvPropTableItem> copyOfList = FXCollections.observableArrayList();;
+        for (EnvPropTableItem item : envPropTableItemList) {
+            copyOfList.add(new EnvPropTableItem(item.getName(), item.getType(), item.getValue()));
+        }
+        // Create a defensive copy of envPropValues
+        Map<String, String> copyOfValues = new HashMap<>(envPropValues);
+
+        // Set the copy of envPropTableItemList as the items of envPropTable
+        this.envPropTable.setItems(copyOfList);
+        // Replace the envPropValues map with the copy
+        this.envPropValues.clear();
+        this.envPropValues.putAll(copyOfValues);
     }
 
     public void restartSimulation(SimulationExecutionDto chosenSimulation) {

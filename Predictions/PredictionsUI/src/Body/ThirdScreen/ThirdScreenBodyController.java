@@ -208,7 +208,6 @@ public class ThirdScreenBodyController implements Initializable {
     }
     private void restartSimulation() {
         primaryController.jumpToNewExcecutionTab();
-        primaryController.getPredictionManager().setWorldDefinition(chosenSimulation.getSimulationWorldDefinition());
         primaryController.restartSimulation(chosenSimulation);
     }
     private void enableRestratButton() {
@@ -405,5 +404,26 @@ public class ThirdScreenBodyController implements Initializable {
     }
     public void RefreshEntityPopTable() {
         this.entityPopulationTable.refresh();
+    }
+
+    public void clearThirdScreen() {
+        this.simulationsDataList.clear();
+        this.entityPopulationList.clear();
+        this.buttonVbox.getChildren().clear();
+        this.restartHbox.getChildren().clear();
+        this.ticksText.textProperty().unbind();
+        this.ticksText.setText("");
+        this.secondText.textProperty().unbind();
+        this.secondText.setText("");
+        this.progressHbox.getChildren().clear();
+        this.resultTabPane.setVisible(false);
+        this.propertyHistogramTable.getItems().clear();
+        this.entitiesComboBox.getItems().clear();
+        this.propertiesListView.getItems().clear();
+        this.oconsistencyLabel.setText("");
+        this.avgValOfPropLabel.setText("");
+        this.lineChart.getData().clear();
+        this.chosenSimulationId = null;
+        this.chosenSimulation = null;
     }
 }
