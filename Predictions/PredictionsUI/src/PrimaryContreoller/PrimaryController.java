@@ -207,7 +207,7 @@ public void loadSimulation(String FilePath) {
         Future<SimulationEndDetailsDto> futureResult = predictionManager.threadPool.submit(simulationList.get(simulationIdNumber));
 
         SimulationExecutionDto simulationExecutionDto =
-                new SimulationExecutionDto(simulationId,"Running", simulationIdNumber, entitiesPopulationMap,
+                new SimulationExecutionDto(simulationId,"Waiting", simulationIdNumber, entitiesPopulationMap,
                         !predictionManager.getSimulationList().get(simulationIdNumber).SimulationEndsByUser(),
                         predictionManager.getWorldDefinition(), items, envPropValues, entitiesPopulationMap);
 

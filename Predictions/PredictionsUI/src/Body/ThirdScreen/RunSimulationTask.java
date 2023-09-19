@@ -32,7 +32,7 @@ public class RunSimulationTask extends Task<Boolean> {
     @Override
     protected Boolean call() throws Exception {
 
-
+        simulationExecutionDto.setStatus("Running");
         while(worldInstance.getStatus().equals(SimulationStatusType.Running) ||
                 worldInstance.getStatus().equals(SimulationStatusType.Pause ) ||
                 (!simulationExecutionDto.isProgressable() && simulationExecutionDto.isRunning())){
