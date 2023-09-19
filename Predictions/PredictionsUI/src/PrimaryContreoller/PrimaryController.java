@@ -149,8 +149,9 @@ public void loadSimulation(String FilePath) {
     SimulationTitlesDetails simulationTitleDto = null;
     try {
         simulationTitleDto = getPredictionManager().loadSimulation(FilePath);
-        clearAllScreens();
         headerComponentController.getFilePathTextField().setText(FilePath);
+        showSuccessDialog();
+        clearAllScreens();
         initFirstNSecondScrean(simulationTitleDto);
         taskThreadPool = Executors.newFixedThreadPool(((ThreadPoolExecutor)predictionManager.threadPool).getMaximumPoolSize());
         queueManager.setThreadPoolSize(((ThreadPoolExecutor)predictionManager.threadPool).getMaximumPoolSize());
@@ -164,6 +165,14 @@ public void loadSimulation(String FilePath) {
 
 
 }
+    private void showSuccessDialog() {
+        String message = "File Loaded Successfully"+ " \uD83D\uDE04";
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     public void initFirstNSecondScrean(SimulationTitlesDetails simulationTitleDto) {
         SetTitleDetailsOnFirstScreen(simulationTitleDto);
 //      second screen - the envprop list and entity list
