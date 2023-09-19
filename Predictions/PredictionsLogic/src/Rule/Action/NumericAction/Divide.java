@@ -37,6 +37,7 @@ public class Divide extends Calculation{
     public ActionDetailsDto getDetails() {
 
         return new ActionDetailsDto("Type: " + this.type
+                +"\ncalc type: Divide"
                 +"\narg1: " + arg1.getExpression() +
                 "\narg2: " + arg2.getExpression()+
                 "\nResult-prop:" + resultProp+

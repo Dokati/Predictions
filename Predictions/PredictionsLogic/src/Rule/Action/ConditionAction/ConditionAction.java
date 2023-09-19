@@ -44,13 +44,13 @@ public class ConditionAction extends Action {
 
     @Override
     public ActionDetailsDto getDetails() {
-        String amountOfElseActions = elseAct.getActionList() != null? this.elseAct.getActionListSize().toString():"";
+        String amountOfElseActions = elseAct.getActionList() != null? "\nAmount of else actions:"+this.elseAct.getActionListSize().toString():"";
         return new ActionDetailsDto("Type: " + this.type +
                 "\nEntity: " + entity.getName()+ "\n"
                 + condition.getDetails()+
                 getSecondryEntityDetails()+
                 "\nAmount of then actions:" + then.getActionListSize().toString()+
-                amountOfElseActions);
+                 amountOfElseActions);
     }
 
     @Override

@@ -22,11 +22,13 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class PrimaryController implements Initializable {
     private PredictionManager predictionManager;
-
     @FXML private BorderPane borderPane;
     @FXML private TabPane tabPane;
     @FXML private ScrollPane headerComponent;
@@ -37,12 +39,16 @@ public class PrimaryController implements Initializable {
     @FXML private SecondScreenBodyController secondScreenBodyController;
     @FXML private ScrollPane thirdScreenBody;
     @FXML private ThirdScreenBodyController thirdScreenBodyController;
+    public QueueManager queueManager;
+    public ExecutorService taskThreadPool;
+
 
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         predictionManager = new PredictionManager();
+        queueManager = new QueueManager();
 
         if (headerComponentController != null && firstScreenBodyController != null && secondScreenBodyController !=null
         && thirdScreenBodyController != null) {
@@ -144,7 +150,10 @@ public void loadSimulation(String FilePath) {
     try {
         simulationTitleDto = getPredictionManager().loadSimulation(FilePath);
         clearAllScreens();
+        headerComponentController.getFilePathTextField().setText(FilePath);
         initFirstNSecondScrean(simulationTitleDto);
+        taskThreadPool = Executors.newFixedThreadPool(((ThreadPoolExecutor)predictionManager.threadPool).getMaximumPoolSize());
+        queueManager.setThreadPoolSize(((ThreadPoolExecutor)predictionManager.threadPool).getMaximumPoolSize());
     }
     catch (IllegalArgumentException exception){
         showAlertToUser(exception.getMessage());
@@ -187,18 +196,21 @@ public void loadSimulation(String FilePath) {
         simulationList.put(simulationIdNumber,new WorldInstance(predictionManager.getWorldDefinition(),envPropValues));
 
         Future<SimulationEndDetailsDto> futureResult = predictionManager.threadPool.submit(simulationList.get(simulationIdNumber));
+
         SimulationExecutionDto simulationExecutionDto =
                 new SimulationExecutionDto(simulationId,"Running", simulationIdNumber, entitiesPopulationMap,
                         !predictionManager.getSimulationList().get(simulationIdNumber).SimulationEndsByUser(),
                         predictionManager.getWorldDefinition(), items, envPropValues, entitiesPopulationMap);
 
         this.thirdScreenBodyController.addSimulationToTable(simulationExecutionDto);
-        RunSimulationTask runSimulationTask = new RunSimulationTask(simulationList.get(simulationIdNumber), simulationExecutionDto, this.thirdScreenBodyController);
+        RunSimulationTask runSimulationTask = new RunSimulationTask(simulationList.get(simulationIdNumber),
+                simulationExecutionDto, this, predictionManager);
 
-        Thread thread = new Thread(runSimulationTask);
-        thread.start();
+        this.taskThreadPool.submit(runSimulationTask);
 
         this.predictionManager.setSimulationIdNumber(simulationIdNumber+1);
+        this.queueManager.incrementRunningSimulations();
+        
     }
 
     public void jumpToResultTab() {
@@ -211,6 +223,7 @@ public void loadSimulation(String FilePath) {
     }
 
     public void clearAllScreens() {
+         headerComponentController.clearHeader();
          firstScreenBodyController.clearFirstScren();
          secondScreenBodyController.clearSecondScreen();
          thirdScreenBodyController.clearThirdScreen();
@@ -220,5 +233,15 @@ public void loadSimulation(String FilePath) {
     public void restartSimulation(SimulationExecutionDto chosenSimulation) {
         this.secondScreenBodyController.restartSimulation(chosenSimulation);
 
+    }
+
+    public ThirdScreenBodyController getThirdScreenControler() {
+        return thirdScreenBodyController;
+    }
+
+    public void SimulationFinished(Integer numberId) {
+        this.queueManager.decrementRunningSimulations();
+        this.queueManager.incrementFinishedSimulations();
+        thirdScreenBodyController.SimulationFinished(numberId);
     }
 }

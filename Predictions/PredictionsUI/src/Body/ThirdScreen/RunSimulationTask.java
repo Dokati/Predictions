@@ -1,6 +1,8 @@
 package Body.ThirdScreen;
 
 import Dto.SimulationExecutionDto;
+import Manager.PredictionManager;
+import PrimaryContreoller.PrimaryController;
 import World.instance.SimulationStatusType;
 import World.instance.WorldInstance;
 import javafx.application.Platform;
@@ -16,11 +18,14 @@ public class RunSimulationTask extends Task<Boolean> {
 
     WorldInstance worldInstance;
     SimulationExecutionDto simulationExecutionDto;
-    ThirdScreenBodyController thirdScreenBodyController;
-    public RunSimulationTask(WorldInstance worldInstance, SimulationExecutionDto simulationExecutionDto, ThirdScreenBodyController thirdScreenBodyController) {
+    PrimaryController primaryController;
+    PredictionManager predictionManager;
+    public RunSimulationTask(WorldInstance worldInstance, SimulationExecutionDto simulationExecutionDto,
+                             PrimaryController primaryController, PredictionManager predictionManager) {
         this.worldInstance = worldInstance;
         this.simulationExecutionDto = simulationExecutionDto;
-        this.thirdScreenBodyController = thirdScreenBodyController;
+        this.primaryController = primaryController;
+        this.predictionManager = predictionManager;
     }
 
 
@@ -71,7 +76,7 @@ public class RunSimulationTask extends Task<Boolean> {
         Platform.runLater(()->simulationExecutionDto.setTick(tick));
         Platform.runLater(()->simulationExecutionDto.setRunningTimeInSeconds(time));
         Platform.runLater(()->simulationExecutionDto.UpdateEntitiesPopulation(entitiesPopulation));
-        Platform.runLater(()->thirdScreenBodyController.RefreshEntityPopTable());
+        Platform.runLater(()->primaryController.getThirdScreenControler().RefreshEntityPopTable());
 
         if(simulationExecutionDto.isProgressable()){
             Integer maxTick = worldInstance.getTicksTermination().getCount();
@@ -85,6 +90,6 @@ public class RunSimulationTask extends Task<Boolean> {
 
     private void ToDoWhenSimulationHasFinished() {
         this.simulationExecutionDto.FinishRunning();
-        this.thirdScreenBodyController.SimulationFinished(simulationExecutionDto.getNumberId());
+        this.primaryController.SimulationFinished(simulationExecutionDto.getNumberId());
     }
 }

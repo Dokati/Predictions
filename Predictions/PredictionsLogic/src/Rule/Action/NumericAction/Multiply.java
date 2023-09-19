@@ -35,6 +35,7 @@ public class Multiply extends Calculation {
     @Override
     public ActionDetailsDto getDetails() {
         return new ActionDetailsDto("Type: " + this.type
+                + "\ncalc type: Multiply"
                 +"\narg1: " + arg1.getExpression() +
                 "\narg2: " + arg2.getExpression()+
                 "\nResult-prop:" + resultProp+
