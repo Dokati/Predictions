@@ -89,18 +89,23 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
         boolean simulationTermByTicks = terminationConditions.containsKey(TerminationType.TICK);
         boolean simulationTermBySecond = terminationConditions.containsKey(TerminationType.SECOND);
         Instant startTime = Instant.now();
+        long waitTimeInSecCount = 0 ;
 
         while (!status.equals(SimulationStatusType.Stop)) {
 
+            Instant startItrTime = Instant.now();
+            long waitTimeInSecPause = 0;
             while(status.equals(SimulationStatusType.Pause)) {
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                waitTimeInSecPause = Duration.between(startItrTime, Instant.now()).getSeconds();;
             }
+            waitTimeInSecCount += waitTimeInSecPause;
 
-            runningTimeInSeconds = Duration.between(startTime, Instant.now()).getSeconds();
+            runningTimeInSeconds = Duration.between(startTime, Instant.now()).getSeconds() - waitTimeInSecCount;
             updateEntitiesPopulation();
             MoveEntitiesOneStepRandomly();
 
@@ -130,7 +135,6 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
             }
 
             tick++;
-
         }
 
         getEndSimulationDetails();
