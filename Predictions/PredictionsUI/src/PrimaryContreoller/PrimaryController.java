@@ -40,7 +40,7 @@ public class PrimaryController implements Initializable {
     @FXML private FirstScreenBodyController firstScreenBodyController;
     @FXML private GridPane secondScreenBody;
     @FXML private SecondScreenBodyController secondScreenBodyController;
-    @FXML private ScrollPane thirdScreenBody;
+    @FXML private GridPane thirdScreenBody;
     @FXML private ThirdScreenBodyController thirdScreenBodyController;
     public QueueManager queueManager;
     public ExecutorService taskThreadPool;
