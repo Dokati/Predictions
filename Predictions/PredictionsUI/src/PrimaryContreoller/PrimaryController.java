@@ -17,6 +17,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -31,11 +34,11 @@ public class PrimaryController implements Initializable {
     private PredictionManager predictionManager;
     @FXML private BorderPane borderPane;
     @FXML private TabPane tabPane;
-    @FXML private ScrollPane headerComponent;
+    @FXML private BorderPane headerComponent;
     @FXML private HeaderController headerComponentController;
-    @FXML private ScrollPane firstScreenBody;
+    @FXML private GridPane firstScreenBody;
     @FXML private FirstScreenBodyController firstScreenBodyController;
-    @FXML private ScrollPane secondScreenBody;
+    @FXML private GridPane secondScreenBody;
     @FXML private SecondScreenBodyController secondScreenBodyController;
     @FXML private ScrollPane thirdScreenBody;
     @FXML private ThirdScreenBodyController thirdScreenBodyController;
@@ -79,6 +82,7 @@ public class PrimaryController implements Initializable {
         }
         if(color.equals("default")){
             this.borderPane.getStylesheets().add(StylePaths.DEFAULT);
+
         }
 
 
@@ -149,6 +153,7 @@ public void loadSimulation(String FilePath) {
     SimulationTitlesDetails simulationTitleDto = null;
     try {
         simulationTitleDto = getPredictionManager().loadSimulation(FilePath);
+        predictionManager.resetSimulationList();
         headerComponentController.getFilePathTextField().setText(FilePath);
         showSuccessDialog();
         clearAllScreens();

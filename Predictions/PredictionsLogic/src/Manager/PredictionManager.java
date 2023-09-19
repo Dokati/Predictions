@@ -154,4 +154,8 @@ public class PredictionManager {
         }
     }
 
+    public void resetSimulationList() {
+        simulationList = new HashMap<>();
+        simulationIdNumber = 1;
+    }
 }

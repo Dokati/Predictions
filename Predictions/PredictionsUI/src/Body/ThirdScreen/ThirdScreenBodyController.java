@@ -244,22 +244,25 @@ public class ThirdScreenBodyController implements Initializable {
 
     }
     private void setControlButtonsListeners() {
-        HashMap<Integer, WorldInstance> simulatiosnMap =
-                primaryController.getPredictionManager().getSimulationList();
-
         playButton.setOnAction(event -> {
+            HashMap<Integer, WorldInstance> simulatiosnMap =
+                    primaryController.getPredictionManager().getSimulationList();
             SimulationStatusType simulationStatus = simulatiosnMap.get(chosenSimulationId).getStatus();
             if(simulationStatus.equals(SimulationStatusType.Pause)){
                 simulatiosnMap.get(chosenSimulationId).ChangeSimulationStatusToRunning();}
         });
 
         pauseButton.setOnAction(event -> {
+            HashMap<Integer, WorldInstance> simulatiosnMap =
+                    primaryController.getPredictionManager().getSimulationList();
             SimulationStatusType simulationStatus = simulatiosnMap.get(chosenSimulationId).getStatus();
             if(simulationStatus.equals(SimulationStatusType.Running)){
                 simulatiosnMap.get(chosenSimulationId).PauseSimulation();}
         });
 
         stopButton.setOnAction(event -> {
+            HashMap<Integer, WorldInstance> simulatiosnMap =
+                    primaryController.getPredictionManager().getSimulationList();
             SimulationStatusType simulationStatus = simulatiosnMap.get(chosenSimulationId).getStatus();
             if(simulationStatus.equals(SimulationStatusType.Running) ||
                     simulationStatus.equals(SimulationStatusType.Pause)){
@@ -269,6 +272,7 @@ public class ThirdScreenBodyController implements Initializable {
             }
         });
     }
+
     private void enableControlButtons(){
         playButton.setGraphic(playimage);
         playButton.setDisable(false);
