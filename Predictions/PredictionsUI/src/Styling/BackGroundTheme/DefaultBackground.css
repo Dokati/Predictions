@@ -6,7 +6,7 @@
     -fx-faint-focus-color: rgba(0, 0, 0, 0.25);
 
 }
-#grid-first-screen, #grid-second-screen,#grid-third-screen, #hbox-header{
+#grid-first-screen, #grid-second-screen,#grid-third-screen, #hbox-header, #left-header, #right-header{
     -fx-background-color: rgba(173, 216, 230, .3);
 }
 .scroll-pane{
@@ -20,3 +20,4 @@
 {
     -fx-background-color: -fx-outer-border, -fx-text-box-border, rgba(173, 216, 230, 0.2);
 }
+
