@@ -13,9 +13,8 @@ public class GUI extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Predictions");
         Parent load = FXMLLoader.load(getClass().getResource("PrimaryContreoller/primaryController.fxml"));
-        Scene scene = new Scene(load, 1002 , 702);
+        Scene scene = new Scene(load, 1050 , 702);
         primaryStage.setScene(scene);
-//        primaryStage.setMinWidth(300);
         primaryStage.show();
     }
 
