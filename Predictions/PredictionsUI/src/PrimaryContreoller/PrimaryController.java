@@ -34,13 +34,13 @@ public class PrimaryController implements Initializable {
     private PredictionManager predictionManager;
     @FXML private BorderPane borderPane;
     @FXML private TabPane tabPane;
-    @FXML private BorderPane headerComponent;
+    @FXML private ScrollPane headerComponent;
     @FXML private HeaderController headerComponentController;
-    @FXML private GridPane firstScreenBody;
+    @FXML private ScrollPane firstScreenBody;
     @FXML private FirstScreenBodyController firstScreenBodyController;
-    @FXML private GridPane secondScreenBody;
+    @FXML private ScrollPane secondScreenBody;
     @FXML private SecondScreenBodyController secondScreenBodyController;
-    @FXML private GridPane thirdScreenBody;
+    @FXML private ScrollPane thirdScreenBody;
     @FXML private ThirdScreenBodyController thirdScreenBodyController;
     public QueueManager queueManager;
     public ExecutorService taskThreadPool;
