@@ -46,7 +46,7 @@ public class RunSimulationTask extends Task<Boolean> {
                 if (simulationExecutionDto.isForwarded()) {
                     simulationExecutionDto.setForwarded(false);
                     doOneStep = true;
-                    Thread.sleep(200);
+                    Thread.sleep(350);
                     break;
                 }
             }
