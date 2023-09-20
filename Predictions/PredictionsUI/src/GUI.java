@@ -15,7 +15,6 @@ public class GUI extends Application {
         Parent load = FXMLLoader.load(getClass().getResource("PrimaryContreoller/primaryController.fxml"));
         Scene scene = new Scene(load, 1050 , 702);
         primaryStage.setScene(scene);
-//       primaryStage.setMinWidth(300);
         primaryStage.show();
     }
 
