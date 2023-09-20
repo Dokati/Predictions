@@ -84,7 +84,6 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
 
     @Override
     public SimulationEndDetailsDto call() {
-        System.out.println("Thread ID: " + Thread.currentThread().getId() + " is running runSimulation");
         status = SimulationStatusType.Running;
         boolean simulationTermByTicks = terminationConditions.containsKey(TerminationType.TICK);
         boolean simulationTermBySecond = terminationConditions.containsKey(TerminationType.SECOND);
@@ -310,4 +309,7 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
         return "";
     }
 
+    public void ChangeSimulationStatusToStepForward() {
+//        status = SimulationStatusType.;
+    }
 }

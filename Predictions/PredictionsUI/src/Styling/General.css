@@ -1,6 +1,0 @@
-.gradient-button {
-    -fx-background-color: linear-gradient(to right, dodgerblue, #040000);
-    -fx-text-fill: white; /* Set text color to white */
-    -fx-font-weight: bold; /* Make text bold */
-    -fx-padding: 10px 20px; /* Adjust padding as needed */
-}

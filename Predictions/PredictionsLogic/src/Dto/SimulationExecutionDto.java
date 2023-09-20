@@ -25,6 +25,7 @@ public class SimulationExecutionDto {
     Map<String, IntegerProperty> entitiesPopulation;
     DoubleProperty progress;
     boolean isRunning;
+    boolean isPaused;
     boolean isProgressable;
     private HashMap<String, EntitySimulationEndDetails> endSimulationDetails;
     WorldDefinition simulationWorldDefinition;
@@ -40,6 +41,7 @@ public class SimulationExecutionDto {
         tick = new SimpleIntegerProperty(0);
         runningTimeInSeconds = new SimpleIntegerProperty(0);
         isRunning = true;
+        isPaused = false;
         this.numberId = numberId;
         this.entitiesPopulation = entitiesPopulationMap.entrySet().stream().collect(Collectors.toMap(
                         Map.Entry::getKey, entry -> new SimpleIntegerProperty(entry.getValue())));
@@ -165,5 +167,13 @@ public class SimulationExecutionDto {
 
     public Map<String, Integer> getPopulationMap() {
         return populationMap;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public void setPaused(boolean paused) {
+        isPaused = paused;
     }
 }
