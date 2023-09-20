@@ -20,6 +20,16 @@ public class EntitySimulationEndDetails {
         }
     }
 
+    public void InitEntitySimulationEndDetails() {
+        Map<String, PropertySimulationEndDetails> newEndSimulationPropertiesDetails = new HashMap<>();
+
+        for(Map.Entry<String, PropertySimulationEndDetails> propertySimulationEndDetailsEntry : endSimulationPropertiesDetails.entrySet()) {
+            newEndSimulationPropertiesDetails.put(propertySimulationEndDetailsEntry.getKey(),new PropertySimulationEndDetails());
+        }
+
+        this.endSimulationPropertiesDetails = newEndSimulationPropertiesDetails;
+    }
+
     public Map<Integer, Integer> getPopulationByTick() {
         return populationByTick;
     }
