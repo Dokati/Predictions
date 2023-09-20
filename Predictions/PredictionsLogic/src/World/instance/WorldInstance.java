@@ -95,17 +95,25 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
 
             Instant startItrTime = Instant.now();
             long waitTimeInSecPause = 0;
+
             while(status.equals(SimulationStatusType.Pause)) {
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                waitTimeInSecPause = Duration.between(startItrTime, Instant.now()).getSeconds();;
+
+                if(status.equals(SimulationStatusType.ForwardStep)){
+                    status = SimulationStatusType.Pause;
+                    waitTimeInSecPause = Duration.between(startItrTime, Instant.now()).getSeconds();
+                    break;
+                }
+
+                waitTimeInSecPause = Duration.between(startItrTime, Instant.now()).getSeconds();
             }
             waitTimeInSecCount += waitTimeInSecPause;
-
             runningTimeInSeconds = Duration.between(startTime, Instant.now()).getSeconds() - waitTimeInSecCount;
+
             updateEntitiesPopulation();
             MoveEntitiesOneStepRandomly();
 
@@ -135,6 +143,7 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
             }
 
             tick++;
+            getEndSimulationDetails();
         }
 
         getEndSimulationDetails();
@@ -158,6 +167,9 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
 
     public void getEndSimulationDetails(){
 
+        for (Map.Entry<String, EntitySimulationEndDetails> entity : endSimulationDetails.entrySet()) {
+            entity.getValue().InitEntitySimulationEndDetails();
+        }
 
         for (EntityInstance entity : entities) {
 
