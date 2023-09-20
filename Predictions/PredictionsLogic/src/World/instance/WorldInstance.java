@@ -322,6 +322,6 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
     }
 
     public void ChangeSimulationStatusToStepForward() {
-//        status = SimulationStatusType.;
+        status = SimulationStatusType.ForwardStep;
     }
 }

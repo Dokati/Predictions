@@ -20,6 +20,7 @@ public class RunSimulationTask extends Task<Boolean> {
     SimulationExecutionDto simulationExecutionDto;
     PrimaryController primaryController;
     PredictionManager predictionManager;
+    boolean doOneStep = false;
     public RunSimulationTask(WorldInstance worldInstance, SimulationExecutionDto simulationExecutionDto,
                              PrimaryController primaryController, PredictionManager predictionManager) {
         this.worldInstance = worldInstance;
@@ -38,11 +39,28 @@ public class RunSimulationTask extends Task<Boolean> {
                 (!simulationExecutionDto.isProgressable() && simulationExecutionDto.isRunning())){
 
 
-            while(worldInstance.getStatus().equals(SimulationStatusType.Pause)){
+            while(worldInstance.getStatus().equals(SimulationStatusType.Pause)||
+                    worldInstance.getStatus().equals(SimulationStatusType.ForwardStep)){
+
                 Thread.sleep(200);
+                if (simulationExecutionDto.isForwarded()) {
+                    simulationExecutionDto.setForwarded(false);
+                    doOneStep = true;
+                    Thread.sleep(200);
+                    break;
+                }
             }
 
+
             sampleEngineAndUpdateUi();
+            if (doOneStep) {
+                doOneStep = false;
+                simulationExecutionDto.setEndSimulationDetails(worldInstance.getSimulationDetailsMap());
+                Platform.runLater(()->primaryController.getThirdScreenControler().loadSimulationResult());
+                Platform.runLater(()->primaryController.getThirdScreenControler().setResultTabvisile());
+            }
+
+
 
             try {
                 // Sleep for 0.2 seconds (200 milliseconds)

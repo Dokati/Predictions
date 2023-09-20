@@ -312,6 +312,7 @@ public class ThirdScreenBodyController implements Initializable {
             HashMap<Integer, WorldInstance> simulatiosnMap =
                     primaryController.getPredictionManager().getSimulationList();
             simulatiosnMap.get(chosenSimulationId).ChangeSimulationStatusToStepForward();
+            chosenSimulation.setForwarded(true);
         });
     }
 
@@ -356,10 +357,9 @@ public class ThirdScreenBodyController implements Initializable {
         }
     }
 
-    private void loadSimulationResult() {
+    public void loadSimulationResult() {
         loadEntityAmountGraph();
         loadEntitiesComboBoxAndPropList();
-
     }
 
 
@@ -413,7 +413,7 @@ public class ThirdScreenBodyController implements Initializable {
 
     private void loadEntityAmountGraph() {
         lineChart.getData().clear();
-        int iterationLimit = 2000; // Set the desired iteration limit
+        int iterationLimit = 10; // Set the desired iteration limit
         int iterationCount = 0; // Initialize the counter
         // Iterate through the map and create a series for each key
         for (Map.Entry<String, EntitySimulationEndDetails> entry : chosenSimulation.getEndSimulationDetails().entrySet()) {
@@ -472,5 +472,9 @@ public class ThirdScreenBodyController implements Initializable {
         this.lineChart.getData().clear();
         this.chosenSimulationId = null;
         this.chosenSimulation = null;
+    }
+
+    public void setResultTabvisile() {
+        this.resultTabPane.setVisible(true);
     }
 }
