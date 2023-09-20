@@ -413,7 +413,7 @@ public class ThirdScreenBodyController implements Initializable {
 
     private void loadEntityAmountGraph() {
         lineChart.getData().clear();
-        int iterationLimit = 10; // Set the desired iteration limit
+        int iterationLimit = 2000; // Set the desired iteration limit
         int iterationCount = 0; // Initialize the counter
         // Iterate through the map and create a series for each key
         for (Map.Entry<String, EntitySimulationEndDetails> entry : chosenSimulation.getEndSimulationDetails().entrySet()) {
