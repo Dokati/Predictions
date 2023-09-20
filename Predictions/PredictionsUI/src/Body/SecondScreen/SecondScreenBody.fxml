@@ -97,7 +97,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="69.0" prefWidth="382.0" GridPane.rowIndex="4">
                <children>
-                  <Button layoutX="76.0" mnemonicParsing="false" onAction="#clearSecondsScreenOnClick" prefHeight="45.0" prefWidth="126.0" text="Clear" />
+                  <Button fx:id="clearButton" layoutX="76.0" mnemonicParsing="false" onAction="#clearSecondsScreenOnClick" prefHeight="45.0" prefWidth="126.0" text="Clear" />
                </children>
             </AnchorPane>
             <VBox fx:id="amountVbox" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">

@@ -29,22 +29,15 @@ public class SecondScreenBodyController implements Initializable {
     Slider slider;
     Text currenSliderValue;
     ComboBox<String> trueOrFalseBox;
-    @FXML
-    private GridPane grid;
-    @FXML
-    private GridPane populationGridPane;
-    @FXML
-    private TableView<EnvPropTableItem> envPropTable;
-    @FXML
-    private HBox hbox;
-    @FXML
-    private VBox vbox;
-    @FXML
-    private AnchorPane anchorPane;
-    @FXML
-    private VBox amountVbox;
-    @FXML
-    private Button runSimulationButton;
+    @FXML private GridPane grid;
+    @FXML private GridPane populationGridPane;
+    @FXML private TableView<EnvPropTableItem> envPropTable;
+    @FXML private HBox hbox;
+    @FXML private VBox vbox;
+    @FXML private AnchorPane anchorPane;
+    @FXML private VBox amountVbox;
+    @FXML private Button runSimulationButton;
+    @FXML private Button clearButton;
 
     private Map<String, String> envPropValues;
     Map<String, TextField> entityToPopTextFieldMap;
@@ -111,6 +104,11 @@ public class SecondScreenBodyController implements Initializable {
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("Value"));
         this.envPropTable.getColumns().addAll(nameColumn, typeColumn, valueColumn);
         //-----------------------------//
+        runSimulationButton.setDisable(true);
+        clearButton.setDisable(true);
+        //-----------------------------//
+
+
 
 
 
@@ -352,5 +350,15 @@ public class SecondScreenBodyController implements Initializable {
                 }
             }
         }
+    }
+
+    public void activateClearAndRunButtons() {
+        if(this.runSimulationButton.isDisabled()){
+            this.runSimulationButton.setDisable(false);
+        }
+        if(this.clearButton.isDisabled()){
+            this.clearButton.setDisable(false);
+        }
+
     }
 }
