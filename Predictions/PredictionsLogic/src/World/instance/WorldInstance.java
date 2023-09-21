@@ -94,25 +94,17 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
 
             Instant startItrTime = Instant.now();
             long waitTimeInSecPause = 0;
-
             while(status.equals(SimulationStatusType.Pause)) {
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                if(status.equals(SimulationStatusType.ForwardStep)){
-                    status = SimulationStatusType.Pause;
-                    waitTimeInSecPause = Duration.between(startItrTime, Instant.now()).getSeconds();
-                    break;
-                }
-
-                waitTimeInSecPause = Duration.between(startItrTime, Instant.now()).getSeconds();
+                waitTimeInSecPause = Duration.between(startItrTime, Instant.now()).getSeconds();;
             }
             waitTimeInSecCount += waitTimeInSecPause;
-            runningTimeInSeconds = Duration.between(startTime, Instant.now()).getSeconds() - waitTimeInSecCount;
 
+            runningTimeInSeconds = Duration.between(startTime, Instant.now()).getSeconds() - waitTimeInSecCount;
             updateEntitiesPopulation();
             MoveEntitiesOneStepRandomly();
 
@@ -130,19 +122,16 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
             }
 
             if (simulationTermBySecond && runningTimeInSeconds >= (long)terminationConditions.get(TerminationType.SECOND).getCount()) {
-                System.out.println("The Activation ended after " + this.terminationConditions.get(TerminationType.SECOND).getCount() + " seconds");
                 status = SimulationStatusType.End;
                 break;
             }
 
             if (simulationTermByTicks && tick >= this.terminationConditions.get(TerminationType.TICK).getCount()) {
-                System.out.println("The Activation ended after " + this.terminationConditions.get(TerminationType.TICK).getCount() + " ticks");
                 status = SimulationStatusType.End;
                 break;
             }
 
             tick++;
-            getEndSimulationDetails();
         }
 
         getEndSimulationDetails();
@@ -166,9 +155,6 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
 
     public void getEndSimulationDetails(){
 
-        for (Map.Entry<String, EntitySimulationEndDetails> entity : endSimulationDetails.entrySet()) {
-            entity.getValue().InitEntitySimulationEndDetails();
-        }
 
         for (EntityInstance entity : entities) {
 
@@ -321,7 +307,4 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
         return "";
     }
 
-    public void ChangeSimulationStatusToStepForward() {
-        status = SimulationStatusType.ForwardStep;
-    }
 }

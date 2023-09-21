@@ -55,18 +55,15 @@ public class ThirdScreenBodyController implements Initializable {
     Button playButton;
     Button pauseButton;
     Button stopButton;
-    Button forwardButton;
     Button restartButton;
     ImageView playimage;
     ImageView stopimage;
     ImageView pauseimage;
-    ImageView forwardimage;
     ImageView restartimage;
     ImageView disableplayimage;
     ImageView disableStopimage;
     ImageView disablePauseimage;
     ImageView disableRestartImage;
-    ImageView disableForwardImage;
     ProgressBar progressBar;
     Text progressText;
     Text progressPrecent;
@@ -95,7 +92,6 @@ public class ThirdScreenBodyController implements Initializable {
 
         setControlButtons();
         setRestartButton();
-        setForwardButton();
         ///////-----------------------------------///////////////////
         progressBar = new ProgressBar();
         progressBar.setPrefSize(200,25);
@@ -115,28 +111,7 @@ public class ThirdScreenBodyController implements Initializable {
 
     }
 
-    private void setForwardButton() {
-        forwardButton = new Button();
-        forwardimage = new ImageView(new Image(ButtonsImagePath.FORWARD));
-        disableForwardImage = new ImageView(new Image(ButtonsImagePath.DISABLE_FORWARD));
-        forwardimage.setFitWidth(30);
-        forwardimage.setFitHeight(30);
-        disableForwardImage.setFitWidth(30);
-        disableForwardImage.setFitHeight(30);
-        forwardButton.setOnAction(event -> {
 
-        });
-        disableForwardButton();
-    }
-
-    private void disableForwardButton() {
-        forwardButton.setGraphic(disableForwardImage);
-        forwardButton.setDisable(true);
-    }
-    private void enableForwardButton() {
-        forwardButton.setGraphic(forwardimage);
-        forwardButton.setDisable(false);
-    }
 
 
     private void simulationGotSelected() {
@@ -179,7 +154,7 @@ public class ThirdScreenBodyController implements Initializable {
     }
 
     private void enableOrDisableControlButtons(SimulationExecutionDto selectedSimulationDetails) {
-        this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton, forwardButton);
+        this.buttonVbox.getChildren().addAll(playButton,pauseButton,stopButton);
         restartHbox.getChildren().add(restartButton);
 
         if (selectedSimulationDetails.isRunning()){
@@ -189,15 +164,7 @@ public class ThirdScreenBodyController implements Initializable {
         else {
             disableControlButtons();
             enableRestratButton();
-            disableForwardButton();
         }
-        if (selectedSimulationDetails.isPaused()){
-            enableForwardButton();
-        }
-        else {
-            disableForwardButton();
-        }
-
     }
 
     private void resultSimulationShowOrHide(SimulationExecutionDto selectedSimulationDetails) {
@@ -278,7 +245,6 @@ public class ThirdScreenBodyController implements Initializable {
     }
     private void setControlButtonsListeners() {
         playButton.setOnAction(event -> {
-            disableForwardButton();
             HashMap<Integer, WorldInstance> simulatiosnMap =
                     primaryController.getPredictionManager().getSimulationList();
             SimulationStatusType simulationStatus = simulatiosnMap.get(chosenSimulationId).getStatus();
@@ -287,8 +253,6 @@ public class ThirdScreenBodyController implements Initializable {
         });
 
         pauseButton.setOnAction(event -> {
-            chosenSimulation.setPaused(true);
-            enableForwardButton();
             HashMap<Integer, WorldInstance> simulatiosnMap =
                     primaryController.getPredictionManager().getSimulationList();
             SimulationStatusType simulationStatus = simulatiosnMap.get(chosenSimulationId).getStatus();
@@ -307,13 +271,6 @@ public class ThirdScreenBodyController implements Initializable {
                 simulationsDataList.get(chosenSimulationId-1).FinishRunning();
             }
         });
-
-        forwardButton.setOnAction(event -> {
-            HashMap<Integer, WorldInstance> simulatiosnMap =
-                    primaryController.getPredictionManager().getSimulationList();
-            simulatiosnMap.get(chosenSimulationId).ChangeSimulationStatusToStepForward();
-            chosenSimulation.setForwarded(true);
-        });
     }
 
     private void enableControlButtons(){
@@ -331,7 +288,6 @@ public class ThirdScreenBodyController implements Initializable {
         pauseButton.setDisable(true);
         stopButton.setGraphic(disableStopimage);
         stopButton.setDisable(true);
-        disableForwardButton();
     }
     public void addSimulationToTable(SimulationExecutionDto simulationExecutionDto) {
         simulationsDataList.add(simulationExecutionDto);
@@ -357,9 +313,10 @@ public class ThirdScreenBodyController implements Initializable {
         }
     }
 
-    public void loadSimulationResult() {
+    private void loadSimulationResult() {
         loadEntityAmountGraph();
         loadEntitiesComboBoxAndPropList();
+
     }
 
 
@@ -472,9 +429,5 @@ public class ThirdScreenBodyController implements Initializable {
         this.lineChart.getData().clear();
         this.chosenSimulationId = null;
         this.chosenSimulation = null;
-    }
-
-    public void setResultTabvisile() {
-        this.resultTabPane.setVisible(true);
     }
 }
