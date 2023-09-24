@@ -6,5 +6,4 @@ public enum SimulationStatusType {
     Pause,
     Stop,
     End,
-    ForwardStep,
 }

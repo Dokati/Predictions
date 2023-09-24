@@ -62,17 +62,17 @@
                   </VBox>
                </content>
             </ScrollPane>
-            <HBox fx:id="detailsHbox" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
+            <HBox fx:id="detailsHbox" spacing="20.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <GridPane.margin>
-                  <Insets top="10.0" />
+                  <Insets top="30.0" />
                </GridPane.margin>
                <children>
-                  <VBox fx:id="buttonVbox" alignment="CENTER" prefHeight="200.0" prefWidth="109.0">
+                  <VBox fx:id="buttonVbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <HBox.margin>
-                        <Insets />
+                        <Insets bottom="10.0" top="10.0" />
                      </HBox.margin>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="153.0" prefWidth="144.0" spacing="20.0">
