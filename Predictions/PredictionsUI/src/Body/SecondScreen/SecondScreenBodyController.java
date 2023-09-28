@@ -252,14 +252,12 @@ public class SecondScreenBodyController implements Initializable {
                     updateTotalPopulationLabel();
                 }
 
-
             });
             this.populationGridPane.add(EntityText, 0, rowIndex);
             this.populationGridPane.add(populationTextField, 1, rowIndex);
 
             rowIndex++;
         }
-
     }
 
     private void updateTotalPopulationLabel() {
