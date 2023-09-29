@@ -11,7 +11,6 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import okhttp3.*;
-import okio.Buffer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -75,8 +74,10 @@ public class FirstScreenBodyController implements Initializable {
                 .selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null && newValue.isLeaf()){
-                        if(((MyTreeItem)newValue).getName().equals("Entity name")) setEntityPropertiesDetails(newValue.getValue());
-                        if(((MyTreeItem)newValue).getName().equals("Activation")) setRuleActivaionDetails(newValue.getParent().getValue());
+                        if(((MyTreeItem)newValue).getName().equals("Entity name")) {try {setEntityPropertiesDetails(newValue.getValue());} catch (IOException e)
+                        {throw new RuntimeException(e);}}
+                        if(((MyTreeItem)newValue).getName().equals("Activation")) {try {setRuleActivaionDetails(newValue.getParent().getValue());} catch (IOException e) {
+                            throw new RuntimeException(e);}}
                         if(((MyTreeItem)newValue).getName().equals("Termination")) {
                             try {setTerminationDetails();} catch (IOException e) {throw new RuntimeException(e);}}
                         if(((MyTreeItem)newValue).getName().equals("Env name")) {
@@ -118,7 +119,7 @@ public class FirstScreenBodyController implements Initializable {
         this.tilePane.getChildren().clear();
         int Index = ((MyActionTreeItem)action).getactionIndex();
         String stringIndex = Integer.toString(Index);
-        Request request = CreateGetActionsRequest(ruleName, stringIndex);
+        Request request = CreatePostActionsRequest(ruleName, stringIndex);
         Response response = ExecuteRequest(request);
         if(response!=null) {
             ActionDetailsDto actionDetailsDto = new Gson().fromJson(response.body().string(), ActionDetailsDto.class);
@@ -156,17 +157,22 @@ public class FirstScreenBodyController implements Initializable {
         this.tilePane.getChildren().add(label);
     }
 
-    private void setRuleActivaionDetails(String ruleName) {
+    private void setRuleActivaionDetails(String ruleName) throws IOException {
         this.tilePane.getChildren().clear();
-        RuleActivationDto activationDto = primaryController.getPredictionManager().getActivationDetails(ruleName);
+        Request request =  CreateRuleActivaionRequest(ruleName);
+        Response response = ExecuteRequest(request);
+        if (response == null) return;
+        RuleActivationDto activationDto = new Gson().fromJson(response.body().string(), RuleActivationDto.class);
         DetailLabel label = new DetailLabel("Activation terms:\nTick: "+activationDto.getTick()+"\nProbability: "+activationDto.getProbability());
         this.tilePane.getChildren().add(label);
     }
 
-    private void setEntityPropertiesDetails(String value) {
+    private void setEntityPropertiesDetails(String entityName) throws IOException {
         this.tilePane.getChildren().clear();
-        EntityPropertyDetailDto entityPropertiesDetail =  primaryController.getPredictionManager().getEntityPropertiesDetail(value);
-
+        Request request =  CreateEntityActionsRequest(entityName);
+        Response response = ExecuteRequest(request);
+        if (response == null) return;
+        EntityPropertyDetailDto entityPropertiesDetail =  new Gson().fromJson(response.body().string(), EntityPropertyDetailDto.class);
         for(String propDetail : entityPropertiesDetail.getPropertiesDetails()){
             DetailLabel label = new DetailLabel(propDetail);
             this.tilePane.getChildren().add(label);

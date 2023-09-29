@@ -1,6 +1,257 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="RunManager">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Server:Web exploded" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f4860e6f-8ec8-4400-aee6-ea7d88eb2d97" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Server_Web_exploded.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Java_EE_6_Java_EE_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/squareup_okhttp3_okhttp.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Admin/Admin.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PredictionsLogic/src/Manager/AdminManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PredictionsLogic/src/UserRequest/UserRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Server.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/ActionDetailsServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/AddSimulationToListServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/AllEnvPropsServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/EntityPropertiesServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/EnvPropDetailsServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/EnvVariableDetailsServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GridDetailsServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/InitializePopulationServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/LoadSimulationServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/MyServletContextListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/ResetSimulationListServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/RuleActivationServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/TerminationDetailsServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/WorldDefinitionServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/web/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/PredictionsLogic_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/PredictionsLogic_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/PredictionsUI_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/PredictionsUI_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/error.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/error.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/error2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/error2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/error3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/error3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ex1-cigarets.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ex1-cigarets.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ex2-error-1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ex2-error-1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ex2-error-3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ex2-error-3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ex2-virus.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ex2-virus.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/ant_javafx.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/ant_javafx.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/javafx_mx.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/javafx_mx.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/master-ex1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/master-ex1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/master-ex2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/master-ex2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Predictions.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Predictions.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/PredictionsLogic.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/PredictionsLogic.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Context/Context.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Context/Context.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Context/ContextSecondaryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Context/ContextSecondaryEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Coordinate/Coordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Coordinate/Coordinate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/ActionDetailsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/ActionDetailsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/EntityPropertyDetailDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/EntityPropertyDetailDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/EntitySimulationEndDetailsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/EntitySimulationEndDetailsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/EnvPropDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/EnvPropDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/EnvPropNEntitiesDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/EnvPropNEntitiesDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/EnvVariableDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/EnvVariableDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/EnviormentVariablesDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/EnviormentVariablesDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/GridDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/GridDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/PropertySimulationEndDetailsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/PropertySimulationEndDetailsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/RuleActivationDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/RuleActivationDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/RuleTitleDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/RuleTitleDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/SimulationDetailsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/SimulationDetailsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/SimulationEndDetailsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/SimulationEndDetailsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/SimulationExecutionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/SimulationExecutionDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/SimulationTitlesDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/SimulationTitlesDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Dto/TerminationDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Dto/TerminationDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/EndSimulationDetails/EntitySimulationEndDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/EndSimulationDetails/EntitySimulationEndDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/EndSimulationDetails/PropertySimulationEndDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/EndSimulationDetails/PropertySimulationEndDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Entity/SecondaryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Entity/SecondaryEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Entity/definition/EntityDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Entity/definition/EntityDefinition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Entity/instance/EntityInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Entity/instance/EntityInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/IllegalXmlDataArgOfNumericActionAreNotNumericExceptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/IllegalXmlDataArgOfNumericActionAreNotNumericExceptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/IllegalXmlDataDupEntityPropNameExceptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/IllegalXmlDataDupEntityPropNameExceptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/IllegalXmlDataDupEnvVarNameExceptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/IllegalXmlDataDupEnvVarNameExceptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/IllegalXmlDataInvalidActionEntityExceptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/IllegalXmlDataInvalidActionEntityExceptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/IllegalXmlDataInvalidActionPropExceptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/IllegalXmlDataInvalidActionPropExceptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/NotNumericValueException.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/NotNumericValueException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/NotSameTypeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/NotSameTypeException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/OutOfRangeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Exceptions/OutOfRangeException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Expression/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Expression/Expression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Grid/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Grid/Grid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Manager/PredictionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Manager/PredictionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/ObjectFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/ObjectFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDActivation.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDActivation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDBySecond.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDBySecond.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDByTicks.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDByTicks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDDivide.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDDivide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDElse.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDElse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDEntities.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDEntities.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDEnvProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDEnvProperty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDEnvironment.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDEnvironment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDMultiply.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDMultiply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDProperty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDRange.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDRange.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDRule.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDRule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDRules.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDTermination.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDTermination.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDThen.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDThen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDValue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/PRD/PRDWorld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Property/PropertyType.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Property/PropertyType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Property/Range.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Property/Range.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Property/definition/EnvPropertyDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Property/definition/EnvPropertyDefinition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Property/definition/NumericPropertyDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Property/definition/NumericPropertyDefinition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Property/definition/PropertyDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Property/definition/PropertyDefinition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Property/instance/EnvPropertyInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Property/instance/EnvPropertyInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Property/instance/PropertyInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Property/instance/PropertyInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Action.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/ActionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/ActionFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Condition/Condition.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Condition/Condition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Condition/ConditionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Condition/ConditionFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Condition/MultipleCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Condition/MultipleCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Condition/SingleCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Condition/SingleCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/ConditionAction/ConditionAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/ConditionAction/ConditionAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/ConditionAction/Else.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/ConditionAction/Else.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/ConditionAction/Then.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/ConditionAction/Then.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Kill.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Kill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/NumericAction/Calculation.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/NumericAction/Calculation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/NumericAction/Decrease.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/NumericAction/Decrease.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/NumericAction/Divide.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/NumericAction/Divide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/NumericAction/Increase.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/NumericAction/Increase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/NumericAction/Multiply.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/NumericAction/Multiply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Proximity.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Proximity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Replace.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Replace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Set.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Action/Set.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Rule/Rule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Terminition/Termination.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Terminition/Termination.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Terminition/TerminationType.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Terminition/TerminationType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/Validation/Validation.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/Validation/Validation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/World/definition/WorldDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/World/definition/WorldDefinition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/World/instance/SimulationStatusType.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/World/instance/SimulationStatusType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsLogic/src/World/instance/WorldInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsLogic/src/World/instance/WorldInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/PredictionsUI.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/PredictionsUI.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/FirstScreen/DetailLabel.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/FirstScreen/DetailLabel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/FirstScreen/FirstScreenBody.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/FirstScreen/FirstScreenBody.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/FirstScreen/FirstScreenBodyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/FirstScreen/FirstScreenBodyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/FirstScreen/MyActionTreeItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/FirstScreen/MyActionTreeItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/FirstScreen/MyTreeItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/FirstScreen/MyTreeItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/EnvPropTableItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/EnvPropTableItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/SecondScreen.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/SecondScreen.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/SecondScreenBody.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/SecondScreenBody.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/SecondScreenBodyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/SecondScreen/SecondScreenBodyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/ThirdScreen/EntityPopulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/ThirdScreen/EntityPopulation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/ThirdScreen/PropertyHistPair.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/ThirdScreen/PropertyHistPair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/ThirdScreen/RunSimulationTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/ThirdScreen/RunSimulationTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/ThirdScreen/ThirdScreenBody.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/ThirdScreen/ThirdScreenBody.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Body/ThirdScreen/ThirdScreenBodyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Body/ThirdScreen/ThirdScreenBodyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Header/Header.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Header/Header.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Header/HeaderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Header/HeaderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Paths/ButtonsImagePath.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Paths/ButtonsImagePath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Paths/StylePaths.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Paths/StylePaths.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/PrimaryContreoller/PrimaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/PrimaryContreoller/PrimaryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/PrimaryContreoller/QueueManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/PrimaryContreoller/QueueManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/PrimaryContreoller/primaryController.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/PrimaryContreoller/primaryController.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Resources/ControlButton/forward-button.png" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Resources/ControlButton/forward-button.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Resources/ControlButton/pause.png" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Resources/ControlButton/pause.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Resources/ControlButton/play-button.png" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Resources/ControlButton/play-button.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Resources/ControlButton/stop-button.png" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Resources/ControlButton/stop-button.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Resources/DisabledControlButton/forward-button.png" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Resources/DisabledControlButton/forward-button.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Resources/DisabledControlButton/pause.png" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Resources/DisabledControlButton/pause.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Resources/DisabledControlButton/play-button.png" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Resources/DisabledControlButton/play-button.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Resources/DisabledControlButton/stop-button.png" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Resources/DisabledControlButton/stop-button.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Resources/RestartButton/disable-restart.png" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Resources/RestartButton/disable-restart.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Resources/RestartButton/restart.png" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Resources/RestartButton/restart.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Styling/BackGroundTheme/DarkBackground.css" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Styling/BackGroundTheme/DarkBackground.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Styling/BackGroundTheme/DefaultBackground.css" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Styling/BackGroundTheme/DefaultBackground.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Styling/BackGroundTheme/RoseGoldBackground.css" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Styling/BackGroundTheme/RoseGoldBackground.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Styling/ButtonsAppearance/DarkButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Styling/ButtonsAppearance/DarkButton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Styling/ButtonsAppearance/DefaultButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Styling/ButtonsAppearance/DefaultButton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Styling/ButtonsAppearance/RoseGoldButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Styling/ButtonsAppearance/RoseGoldButton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Styling/LabelStyling/DefaultLabel.css" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Styling/LabelStyling/DefaultLabel.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Styling/LabelStyling/LargeRalewayLabel.css" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Styling/LabelStyling/LargeRalewayLabel.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PredictionsUI/src/Styling/LabelStyling/MediumMontserratLabel.css" beforeDir="false" afterPath="$PROJECT_DIR$/PredictionsUI/src/Styling/LabelStyling/MediumMontserratLabel.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2Vwra4oh5kubCk8FFxIrj1atYru" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;1.8 (2)&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Dor/Desktop/Predictions (3)/Predictions/Predictions/lib/gson-2.8.8.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.35747126&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Admin" />
@@ -8,10 +259,136 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Tomcat 10.0.11" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.0.11" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="Server:Web exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/Server_Web_exploded" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="ab212061-b346-44a7-b550-544931d7cfb8" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="49968" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="Server:Web exploded" />
+        </option>
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f4860e6f-8ec8-4400-aee6-ea7d88eb2d97" name="Changes" comment="" />
+      <created>1695758046946</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1695758046946</updated>
+      <workItem from="1695758052998" duration="14188000" />
+      <workItem from="1695892245929" duration="22633000" />
+      <workItem from="1695997189658" duration="754000" />
+      <workItem from="1695998240020" duration="2396000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/PredictionsLogic/src/Manager/AdminManager.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Server/src/AddSimulationToListServlet.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Admin/src/PrimaryScreen/AdminPrimaryController.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

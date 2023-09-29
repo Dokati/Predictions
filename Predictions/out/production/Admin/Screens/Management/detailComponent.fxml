@@ -12,9 +12,9 @@
    <content>
       <GridPane id="grid-first-screen" fx:id="grid" alignment="CENTER" minHeight="530.0" minWidth="602.0" prefHeight="548.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="ALWAYS" />
-            <ColumnConstraints hgrow="ALWAYS" />
-            <ColumnConstraints hgrow="ALWAYS" prefWidth="387.0" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="192.0" minWidth="120.0" prefWidth="146.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="178.0" minWidth="97.0" prefWidth="120.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="442.0" minWidth="392.0" prefWidth="419.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="259.0" vgrow="ALWAYS" />
@@ -34,13 +34,13 @@
                   </TreeView>
                </content>
             </ScrollPane>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="453.0" prefWidth="527.0" GridPane.columnIndex="2" GridPane.rowSpan="3">
-               <GridPane.margin>
-                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-               </GridPane.margin>
+            <ScrollPane fitToHeight="true" fitToWidth="true" vbarPolicy="ALWAYS" GridPane.columnIndex="2" GridPane.rowSpan="2">
                <content>
                   <TilePane fx:id="tilePane" hgap="10.0" vgap="10.0" />
                </content>
+               <GridPane.margin>
+                  <Insets left="5.0" right="20.0" top="30.0" />
+               </GridPane.margin>
             </ScrollPane>
          </children>
       </GridPane>
