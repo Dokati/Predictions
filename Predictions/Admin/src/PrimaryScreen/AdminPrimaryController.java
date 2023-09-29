@@ -49,14 +49,19 @@ public class AdminPrimaryController implements Initializable {
         try {
             Request request = createPostSimulationFileRequest(FilePath);
             Response response = ExecuteRequest(request); //sending the file to the engine.
-            simulationTitleDto = new Gson().fromJson(response.body().string(), SimulationTitlesDetails.class);
+            if(response.code() == 200) {
+                simulationTitleDto = new Gson().fromJson(response.body().string(), SimulationTitlesDetails.class);
 //            predictionManager.resetSimulationList();
-            managementScreenController.getFilePathTextField().setText(FilePath);
-            showSuccessDialog();
+                managementScreenController.getFilePathTextField().setText(FilePath);
+                showSuccessDialog();
 //            clearAllScreens();
-            initFirstScrean(simulationTitleDto);
-            taskThreadPool = Executors.newFixedThreadPool(simulationTitleDto.getThreadsCount());
-            queueManager.setThreadPoolSize(simulationTitleDto.getThreadsCount());
+                initFirstScrean(simulationTitleDto);
+//            taskThreadPool = Executors.newFixedThreadPool(simulationTitleDto.getThreadsCount());
+//            queueManager.setThreadPoolSize(simulationTitleDto.getThreadsCount());
+            }
+            else{
+                showAlertToUser(response.body().string());
+            }
         }
         catch (IllegalArgumentException exception){
             showAlertToUser(exception.getMessage());

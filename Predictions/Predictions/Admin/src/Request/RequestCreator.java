@@ -35,11 +35,29 @@ public class RequestCreator {
                 .build();
         return request;
     }
-    public static Request CreateGetActionsRequest(String ruleName, String index) {
+    public static Request CreatePostActionsRequest(String ruleName, String index) {
         String url = BASE_URL + "/getActionDetails";
         RequestBody requestBody = new FormBody.Builder()
                 .add("ruleName", ruleName)
                 .add("index", index)
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        return request;
+    }
+
+    public static Request CreateEntityActionsRequest(String entityName) {
+         return   CreateSingleParameterPostRequest(entityName, "entityName", "/getEntityProperties");
+    }
+    public static Request CreateRuleActivaionRequest(String entityName) {
+        return   CreateSingleParameterPostRequest(entityName, "ruleName", "/getRuleActivation");
+    }
+    public static Request CreateSingleParameterPostRequest(String entityName, String parameterName , String resource) {
+        String url = BASE_URL + resource;
+        RequestBody requestBody = new FormBody.Builder()
+                .add(parameterName, entityName)
                 .build();
         Request request = new Request.Builder()
                 .url(url)
