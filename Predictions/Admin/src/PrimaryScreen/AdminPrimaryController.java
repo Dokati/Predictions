@@ -1,6 +1,5 @@
 package PrimaryScreen;
 
-import Body.FirstScreen.FirstScreenBodyController;
 import Dto.SimulationTitlesDetails;
 import PrimaryContreoller.QueueManager;
 import Screens.Management.ManagementController;
@@ -9,26 +8,23 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import okhttp3.*;
 import okio.Buffer;
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
-import static Config.Configuration.BASE_URL;
 import static Config.Configuration.HTTP_CLIENT;
+import static Request.RequestCreator.ExecuteRequest;
+import static Request.RequestCreator.createPostSimulationFileRequest;
 
-public class PrimaryController implements Initializable {
+public class AdminPrimaryController implements Initializable {
 
     @FXML private GridPane managementScreen;
     @FXML private ManagementController managementScreenController;
@@ -52,8 +48,7 @@ public class PrimaryController implements Initializable {
         SimulationTitlesDetails simulationTitleDto = null;
         try {
             Request request = createPostSimulationFileRequest(FilePath);
-            Call call = HTTP_CLIENT.newCall(request);
-            Response response = call.execute();// sending the file to the engine.
+            Response response = ExecuteRequest(request); //sending the file to the engine.
             simulationTitleDto = new Gson().fromJson(response.body().string(), SimulationTitlesDetails.class);
 //            predictionManager.resetSimulationList();
             managementScreenController.getFilePathTextField().setText(FilePath);
@@ -84,31 +79,8 @@ public class PrimaryController implements Initializable {
         return buffer.readUtf8();
     }
 
-    private Request createPostSimulationFileRequest(String filePath) throws IOException {
-        String RESOURCE = "/loadSimulationServlet";
-        String xmlContent = new String(Files.readAllBytes(new File(filePath).toPath()));
 
-        RequestBody body = RequestBody.create(MediaType.parse("application/xml"), xmlContent);
-        String url = BASE_URL + RESOURCE;
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
 
-        return request;
-
-    }
-
-    private Request simpleGet(String filePath) {
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL).newBuilder();
-        String finalUrl = urlBuilder.build().toString();
-
-        Request request = new Request.Builder()
-                .url(finalUrl)
-                .build();
-        return request;
-
-    }
 
     private void showSuccessDialog() {
         String message = "File Loaded Successfully"+ " \uD83D\uDE04";

@@ -8,5 +8,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="PredictionsLogic" exported="" />
+    <orderEntry type="library" name="squareup.okhttp3.okhttp" level="project" />
+    <orderEntry type="module" module-name="Admin" exported="" />
+    <orderEntry type="library" name="gson-2.8.8" level="project" />
   </component>
 </module>

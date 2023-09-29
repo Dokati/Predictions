@@ -1,12 +1,11 @@
 package Screens.Management;
 import Body.FirstScreen.FirstScreenBodyController;
 import Dto.SimulationTitlesDetails;
-import PrimaryScreen.PrimaryController;
+import PrimaryScreen.AdminPrimaryController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -15,7 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ManagementController implements Initializable {
-    private PrimaryController primaryController;
+    private AdminPrimaryController primaryController;
     @FXML private ScrollPane detailsComponent;
     @FXML private FirstScreenBodyController detailsComponentController;
     @FXML private Button loadFileButton;
@@ -43,7 +42,7 @@ public class ManagementController implements Initializable {
         }
     }
 
-    public void setMainController(PrimaryController primaryController) {
+    public void setMainController(AdminPrimaryController primaryController) {
         this.primaryController = primaryController;
         initializeThatDependsOnPrimaryInit();
     }

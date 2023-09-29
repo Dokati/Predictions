@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TabPane?>
 
 
-<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PrimaryScreen.PrimaryController">
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PrimaryScreen.AdminPrimaryController">
    <content>
       <TabPane tabClosingPolicy="UNAVAILABLE" tabMinWidth="300.0">
         <tabs>

@@ -2,6 +2,7 @@ package Body.FirstScreen;
 
 import Dto.*;
 import PrimaryContreoller.PrimaryController;
+import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
@@ -9,12 +10,16 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+import okhttp3.*;
+import okio.Buffer;
 
-
+import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+
+import static Request.RequestCreator.*;
 
 public class FirstScreenBodyController implements Initializable {
 
@@ -72,10 +77,14 @@ public class FirstScreenBodyController implements Initializable {
                     if (newValue != null && newValue.isLeaf()){
                         if(((MyTreeItem)newValue).getName().equals("Entity name")) setEntityPropertiesDetails(newValue.getValue());
                         if(((MyTreeItem)newValue).getName().equals("Activation")) setRuleActivaionDetails(newValue.getParent().getValue());
-                        if(((MyTreeItem)newValue).getName().equals("Termination")) setTerminationDetails();
-                        if(((MyTreeItem)newValue).getName().equals("Env name")) setEnvVariablesDetails(newValue.getValue());
-                        if(((MyTreeItem)newValue).getName().equals("Action")) setActionDetails(newValue, newValue.getParent().getParent().getValue());
-                        if(((MyTreeItem)newValue).getName().equals("Grid")) setGridDetails();
+                        if(((MyTreeItem)newValue).getName().equals("Termination")) {
+                            try {setTerminationDetails();} catch (IOException e) {throw new RuntimeException(e);}}
+                        if(((MyTreeItem)newValue).getName().equals("Env name")) {
+                            try {setEnvVariablesDetails(newValue.getValue());} catch (IOException e) {throw new RuntimeException(e);}}
+                        if(((MyTreeItem)newValue).getName().equals("Action")) {
+                            try {setActionDetails(newValue, newValue.getParent().getParent().getValue());} catch (IOException e) {throw new RuntimeException(e);}}
+                        if(((MyTreeItem)newValue).getName().equals("Grid")) {try {setGridDetails();} catch (IOException e) {throw new RuntimeException(e);}
+                        }
                     }
                 });
 
@@ -94,33 +103,49 @@ public class FirstScreenBodyController implements Initializable {
         newWorld.getChildren().addAll(entitiesItem,rulesItem,terminationItem,envItem,gridItem);
     }
 
-    private void setGridDetails() {
+    private void setGridDetails() throws IOException {
         this.tilePane.getChildren().clear();
-        GridDto Grid = primaryController.getPredictionManager().getGridDetails();
-        DetailLabel label = new DetailLabel("Grid details:\n\nRows: "+Grid.getRows() + "\nCulomns: " + Grid.getCulomns());
-        this.tilePane.getChildren().add(label);
+        Request request = CreateGetRequest("/getGridDetails");
+        Response response = ExecuteRequest(request);
+        if(response!=null) {
+            GridDto Grid = new Gson().fromJson(response.body().string(), GridDto.class);
+            DetailLabel label = new DetailLabel("Grid details:\n\nRows: " + Grid.getRows() + "\nCulomns: " + Grid.getCulomns());
+            this.tilePane.getChildren().add(label);
+        }
     }
 
-    private void setActionDetails(TreeItem<String> action, String ruleName) {
+    private void setActionDetails(TreeItem<String> action, String ruleName) throws IOException {
         this.tilePane.getChildren().clear();
-        ActionDetailsDto actionDetailsDto = primaryController.getPredictionManager().getActionDetails(((MyActionTreeItem)action).getactionIndex(), ruleName);
-        DetailLabel label = new DetailLabel(actionDetailsDto.getActionDetails());
-        this.tilePane.getChildren().add(label);
+        int Index = ((MyActionTreeItem)action).getactionIndex();
+        String stringIndex = Integer.toString(Index);
+        Request request = CreateGetActionsRequest(ruleName, stringIndex);
+        Response response = ExecuteRequest(request);
+        if(response!=null) {
+            ActionDetailsDto actionDetailsDto = new Gson().fromJson(response.body().string(), ActionDetailsDto.class);
+            DetailLabel label = new DetailLabel(actionDetailsDto.getActionDetails());
+            this.tilePane.getChildren().add(label);
+        }
 
     }
 
-    private void setEnvVariablesDetails(String envName) {
+    private void setEnvVariablesDetails(String envName) throws IOException {
         this.tilePane.getChildren().clear();
-        EnviormentVariablesDto enviormentVariablesDto = primaryController.getPredictionManager().getEnvVariableDetails();
+        Request request = CreateGetRequest("/getEnvVariableDetails");
+        Response response = ExecuteRequest(request);
+        if (response == null) return;
+        EnviormentVariablesDto enviormentVariablesDto = new Gson().fromJson(response.body().string(), EnviormentVariablesDto.class);
         EnvVariableDto envVariableDto = enviormentVariablesDto.getEnvVariableDtoList().stream().filter(env -> env.getName().equals(envName)).findFirst().get();
         DetailLabel label = new DetailLabel("Env-variable deatils:\n\nName: " + envVariableDto.getName() + "\n"+"Type: " +envVariableDto.getType()+ "\n");
         if(envVariableDto.hasRange()) label.setText(label.getText()+ "Range: " + envVariableDto.getRange());
         this.tilePane.getChildren().add(label);
     }
 
-    private void setTerminationDetails() {
+    private void setTerminationDetails() throws IOException {
         this.tilePane.getChildren().clear();
-        TerminationDto terminationDto = primaryController.getPredictionManager().getTerminationDetails();
+        Request request = CreateGetRequest("/getTerminationDetails");
+        Response response = ExecuteRequest(request);
+        if (response == null) return;
+        TerminationDto terminationDto = new Gson().fromJson(response.body().string(), TerminationDto.class);
         DetailLabel label = new DetailLabel("Termination by:\n");
         for(Map.Entry<String ,Integer> entry : terminationDto.getTerminations().entrySet()){
             if(entry.getKey()!= "BYUSER"){

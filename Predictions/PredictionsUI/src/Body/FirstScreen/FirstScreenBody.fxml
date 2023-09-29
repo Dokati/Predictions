@@ -41,7 +41,7 @@
                   <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                </GridPane.margin>
                <content>
-                  <TilePane fx:id="tilePane" hgap="10.0" prefHeight="486.0" prefWidth="559.0" vgap="10.0" />
+                  <TilePane fx:id="tilePane" hgap="10.0" prefHeight="486.0" prefWidth="559.0" stylesheets="@../../Styling/LabelStyling/DefaultLabel.css" vgap="10.0" />
                </content>
             </ScrollPane>
          </children>
