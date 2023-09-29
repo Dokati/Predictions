@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PrimaryContreoller.PrimaryController">
+   <top>
+      <fx:include fx:id="headerComponent" source="../Header/Header.fxml" BorderPane.alignment="TOP_CENTER" />
+   </top>
+   <center>
+      <TabPane id="tab-pane" fx:id="tabPane" stylesheets="@../Styling/LabelStyling/DefaultLabel.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Details">
+               <content>
+                  <fx:include fx:id="firstScreenBody" source="../Body/FirstScreen/FirstScreenBody.fxml" />
+               </content>
+            </Tab>
+          <Tab text="New Execution">
+               <content>
+                  <fx:include fx:id="secondScreenBody" source="../Body/SecondScreen/SecondScreenBody.fxml" />
+               </content>
+            </Tab>
+            <Tab text="Result">
+               <content>
+                  <fx:include fx:id="thirdScreenBody" source="../Body/ThirdScreen/ThirdScreenBody.fxml" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+   <stylesheets>
+      <URL value="@../Styling/BackGroundTheme/DefaultBackground.css" />
+      <URL value="@../Styling/ButtonsAppearance/DefaultButton.css" />
+   </stylesheets>
+</BorderPane>
