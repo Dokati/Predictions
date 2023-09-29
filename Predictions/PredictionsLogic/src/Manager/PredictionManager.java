@@ -75,7 +75,7 @@ public class PredictionManager {
         List<String> EnvVariableNames = worldDefinition.getEnvironmentProperties().values().stream()
                 .map(EnvPropertyDefinition::getName).collect(Collectors.toList());
         Integer populationSpace = worldDefinition.getGrid().getColumns()*worldDefinition.getGrid().getRows();
-        return new SimulationTitlesDetails(entitiesNames, ruleDtos,EnvVariableNames, populationSpace);
+        return new SimulationTitlesDetails(entitiesNames, ruleDtos,EnvVariableNames, populationSpace, worldDefinition.getThreadCount());
 
     }
 
