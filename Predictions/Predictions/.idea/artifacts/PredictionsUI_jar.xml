@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PredictionsUI:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/</output-path>
+    <root id="archive" name="PredictionsUI.jar">
+      <element id="module-output" name="PredictionsUI" />
+      <element id="module-output" name="PredictionsLogic" />
+    </root>
+  </artifact>
+</component>
