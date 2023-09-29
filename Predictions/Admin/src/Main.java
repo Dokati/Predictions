@@ -8,7 +8,6 @@ import java.net.URL;
 
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Predictions");
@@ -17,10 +16,8 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
     public static void main(String[] args) {
         launch(args);
-
     }
 
 }
