@@ -8,19 +8,17 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.TilePane?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Body.FirstScreen.FirstScreenBodyController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="550.0" style="-fx-border-color: transparent; -fx-border-width: 0;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Body.FirstScreen.FirstScreenBodyController">
    <content>
-      <GridPane id="grid-first-screen" fx:id="grid" alignment="CENTER" minHeight="530.0" minWidth="900.0" prefHeight="548.0" prefWidth="998.0">
+      <GridPane id="grid-first-screen" fx:id="grid" alignment="CENTER" minHeight="530.0" minWidth="602.0" prefHeight="548.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="242.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="449.0" />
-            <ColumnConstraints />
+          <ColumnConstraints hgrow="ALWAYS" />
+            <ColumnConstraints hgrow="ALWAYS" />
+            <ColumnConstraints hgrow="ALWAYS" prefWidth="387.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="239.0" vgrow="ALWAYS" />
-          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="256.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="259.0" vgrow="ALWAYS" />
+          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="236.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -29,19 +27,19 @@
                   <Insets left="20.0" top="30.0" />
                </GridPane.margin>
                <content>
-                  <TreeView fx:id="TreeView" minHeight="450.0" minWidth="280.0" prefWidth="276.0">
+                  <TreeView fx:id="TreeView" minHeight="450.0" minWidth="200.0" prefWidth="276.0">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                   </TreeView>
                </content>
             </ScrollPane>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="453.0" prefWidth="527.0" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowSpan="3">
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="453.0" prefWidth="527.0" GridPane.columnIndex="2" GridPane.rowSpan="3">
                <GridPane.margin>
                   <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                </GridPane.margin>
                <content>
-                  <TilePane fx:id="tilePane" hgap="10.0" prefHeight="486.0" prefWidth="559.0" vgap="10.0" />
+                  <TilePane fx:id="tilePane" hgap="10.0" vgap="10.0" />
                </content>
             </ScrollPane>
          </children>

@@ -77,7 +77,7 @@ public class ThirdScreenBodyController implements Initializable {
         simulationsDataList = FXCollections.observableArrayList();
         executionListTable.setItems(simulationsDataList);
         executionListTable.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 1) {
+            if (!executionListTable.getItems().isEmpty() && event.getClickCount() == 1) {
                 simulationGotSelected();
             }
         });

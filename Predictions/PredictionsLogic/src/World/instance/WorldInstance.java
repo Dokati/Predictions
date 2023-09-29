@@ -84,7 +84,6 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
 
     @Override
     public SimulationEndDetailsDto call() {
-        System.out.println("Thread ID: " + Thread.currentThread().getId() + " is running runSimulation");
         status = SimulationStatusType.Running;
         boolean simulationTermByTicks = terminationConditions.containsKey(TerminationType.TICK);
         boolean simulationTermBySecond = terminationConditions.containsKey(TerminationType.SECOND);
@@ -123,13 +122,11 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
             }
 
             if (simulationTermBySecond && runningTimeInSeconds >= (long)terminationConditions.get(TerminationType.SECOND).getCount()) {
-                System.out.println("The Activation ended after " + this.terminationConditions.get(TerminationType.SECOND).getCount() + " seconds");
                 status = SimulationStatusType.End;
                 break;
             }
 
             if (simulationTermByTicks && tick >= this.terminationConditions.get(TerminationType.TICK).getCount()) {
-                System.out.println("The Activation ended after " + this.terminationConditions.get(TerminationType.TICK).getCount() + " ticks");
                 status = SimulationStatusType.End;
                 break;
             }

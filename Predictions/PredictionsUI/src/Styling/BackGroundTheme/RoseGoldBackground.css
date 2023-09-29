@@ -6,7 +6,7 @@
     -fx-faint-focus-color: rgba(0, 0, 0, 0.25);
 
 }
-#grid-first-screen,#grid-second-screen,#grid-third-screen, #hbox-header{
+#grid-first-screen,#grid-second-screen,#grid-third-screen, #hbox-header,#left-header, #right-header{
     -fx-background-color: rgba(177, 177, 124, 0.6);
 }
 

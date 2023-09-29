@@ -51,12 +51,12 @@ public class PropertyDefinition {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Property: ")
-                .append("type: ").append(type)
-                .append(", name: ").append(name)
-                .append(", randomInitialize: ").append(randomInitialize);
+                .append("\ntype: ").append(type)
+                .append("\nname: ").append(name)
+                .append("\nrandomInitialize: ").append(randomInitialize);
 
         if (initValue != null) {
-            sb.append(", value: ").append(initValue);
+            sb.append("\nvalue: ").append(initValue);
         }
 
         return sb.toString();

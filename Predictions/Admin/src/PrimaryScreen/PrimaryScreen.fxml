@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PrimaryScreen.PrimaryController">
+   <content>
+      <TabPane tabClosingPolicy="UNAVAILABLE" tabMinWidth="300.0">
+        <tabs>
+          <Tab text="Management">
+               <content>
+                  <fx:include fx:id="managementScreen" source="../Screens/Management/ManagementScreen.fxml" />
+               </content>
+            </Tab>
+          <Tab text="Allocations" />
+            <Tab text="Executions History" />
+        </tabs>
+      </TabPane>
+   </content>
+</ScrollPane>

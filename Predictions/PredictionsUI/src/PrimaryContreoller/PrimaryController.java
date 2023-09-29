@@ -179,8 +179,10 @@ public void loadSimulation(String FilePath) {
         alert.showAndWait();
     }
     public void initFirstNSecondScrean(SimulationTitlesDetails simulationTitleDto) {
+        //first screen - the title
         SetTitleDetailsOnFirstScreen(simulationTitleDto);
 //      second screen - the envprop list and entity list
+        this.secondScreenBodyController.activateClearAndRunButtons();
         this.secondScreenBodyController.setEnvPropTable();
         this.secondScreenBodyController.setEntitiesPopulationList(simulationTitleDto.getEntitiesNames(),simulationTitleDto.getPopulationSpace());
     }

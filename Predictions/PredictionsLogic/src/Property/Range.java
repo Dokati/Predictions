@@ -45,7 +45,7 @@ public class Range {
 
     @Override
     public String toString() {
-        return "Range: (to=" + to +
+        return "\nRange: (to=" + to +
                 ", from=" + from + ")";
     }
 }

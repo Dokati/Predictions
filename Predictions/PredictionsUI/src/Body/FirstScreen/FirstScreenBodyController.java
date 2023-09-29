@@ -32,21 +32,16 @@ public class FirstScreenBodyController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         MyTreeItem rootItem = new MyTreeItem("World Details","World Details");
-        MyTreeItem entitiesItem = new MyTreeItem("Entities","Entities");
-        MyTreeItem rulesItem = new MyTreeItem("Rules","Rules");
-        MyTreeItem terminationItem = new MyTreeItem("Termination","Termination");
-        MyTreeItem envItem = new MyTreeItem("Enviorment Variables","Enviorment Variables");
-        MyTreeItem gridItem = new MyTreeItem("Grid","Grid");
-
         this.TreeView.setRoot(rootItem);
-        rootItem.getChildren().addAll(entitiesItem, rulesItem, terminationItem, envItem, gridItem);
-
     }
 
     
     public void setTitleDetail(SimulationTitlesDetails simulationTitleDto){
+        MyTreeItem newWorld  = new MyTreeItem("World Name: " + simulationTitleDto.getWorldName(), "World Name");
+        this.TreeView.getRoot().getChildren().add(newWorld);
+        addToNewWorldBasicChildren(newWorld);
         // insert Entities Names:
-        this.TreeView.getRoot().getChildren().get(0).getChildren().addAll(simulationTitleDto.getEntitiesNames().stream()
+        newWorld.getChildren().get(0).getChildren().addAll(simulationTitleDto.getEntitiesNames().stream()
                 .map(entityName -> new MyTreeItem(entityName, "Entity name")).collect(Collectors.toList()));
 
         // insert Rules name, activation and actions tree
@@ -63,11 +58,11 @@ public class FirstScreenBodyController implements Initializable {
             });
 
             ruleItem.getChildren().addAll(activationItem,actionsItem);
-            this.TreeView.getRoot().getChildren().get(1).getChildren().add(ruleItem);
+            newWorld.getChildren().get(1).getChildren().add(ruleItem);
         });
 
         //insert enviorment variable name:
-        this.TreeView.getRoot().getChildren().get(3).getChildren().addAll(simulationTitleDto.getEnvVariableNames().stream()
+        newWorld.getChildren().get(3).getChildren().addAll(simulationTitleDto.getEnvVariableNames().stream()
                 .map(envName -> new MyTreeItem(envName, "Env name")).collect(Collectors.toList()));
 
 
@@ -86,6 +81,17 @@ public class FirstScreenBodyController implements Initializable {
 
 
 
+    }
+
+    private void addToNewWorldBasicChildren(MyTreeItem newWorld) {
+
+        MyTreeItem entitiesItem = new MyTreeItem("Entities","Entities");
+        MyTreeItem rulesItem = new MyTreeItem("Rules","Rules");
+        MyTreeItem terminationItem = new MyTreeItem("Termination","Termination");
+        MyTreeItem envItem = new MyTreeItem("Enviorment Variables","Enviorment Variables");
+        MyTreeItem gridItem = new MyTreeItem("Grid","Grid");
+
+        newWorld.getChildren().addAll(entitiesItem,rulesItem,terminationItem,envItem,gridItem);
     }
 
     private void setGridDetails() {
