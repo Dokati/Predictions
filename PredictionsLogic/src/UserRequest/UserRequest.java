@@ -50,16 +50,8 @@ public class UserRequest {
         return numOfTerminateSimulations;
     }
 
-    public void setRequestApproved(UserRequestStatusType requestStatus) {
-        this.requestStatus = requestStatus;
-    }
-
     public String getSimulationName() {
         return simulationName;
-    }
-
-    public void setSimulationName(String simulationName) {
-        this.simulationName = simulationName;
     }
 
     public String getUsername() {
