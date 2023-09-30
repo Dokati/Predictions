@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Predictions/lib/javax.ejb.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/lib/javax.persistence.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/lib/javax.resource.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/lib/javax.servlet.jsp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/lib/gson-2.8.8-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/lib/javax.transaction.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/lib/gson-2.8.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/lib/javax.annotation.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/lib/gson-2.8.8-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/lib/javax.jms.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/lib/javax.servlet.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/lib/javax.servlet.jsp.jstl.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
