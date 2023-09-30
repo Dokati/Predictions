@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Admin/Admin.iml" filepath="$PROJECT_DIR$/Admin/Admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ClientSharedClasess/ClientSharedClasess.iml" filepath="$PROJECT_DIR$/ClientSharedClasess/ClientSharedClasess.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Predictions.iml" filepath="$PROJECT_DIR$/Predictions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PredictionsLogic/PredictionsLogic.iml" filepath="$PROJECT_DIR$/PredictionsLogic/PredictionsLogic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PredictionsUI/PredictionsUI.iml" filepath="$PROJECT_DIR$/PredictionsUI/PredictionsUI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Server/Server.iml" filepath="$PROJECT_DIR$/Server/Server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/User/User.iml" filepath="$PROJECT_DIR$/User/User.iml" />
+    </modules>
+  </component>
+</project>

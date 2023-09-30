@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="lib1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Predictions/out/artifacts/Server_Web_exploded/WEB-INF/lib/jackson-core-2.15.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/out/artifacts/Server_Web_exploded/WEB-INF/lib/jackson-databind-2.15.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/out/artifacts/Server_Web_exploded/WEB-INF/lib/gson-2.10.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/out/artifacts/Server_Web_exploded/WEB-INF/lib/jackson-annotations-2.15.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/out/artifacts/Server_Web_exploded/WEB-INF/lib/PredictionsLogic.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Predictions/out/artifacts/Server_Web_exploded/WEB-INF/lib/PredictionsUI.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
