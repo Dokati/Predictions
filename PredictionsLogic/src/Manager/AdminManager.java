@@ -1,12 +1,12 @@
 package Manager;
 
-import Body.SecondScreen.EnvPropTableItem;
+
 import Dto.*;
 import PRD.PRDWorld;
 import Property.definition.EnvPropertyDefinition;
 import UserRequest.*;
 import World.definition.WorldDefinition;
-import javafx.collections.ObservableList;
+
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -42,6 +42,13 @@ public class AdminManager {
 
         threadPool.submit(users.get(requests.get(requestNum).getUsername()).getSimulationList().get(simulationNumber));
 
+    }
+
+    public void runSimulationByRequestNumber(Integer requestNum,Map<String, Integer> entitiesPopulationMap,Map<String, String> envPropValue){
+
+
+        users.get(requests.get(requestNum).getUsername()).setWorldDefinition(new WorldDefinition(worldDefinitions.get(requests.get(requestNum).getSimulationName()),requests.get(requestNum).getTerminationConditions()));
+        
     }
 
     public void addRequestToList(RequestDto requestDto){

@@ -2,6 +2,9 @@ package UserRequest;
 
 import Terminition.Termination;
 import Terminition.TerminationType;
+import java.util.ArrayList;
+import Terminition.Termination;
+import Terminition.TerminationType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +30,10 @@ public class UserRequest {
         this.numOfRunningSimulation = 0;
         this.numOfTerminateSimulations = 0;
         this.terminationConditions = new HashMap<>();
+    }
+
+    public Integer getRequestedNumOfSimulationRuns() {
+        return requestedNumOfSimulationRuns;
     }
 
     public Integer getRequestedNumOfSimulationRuns() {

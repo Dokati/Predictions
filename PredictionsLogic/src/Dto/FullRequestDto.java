@@ -20,8 +20,8 @@ public class FullRequestDto {
         this.requestStatus = request.getRequestStatus().toString().toLowerCase();
         this.numOfRunningSimulation = request.getNumOfRunningSimulation().toString();
         this.numOfTerminateSimulations = request.getNumOfTerminateSimulations().toString();
-    }
 
+    }
 
     public String getRequestNumber() {
         return requestNumber;
@@ -43,7 +43,7 @@ public class FullRequestDto {
         return numOfRunningSimulation;
     }
 
+
     public String getNumOfTerminateSimulations() {
         return numOfTerminateSimulations;
-    }
 }

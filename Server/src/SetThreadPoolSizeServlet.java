@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import Manager.AdminManager;
-
 import java.io.IOException;
 
 @WebServlet("/setThreadPoolSize")
