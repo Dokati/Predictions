@@ -6,6 +6,7 @@ import PrimaryScreen.UserPrimaryController;
 import Screen.details.FirstScreenBodyController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import javafx.application.Platform;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -34,11 +35,15 @@ public class DetailScreenListenerTask extends TimerTask {
         if (numberOfWorlds != null) {
             if (numberOfWorlds > firstScreenBodyController.getNumberOfWorlds()) {
                 List<SimulationTitlesDetails> simulationTitlesDetailsList = getFromServerAllWorldsDetails();
-                this.firstScreenBodyController.SetSeveralWorldsDetails(simulationTitlesDetailsList);
+                Platform.runLater(() -> {
+                    this.firstScreenBodyController.SetSeveralWorldsDetails(simulationTitlesDetailsList);
+                });
                 List<String> simulationNames = simulationTitlesDetailsList.stream()
                         .map(SimulationTitlesDetails::getSimulationName)
                         .collect(Collectors.toList());
-                this.userPrimaryController.setSimulationNames(simulationNames);
+                Platform.runLater(() -> {
+                    this.userPrimaryController.setSimulationNames(simulationNames);
+                });
             }
         }
 
