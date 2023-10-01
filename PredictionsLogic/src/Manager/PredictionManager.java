@@ -176,4 +176,8 @@ public class PredictionManager {
         simulationList = new HashMap<>();
         simulationIdNumber = 1;
     }
+
+    public void setWorldDefinition(WorldDefinition worldDefinition) {
+        this.worldDefinition = worldDefinition;
+    }
 }

@@ -16,6 +16,7 @@ public class FullRequestDto {
     public FullRequestDto(UserRequest request){
         this.requestNumber = request.getRequestNumber().toString();
         this.simulationName = request.getSimulationName();
+        this.requestedNumOfSimulationRuns = request.getRequestedNumOfSimulationRuns().toString();
         this.requestStatus = request.getRequestStatus().toString().toLowerCase();
         this.numOfRunningSimulation = request.getNumOfRunningSimulation().toString();
         this.numOfTerminateSimulations = request.getNumOfTerminateSimulations().toString();
