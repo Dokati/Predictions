@@ -7,16 +7,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.jetbrains.annotations.NotNull;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import static Request.RequestCreator.ExecuteRequest;
+import static Request.RequestCreator.createPostRequestWithDto;
 
 public class RequestController implements Initializable {
     UserPrimaryController userPrimaryController;
@@ -24,9 +28,20 @@ public class RequestController implements Initializable {
     private TableView<SimulationRequest> requestsTable;
     TextField SecondsTextField;
     @FXML private Button submitButton;
-
+    @FXML private Label SubmitNoteLabel;
 
     private void sendRequestToServer(RequestDto requestDto) {
+        Request request = createPostRequestWithDto("/userRequestsList", requestDto);
+        Response response = ExecuteRequest(request);
+        if (response!=null && response.isSuccessful()) {
+            SubmitNoteLabel.setTextFill(javafx.scene.paint.Color.GREEN);
+            SubmitNoteLabel.setText("Request sent successfully");
+        } else {
+            SubmitNoteLabel.setTextFill(javafx.scene.paint.Color.RED);
+            SubmitNoteLabel.setText("Request failed");
+        }
+
+
 
     }
 
@@ -49,14 +64,8 @@ public class RequestController implements Initializable {
 
     @FXML void submitButtonOnClick(ActionEvent event) {
         SimulationRequest simulationRequest = requestsTable.getItems().get(0);
-        boolean SimulationNameComboBoxIsEmpty = simulationRequest.getSimulationName().getValue() == null;
-        boolean TerminationComboBoxIsEmpty = simulationRequest.getTerminationCondition().getValue() == null;
-        boolean amountOfRunsTextFieldIsEmpty = simulationRequest.getRequestedRuns().getText().isEmpty();
-        boolean TickTextFieldIsEmpty = simulationRequest.getTick().getText().isEmpty() && !simulationRequest.getTick().isDisabled();
-        boolean SecondsTextFieldIsEmpty = simulationRequest.getSeconds().getText().isEmpty() && !simulationRequest.getSeconds().isDisabled();
 
-        if (SimulationNameComboBoxIsEmpty || TerminationComboBoxIsEmpty || amountOfRunsTextFieldIsEmpty
-                || TickTextFieldIsEmpty || SecondsTextFieldIsEmpty) {
+        if (requestFieldsHaveBeenFilledPropely()) {
             System.out.println("Please fill all the fields");
         } else {
             HashMap<String, String> terminationConditionMap = getTerminationHashMap(simulationRequest);
@@ -68,6 +77,16 @@ public class RequestController implements Initializable {
             sendRequestToServer(requestDto);
         }
 
+    }
+
+    private boolean requestFieldsHaveBeenFilledPropely() {
+        SimulationRequest simulationRequest = requestsTable.getItems().get(0);
+        boolean SimulationNameComboBoxIsEmpty = simulationRequest.getSimulationName().getValue() == null;
+        boolean TerminationComboBoxIsEmpty = simulationRequest.getTerminationCondition().getValue() == null;
+        boolean amountOfRunsTextFieldIsEmpty = simulationRequest.getRequestedRuns().getText().isEmpty();
+        boolean TickTextFieldIsEmpty = simulationRequest.getTick().getText().isEmpty() && !simulationRequest.getTick().isDisabled();
+        boolean SecondsTextFieldIsEmpty = simulationRequest.getSeconds().getText().isEmpty() && !simulationRequest.getSeconds().isDisabled();
+        return SimulationNameComboBoxIsEmpty || TerminationComboBoxIsEmpty || amountOfRunsTextFieldIsEmpty || TickTextFieldIsEmpty || SecondsTextFieldIsEmpty;
     }
 
     private static HashMap<String, String> getTerminationHashMap(SimulationRequest simulationRequest) {
@@ -87,5 +106,11 @@ public class RequestController implements Initializable {
 
     public void setPrimaryController(UserPrimaryController userPrimaryController) {
         this.userPrimaryController = userPrimaryController;
+    }
+
+    public void setSimulationNames(List<String> simulationNames) {
+        SimulationRequest simulationRequest = requestsTable.getItems().get(0);
+        simulationRequest.getSimulationName().getItems().clear();
+        simulationRequest.getSimulationName().getItems().addAll(simulationNames);
     }
 }

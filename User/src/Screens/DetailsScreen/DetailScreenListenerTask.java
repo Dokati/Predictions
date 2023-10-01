@@ -2,6 +2,7 @@ package Screens.DetailsScreen;
 
 import Dto.GridDto;
 import Dto.SimulationTitlesDetails;
+import PrimaryScreen.UserPrimaryController;
 import Screen.details.FirstScreenBodyController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -12,15 +13,18 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 import static Request.RequestCreator.CreateGetRequest;
 import static Request.RequestCreator.ExecuteRequest;
 
 public class DetailScreenListenerTask extends TimerTask {
     FirstScreenBodyController firstScreenBodyController;
+    UserPrimaryController userPrimaryController;
 
-    public DetailScreenListenerTask(FirstScreenBodyController firstScreenBodyController) {
+    public DetailScreenListenerTask(FirstScreenBodyController firstScreenBodyController, UserPrimaryController userPrimaryController) {
         this.firstScreenBodyController = firstScreenBodyController;
+        this.userPrimaryController = userPrimaryController;
     }
 
     @Override
@@ -31,6 +35,10 @@ public class DetailScreenListenerTask extends TimerTask {
             if (numberOfWorlds > firstScreenBodyController.getNumberOfWorlds()) {
                 List<SimulationTitlesDetails> simulationTitlesDetailsList = getFromServerAllWorldsDetails();
                 this.firstScreenBodyController.SetSeveralWorldsDetails(simulationTitlesDetailsList);
+                List<String> simulationNames = simulationTitlesDetailsList.stream()
+                        .map(SimulationTitlesDetails::getSimulationName)
+                        .collect(Collectors.toList());
+                this.userPrimaryController.setSimulationNames(simulationNames);
             }
         }
 
@@ -56,7 +64,7 @@ public class DetailScreenListenerTask extends TimerTask {
 
 
     private Integer askServerForNumberOfWorlds() {
-        Integer res = 0;
+        Integer res = null;
         Request request = CreateGetRequest("/getNumOfSimulations");
         Response response = ExecuteRequest(request);
         if (response != null) {

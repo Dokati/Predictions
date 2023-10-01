@@ -7,12 +7,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static Request.RequestCreator.CreateThreadPoolSizePostRequest;
+import static Request.RequestCreator.ExecuteRequest;
 
 public class ManagementController implements Initializable {
     private PrimaryController primaryController;
@@ -22,6 +28,7 @@ public class ManagementController implements Initializable {
     @FXML private TextField filePathTextField;
     @FXML private TextField setThreadsCountTextField;
     @FXML private Button setThreadsCountButton;
+    @FXML private Label threadCountLabel;
 
     @FXML private Label runningSimulationsLabel;
     @FXML private Label waitingSimulationsLabel;
@@ -43,6 +50,23 @@ public class ManagementController implements Initializable {
         }
     }
     @FXML void ThreadsCountButtonOnClick(ActionEvent event) {
+        if (setThreadsCountTextField.getText().isEmpty()) {
+            threadCountLabel.setTextFill(Color.RED);
+            threadCountLabel.setText("Please enter a number");
+        }
+        else {
+            threadCountLabel.setText("");
+            Request request = CreateThreadPoolSizePostRequest(setThreadsCountTextField.getText());
+            Response response = ExecuteRequest(request);
+            if (response.isSuccessful()) {
+                this.primaryController.setThreadPoolSize(Integer.parseInt(setThreadsCountTextField.getText()));
+                threadCountLabel.setTextFill(javafx.scene.paint.Color.GREEN);
+                threadCountLabel.setText("Thread pool size set to " + setThreadsCountTextField.getText());
+            } else {
+                threadCountLabel.setTextFill(Color.RED);
+                threadCountLabel.setText("Failed to set thread pool size");
+            }
+        }
 
     }
 

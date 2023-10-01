@@ -31,6 +31,7 @@ public class AdminManager {
         this.threadPoolSize = null;
         this.threadPool = null;
         this.users = new HashMap<>();
+        this.requests = new HashMap<>();
     }
 
     public void runSimulationByRequestNumber(Integer requestNum,Map<String, Integer> entitiesPopulationMap,Map<String, String> envPropValue){

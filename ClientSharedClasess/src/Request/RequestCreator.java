@@ -1,5 +1,10 @@
 package Request;
 
+import Dto.ActionDetailsDto;
+import Dto.BaseDto;
+import Dto.RequestDto;
+import com.google.gson.Gson;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -71,6 +76,21 @@ public class RequestCreator {
                 .build();
         return request;
     }
+    public static Request createPostRequestWithDto(String resource, BaseDto dto) {
+        String url = BASE_URL + resource;
+        // Serialize the DTO to JSON using Gson
+        Gson gson = new Gson();
+        String json = gson.toJson(dto);
+        // Create a request body with the JSON data
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
+        // Create the POST request
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        return request;
+    }
 
     public static Response ExecuteRequest(Request request){
         try {
@@ -78,7 +98,7 @@ public class RequestCreator {
             return call.execute();
         } catch (IOException e) {
             // Handle IOException here (e.g., log the error, throw a custom exception, or take appropriate action)
-            showAlertToUser(e.getMessage()); // This prints the stack trace for debugging purposes
+            Platform.runLater(()->showAlertToUser(e.getMessage())); // This prints the stack trace for debugging purposes
             return null; // Return an appropriate response or value in case of failure
         }
     }
