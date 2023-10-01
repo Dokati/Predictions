@@ -2,7 +2,7 @@ package Dto;
 
 import java.util.HashMap;
 
-public class RequestDto {
+public class RequestDto extends BaseDto {
     private String userName;
     private String simulationName;
     private Integer requestedRuns;

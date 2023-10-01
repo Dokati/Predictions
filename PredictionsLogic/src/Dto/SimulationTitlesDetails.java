@@ -43,4 +43,8 @@ public class SimulationTitlesDetails {
     public String getWorldName() {
         return simulationName;
     }
+
+    public String getSimulationName() {
+        return simulationName;
+    }
 }

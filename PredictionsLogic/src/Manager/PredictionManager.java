@@ -31,6 +31,7 @@ public class PredictionManager {
         simulationList = new HashMap<>();
         simulationIdNumber = 1;
         worldDefinition = null;
+        requests = new ArrayList<>();
     }
 
     public void addRequest(UserRequest request){
