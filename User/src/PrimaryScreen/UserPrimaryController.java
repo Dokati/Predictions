@@ -3,6 +3,7 @@ package PrimaryScreen;
 import Screen.details.FirstScreenBodyController;
 import Screens.DetailsScreen.DetailScreenListenerTask;
 import Screens.Requests.RequestController;
+import Screens.Requests.RequestListenerTask;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -46,7 +47,15 @@ public class UserPrimaryController implements Initializable {
     private void startListeners() {
         DetailScreenListenerTask detailScreenListenerTask = new DetailScreenListenerTask(this.detailsComponentController , this);
         Timer timer = new Timer();
-        timer.schedule(detailScreenListenerTask, TIMER_DELAY, TIMER_SCEDULE_PERIOD);}
+        timer.schedule(detailScreenListenerTask, TIMER_DELAY, TIMER_SCEDULE_PERIOD);
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        RequestListenerTask requestListenerTask = new RequestListenerTask(this.requestsComponentController);
+        Timer timer2 = new Timer();
+        timer2.schedule(requestListenerTask, TIMER_DELAY, TIMER_SCEDULE_PERIOD);
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    }
+
 
     private void logInPage() {
         Stage loginStage = new Stage();

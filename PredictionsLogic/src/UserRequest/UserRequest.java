@@ -1,8 +1,7 @@
 package UserRequest;
-
+import java.util.ArrayList;
 import Terminition.Termination;
 import Terminition.TerminationType;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +25,7 @@ public class UserRequest {
         this.requestStatus = UserRequestStatusType.Waiting;
         this.numOfRunningSimulation = 0;
         this.numOfTerminateSimulations = 0;
+        this.terminationConditions = new ArrayList<>();
     }
 
     public Integer getRequestedNumOfSimulationRuns() {
