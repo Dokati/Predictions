@@ -24,7 +24,7 @@
                         <TableColumn prefWidth="121.0" text="Seconds" />
                     </columns>
                   </TableView>
-                  <VBox prefHeight="74.0" prefWidth="162.0" spacing="5.0">
+                  <VBox prefHeight="74.0" prefWidth="185.0" spacing="5.0">
                      <children>
                         <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonOnClick" prefHeight="48.0" prefWidth="130.0" style="-fx-background-color: lightgreen; -fx-border-color: black;" text="Submit!" />
                         <Label fx:id="SubmitNoteLabel" />
@@ -50,7 +50,7 @@
                         <Insets bottom="30.0" left="30.0" top="30.0" />
                      </HBox.margin>
                   </TableView>
-                  <VBox alignment="BOTTOM_CENTER" prefHeight="454.0" prefWidth="175.0">
+                  <VBox alignment="BOTTOM_CENTER" prefHeight="454.0" prefWidth="152.0">
                      <children>
                         <Button fx:id="executeButton" mnemonicParsing="false" onAction="#executeButtonOnClick" prefHeight="48.0" prefWidth="130.0" style="-fx-background-color: lightgreen; -fx-border-color: black;" text="Execute !!" />
                      </children>
@@ -58,7 +58,7 @@
                         <Insets />
                      </HBox.margin>
                      <padding>
-                        <Insets bottom="30.0" />
+                        <Insets bottom="40.0" />
                      </padding>
                   </VBox>
                </children></HBox>

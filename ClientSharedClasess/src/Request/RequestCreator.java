@@ -76,6 +76,25 @@ public class RequestCreator {
                 .build();
         return request;
     }
+
+    public  static  Request createGetListRequestsFromServer(String name){
+        return CreateSingleParameterGetRequest(name, "user name","/userRequestsList");
+
+    }
+    public static Request CreateSingleParameterGetRequest(String value, String parameterName , String resource) {
+        // Create a URL with query parameters
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + resource).newBuilder();
+        urlBuilder.addQueryParameter(parameterName, value);
+        String url = urlBuilder.build().toString();
+
+        // Create a GET request
+        Request request = new Request.Builder()
+                .url(url)
+                .get() // Specify it's a GET request
+                .build();
+
+        return request;
+    }
     public static Request createPostRequestWithDto(String resource, BaseDto dto) {
         String url = BASE_URL + resource;
         // Serialize the DTO to JSON using Gson

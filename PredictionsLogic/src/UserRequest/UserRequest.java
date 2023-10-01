@@ -1,8 +1,8 @@
 package UserRequest;
 
 import Terminition.Termination;
+import Terminition.TerminationType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,8 +10,8 @@ public class UserRequest {
     private Integer requestNumber;
     private String simulationName;
     private String username;
-    private int requestedNumOfSimulationRuns;
-    private List<Termination> terminationConditions;
+    private Integer requestedNumOfSimulationRuns;
+    private HashMap<TerminationType,Termination> terminationConditions;
     private boolean openRequest;
     private UserRequestStatusType requestStatus;
     private Integer numOfRunningSimulation;
@@ -26,7 +26,11 @@ public class UserRequest {
         this.requestStatus = UserRequestStatusType.Waiting;
         this.numOfRunningSimulation = 0;
         this.numOfTerminateSimulations = 0;
-        this.terminationConditions = new ArrayList<>();
+        this.terminationConditions = new HashMap<>();
+    }
+
+    public Integer getRequestedNumOfSimulationRuns() {
+        return requestedNumOfSimulationRuns;
     }
 
     public Integer getRequestNumber() {
@@ -41,6 +45,14 @@ public class UserRequest {
         return openRequest;
     }
 
+    public void setNumOfRunningSimulation(Integer numOfRunningSimulation) {
+        this.numOfRunningSimulation = numOfRunningSimulation;
+    }
+
+    public void setNumOfTerminateSimulations(Integer numOfTerminateSimulations) {
+        this.numOfTerminateSimulations = numOfTerminateSimulations;
+    }
+
     public UserRequestStatusType getRequestStatus() {
         return requestStatus;
     }
@@ -53,16 +65,8 @@ public class UserRequest {
         return numOfTerminateSimulations;
     }
 
-    public void setRequestApproved(UserRequestStatusType requestStatus) {
-        this.requestStatus = requestStatus;
-    }
-
     public String getSimulationName() {
         return simulationName;
-    }
-
-    public void setSimulationName(String simulationName) {
-        this.simulationName = simulationName;
     }
 
     public String getUsername() {
@@ -81,11 +85,11 @@ public class UserRequest {
         this.requestedNumOfSimulationRuns = requestedLectures;
     }
 
-    public List<Termination> getTerminationConditions() {
+    public HashMap<TerminationType,Termination> getTerminationConditions() {
         return terminationConditions;
     }
 
-    public void setTerminationConditions(List<Termination> terminations) {
+    public void setTerminationConditions(HashMap<TerminationType,Termination> terminations) {
         this.terminationConditions = terminations;
     }
 

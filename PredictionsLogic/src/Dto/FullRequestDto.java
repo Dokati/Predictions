@@ -3,49 +3,47 @@ package Dto;
 import Terminition.Termination;
 import UserRequest.UserRequest;
 import UserRequest.UserRequestStatusType;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 import java.util.List;
 
 public class FullRequestDto {
-    private StringProperty requestNumber = new SimpleStringProperty();
-    private StringProperty simulationName = new SimpleStringProperty();
-    private StringProperty requestedNumOfSimulationRuns = new SimpleStringProperty();
-    private StringProperty requestStatus = new SimpleStringProperty();
-    private StringProperty numOfRunningSimulation = new SimpleStringProperty();
-    private StringProperty numOfTerminateSimulations = new SimpleStringProperty();
+    private String requestNumber;
+    private String simulationName;
+    private String requestedNumOfSimulationRuns;
+    private String requestStatus;
+    private String numOfRunningSimulation;
+    private String numOfTerminateSimulations;
 
     public FullRequestDto(UserRequest request){
-        this.setRequestNumber(request.getRequestNumber().toString());
-        this.setSimulationName(request.getSimulationName());
-        this.setRequestedNumOfSimulationRuns("2");
-        this.setRequestStatus(request.getRequestStatus().toString());
-        this.setNumOfRunningSimulation(request.getNumOfRunningSimulation().toString());
-        this.setNumOfTerminateSimulations(request.getNumOfTerminateSimulations().toString());
+        this.requestNumber = request.getRequestNumber().toString();
+        this.simulationName = request.getSimulationName();
+        this.requestedNumOfSimulationRuns = request.getRequestedNumOfSimulationRuns().toString();
+        this.requestStatus = request.getRequestStatus().toString().toLowerCase();
+        this.numOfRunningSimulation = request.getNumOfRunningSimulation().toString();
+        this.numOfTerminateSimulations = request.getNumOfTerminateSimulations().toString();
     }
 
-    public void setRequestNumber(String requestNumber) {
-        this.requestNumber.set(requestNumber);
+
+    public String getRequestNumber() {
+        return requestNumber;
     }
 
-    public void setSimulationName(String simulationName) {
-        this.simulationName.set(simulationName);
+    public String getSimulationName() {
+        return simulationName;
     }
 
-    public void setRequestedNumOfSimulationRuns(String requestedNumOfSimulationRuns) {
-        this.requestedNumOfSimulationRuns.set(requestedNumOfSimulationRuns);
+    public String getRequestedNumOfSimulationRuns() {
+        return requestedNumOfSimulationRuns;
     }
 
-    public void setRequestStatus(String requestStatus) {
-        this.requestStatus.set(requestStatus);
+    public String getRequestStatus() {
+        return requestStatus;
     }
 
-    public void setNumOfRunningSimulation(String numOfRunningSimulation) {
-        this.numOfRunningSimulation.set(numOfRunningSimulation);
+    public String getNumOfRunningSimulation() {
+        return numOfRunningSimulation;
     }
 
-    public void setNumOfTerminateSimulations(String numOfTerminateSimulations) {
-        this.numOfTerminateSimulations.set(numOfTerminateSimulations);
+    public String getNumOfTerminateSimulations() {
+        return numOfTerminateSimulations;
     }
 }

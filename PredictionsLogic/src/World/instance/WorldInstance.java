@@ -13,6 +13,7 @@ import Property.instance.PropertyInstance;
 import Rule.Rule;
 import Terminition.Termination;
 import Terminition.TerminationType;
+import UserRequest.UserRequest;
 import World.definition.WorldDefinition;
 
 import java.time.Duration;
@@ -32,8 +33,9 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
     private SimulationStatusType status;
     private final Integer SimulationId;
     private long runningTimeInSeconds;
+    private final UserRequest request;
 
-    public WorldInstance(WorldDefinition worldDef,Map<String, String> envPropValue){
+    public WorldInstance(WorldDefinition worldDef,Map<String, String> envPropValue,UserRequest request){
 
         if(worldDef == null)
         {
@@ -80,11 +82,19 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
 
         //Id
         SimulationId = hashCode();
+
+        //request
+        this.request = request;
     }
 
     @Override
     public SimulationEndDetailsDto call() {
         status = SimulationStatusType.Running;
+
+        synchronized (request) {
+            request.setNumOfRunningSimulation(request.getNumOfRunningSimulation() + 1);
+        }
+
         boolean simulationTermByTicks = terminationConditions.containsKey(TerminationType.TICK);
         boolean simulationTermBySecond = terminationConditions.containsKey(TerminationType.SECOND);
         Instant startTime = Instant.now();
@@ -100,7 +110,7 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                waitTimeInSecPause = Duration.between(startItrTime, Instant.now()).getSeconds();;
+                waitTimeInSecPause = Duration.between(startItrTime, Instant.now()).getSeconds();
             }
             waitTimeInSecCount += waitTimeInSecPause;
 
@@ -136,8 +146,15 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
 
         getEndSimulationDetails();
         status = SimulationStatusType.End;
-        return new SimulationEndDetailsDto(SimulationId,endSimulationDetails);
+
+        synchronized (request) {
+            request.setNumOfRunningSimulation(request.getNumOfRunningSimulation() - 1);
+            request.setNumOfTerminateSimulations(request.getNumOfTerminateSimulations() + 1);
+        }
+
+        return new SimulationEndDetailsDto(SimulationId, endSimulationDetails);
     }
+
 
     public void updateEntitiesPopulation() {
         for (Map.Entry<String, EntitySimulationEndDetails> entityDetails : endSimulationDetails.entrySet()) {
