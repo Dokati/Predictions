@@ -42,6 +42,12 @@ public class EntityDefinition {
         }
     }
 
+    public EntityDefinition(EntityDefinition entityDef){
+        name = entityDef.name;
+        properties = entityDef.getProperties();
+        population = 0;
+    }
+
     public String getName() {
         return name;
     }

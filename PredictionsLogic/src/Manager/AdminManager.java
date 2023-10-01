@@ -1,13 +1,13 @@
 package Manager;
 
-import Dto.FullRequestDto;
-import Dto.RequestDto;
-import Dto.RuleTitleDto;
-import Dto.SimulationTitlesDetails;
+import Body.ThirdScreen.RunSimulationTask;
+import Dto.*;
 import PRD.PRDWorld;
 import Property.definition.EnvPropertyDefinition;
 import UserRequest.*;
 import World.definition.WorldDefinition;
+import World.instance.WorldInstance;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
@@ -32,6 +32,13 @@ public class AdminManager {
         this.threadPool = null;
         this.users = new HashMap<>();
         this.requests = new HashMap<>();
+    }
+
+    public void runSimulationByRequestNumber(Integer requestNum,Map<String, Integer> entitiesPopulationMap,Map<String, String> envPropValue){
+
+
+        users.get(requests.get(requestNum).getUsername()).setWorldDefinition(new WorldDefinition(worldDefinitions.get(requests.get(requestNum).getSimulationName()),requests.get(requestNum).getTerminationConditions()));
+        
     }
 
     public void addRequestToList(RequestDto requestDto){
