@@ -108,4 +108,8 @@ public class PrimaryController implements Initializable {
             // User clicked "Close" or closed the dialog
         }
     }
+
+    public void setThreadPoolSize(int size) {
+        queueManager.setThreadPoolSize(size);
+    }
 }

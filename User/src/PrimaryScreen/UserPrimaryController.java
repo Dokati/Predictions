@@ -17,6 +17,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 
@@ -32,20 +33,20 @@ public class UserPrimaryController implements Initializable {
     @FXML private ScrollPane detailsComponent;
     @FXML private FirstScreenBodyController detailsComponentController;
     @FXML private ScrollPane requestsComponent;
-    @FXML private RequestController requestComponentController;
+    @FXML private RequestController requestsComponentController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         logInPage();
         nameLabel.setText("Name: " + userName);
         startListeners();
-        if(requestComponentController != null) {
-            requestComponentController.setPrimaryController(this);
+        if(requestsComponentController != null) {
+            requestsComponentController.setPrimaryController(this);
         }    }
     private void startListeners() {
-        DetailScreenListenerTask detailScreenListenerTask = new DetailScreenListenerTask(this.detailsComponentController);
+        DetailScreenListenerTask detailScreenListenerTask = new DetailScreenListenerTask(this.detailsComponentController , this);
         Timer timer = new Timer();
-        timer.schedule(detailScreenListenerTask, TIMER_DELAY, TIMER_SCEDULE_PERIOD);}
+        timer.schedule(detailScreenListenerTask, 5000, 5000);}
 
     private void logInPage() {
         Stage loginStage = new Stage();
@@ -118,6 +119,10 @@ public class UserPrimaryController implements Initializable {
 
     public String getUserName() {
         return userName;
+    }
+
+    public void setSimulationNames(List<String> simulationNames) {
+        this.requestsComponentController.setSimulationNames(simulationNames);
     }
 }
 

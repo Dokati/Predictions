@@ -31,6 +31,7 @@ public class AdminManager {
         this.threadPoolSize = null;
         this.threadPool = null;
         this.users = new HashMap<>();
+        this.requests = new HashMap<>();
     }
 
     public void addRequestToList(RequestDto requestDto){

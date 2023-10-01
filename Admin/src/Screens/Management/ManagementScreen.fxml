@@ -37,12 +37,25 @@
       </HBox>
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <VBox>
                <children>
-                  <TextField fx:id="setThreadsCountTextField" alignment="CENTER" promptText="insert thread amount" />
-                  <Button fx:id="setThreadsCountButton" mnemonicParsing="false" onAction="#ThreadsCountButtonOnClick" text="Set threads count" />
+                  <HBox alignment="CENTER" prefHeight="61.0" prefWidth="375.0">
+                     <children>
+                        <TextField fx:id="setThreadsCountTextField" alignment="CENTER" promptText="insert thread amount" />
+                        <Button fx:id="setThreadsCountButton" mnemonicParsing="false" onAction="#ThreadsCountButtonOnClick" text="Set threads count" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="42.0" prefWidth="375.0">
+                     <children>
+                        <Label fx:id="threadCountLabel" alignment="CENTER" textFill="#d71717">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </VBox>
             <VBox alignment="CENTER" prefHeight="110.0" prefWidth="372.0">
                <children>
                    <AnchorPane id="right-header" prefHeight="91.0" prefWidth="278.0">
