@@ -1,7 +1,10 @@
 package Screens.Requests;
 import Dto.FullRequestDto;
 import Dto.RequestDto;
+import Dto.SimulationTitlesDetails;
 import PrimaryScreen.UserPrimaryController;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,13 +18,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static Request.RequestCreator.ExecuteRequest;
-import static Request.RequestCreator.createPostRequestWithDto;
+import static Request.RequestCreator.*;
 
 public class RequestController implements Initializable {
     UserPrimaryController userPrimaryController;
@@ -33,20 +37,7 @@ public class RequestController implements Initializable {
     @FXML private Button submitButton;
     @FXML private Label SubmitNoteLabel;
 
-    private void sendRequestToServer(RequestDto requestDto) {
-        Request request = createPostRequestWithDto("/userRequestsList", requestDto);
-        Response response = ExecuteRequest(request);
-        if (response!=null && response.isSuccessful()) {
-            SubmitNoteLabel.setTextFill(javafx.scene.paint.Color.GREEN);
-            SubmitNoteLabel.setText("Request sent successfully");
-        } else {
-            SubmitNoteLabel.setTextFill(javafx.scene.paint.Color.RED);
-            SubmitNoteLabel.setText("Request failed");
-        }
 
-
-
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -89,6 +80,18 @@ public class RequestController implements Initializable {
 
     }
 
+    private void sendRequestToServer(RequestDto requestDto) {
+        Request request = createPostRequestWithDto("/userRequestsList", requestDto);
+        Response response = ExecuteRequest(request);
+        if (response!=null && response.isSuccessful()) {
+            SubmitNoteLabel.setTextFill(javafx.scene.paint.Color.GREEN);
+            SubmitNoteLabel.setText("Request sent successfully");
+        } else {
+            SubmitNoteLabel.setTextFill(javafx.scene.paint.Color.RED);
+            SubmitNoteLabel.setText("Request failed");
+        }
+    }
+
     private boolean requestFieldsHaveBeenFilledPropely() {
         SimulationRequest simulationRequest = submitRequsetTable.getItems().get(0);
         boolean SimulationNameComboBoxIsEmpty = simulationRequest.getSimulationName().getValue() == null;
@@ -99,7 +102,7 @@ public class RequestController implements Initializable {
         return SimulationNameComboBoxIsEmpty || TerminationComboBoxIsEmpty || amountOfRunsTextFieldIsEmpty || TickTextFieldIsEmpty || SecondsTextFieldIsEmpty;
     }
 
-    private static HashMap<String, String> getTerminationHashMap(SimulationRequest simulationRequest) {
+    private HashMap<String, String> getTerminationHashMap(SimulationRequest simulationRequest) {
         HashMap<String,String> terminationConditionMap = new HashMap<>();
         if (simulationRequest.getTerminationCondition().getValue().equals("Tick")) {
             terminationConditionMap.put("Tick", simulationRequest.getTick().getText());
@@ -122,5 +125,29 @@ public class RequestController implements Initializable {
         SimulationRequest simulationRequest = submitRequsetTable.getItems().get(0);
         simulationRequest.getSimulationName().getItems().clear();
         simulationRequest.getSimulationName().getItems().addAll(simulationNames);
+    }
+
+    public List<FullRequestDto> getListRequestsFromServer() {
+        Request request = CreateGetRequest("/userRequestsList");
+        Response response = ExecuteRequest(request);
+        if (response != null) {
+            try {
+                Type FullRequestDtoListType = new TypeToken<List<FullRequestDto>>() {}.getType();
+                List<FullRequestDto> FullRequestDtoList = new Gson().fromJson(response.body().string(), FullRequestDtoListType);
+                return FullRequestDtoList;
+            } catch (IOException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+        return null;
+    }
+    @FXML
+    void executeButtonOnClick(ActionEvent event) {
+
+    }
+
+    public void setCurrentRequests(List<FullRequestDto> requests) {
+        ObservableList<FullRequestDto> data = FXCollections.observableArrayList(requests);
+        executeRequestTable.setItems(data);
     }
 }
