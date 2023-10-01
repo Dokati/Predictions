@@ -51,16 +51,12 @@ public class AdminManager {
         return res;
     }
 
+    public void SetRequestStatus(Integer requestNum, UserRequestStatusType status){
+        requests.get(requestNum).setRequestStatus(status);
+    }
+
     public List<FullRequestDto> getUserRequestslist(String userName){
         return users.get(userName).getRequestslist();
-    }
-
-    public void ApproveRequest(Integer requestNumber){
-        requests.get(requestNumber).setRequestApproved(UserRequestStatusType.Approved);
-    }
-
-    public void declineRequest(Integer requestNumber){
-        requests.get(requestNumber).setRequestApproved(UserRequestStatusType.Declined);
     }
 
     public SimulationTitlesDetails addSimulationToList(String xmlContent)
