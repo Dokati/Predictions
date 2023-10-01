@@ -3,6 +3,10 @@ package Screens.Allocations;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+
+import static Paths.Paths.ACCEPT_BUTTON;
+import static Paths.Paths.REJECT_BUTTON;
 
 
 public class RequestItem {
@@ -25,11 +29,18 @@ public class RequestItem {
         this.terminationConditiom = "terminationConditiom";
         this.status = new Label("status");
         this.status.setTextFill(javafx.scene.paint.Color.web("#FF0000"));
-        this.runningSimulations = "runningSimulations";
-        this.finishedSimulations = "finishedSimulations";
-        this.approveButton = new Button("approveButton");
-        this.rejectButton = new Button("rejectButton");
-
+        this.runningSimulations = "0";
+        this.finishedSimulations = "0";
+        this.approveButton = new Button();
+        ImageView approveImage = new ImageView(ACCEPT_BUTTON);
+        approveImage.setFitHeight(20);
+        approveImage.setFitWidth(20);
+        this.approveButton.setGraphic(approveImage);
+        this.rejectButton = new Button();
+        ImageView rejectImage = new ImageView(REJECT_BUTTON);
+        rejectImage.setFitHeight(20);
+        rejectImage.setFitWidth(20);
+        this.rejectButton.setGraphic(rejectImage);
     }
 
     public String getId() {
