@@ -24,7 +24,6 @@ public class WorldDefinition {
     private final ArrayList<Rule> rules;
     private final HashMap<TerminationType,Termination> terminationConditions;
     private final Grid grid;
-    private Integer threadCount;
     private Integer sleep;
 
 
@@ -58,19 +57,31 @@ public class WorldDefinition {
         //Get grid
         grid = new Grid(pRDworld.getPRDGrid());
 
-        //Get thread count
-        threadCount = 0;
-
         //Get sleep
         sleep = pRDworld.getSleep();
     }
 
-    public String getName() {
-        return name;
+    public WorldDefinition(WorldDefinition worldDef ,HashMap<TerminationType,Termination> terminationConditions){
+        this.name = worldDef.getName();
+
+        this.environmentProperties = worldDef.getEnvironmentProperties();
+
+        this.entities = new HashMap<>();
+        for (Map.Entry<String, EntityDefinition> entity : entities.entrySet()){
+            entities.put(entity.getKey(),new EntityDefinition(entity.getValue()));
+        }
+
+        this.terminationConditions = terminationConditions;
+
+        this.rules = worldDef.getRules();
+
+        this.grid = worldDef.getGrid();
+
+        this.sleep = worldDef.getSleep();
     }
 
-    public void setThreadCount(Integer threadCount) {
-        this.threadCount = threadCount;
+    public String getName() {
+        return name;
     }
 
     public Integer getSleep() {
@@ -85,9 +96,6 @@ public class WorldDefinition {
         return grid;
     }
 
-    public Integer getThreadCount() {
-        return threadCount;
-    }
 
     public HashMap<String, EnvPropertyDefinition> getEnvironmentProperties() {
         return environmentProperties;
@@ -125,6 +133,10 @@ public class WorldDefinition {
         return  "entities:\n__________\n" + entitiesstringBuilder + "\n" +
                 "rules:\n_______\n" + rulesStringBuilder + "\n" +
                 "terminationConditions:\n______________________\n" + terminationConditions + "\n";
+    }
+
+    public Integer getThreadCount() {
+        return 0;
     }
 }
 

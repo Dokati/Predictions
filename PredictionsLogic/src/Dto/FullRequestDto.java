@@ -17,6 +17,7 @@ public class FullRequestDto {
     private StringProperty numOfTerminateSimulations = new SimpleStringProperty();
 
     public FullRequestDto(UserRequest request){
+
         this.setRequestNumber(request.getRequestNumber().toString());
         this.setSimulationName(request.getSimulationName());
         this.setRequestedNumOfSimulationRuns("2");
@@ -47,5 +48,12 @@ public class FullRequestDto {
 
     public void setNumOfTerminateSimulations(String numOfTerminateSimulations) {
         this.numOfTerminateSimulations.set(numOfTerminateSimulations);
+        this.requestNumber = request.getRequestNumber().toString();
+        this.simulationName = request.getSimulationName();
+        this.requestedNumOfSimulationRuns = request.getRequestedNumOfSimulationRuns().toString();
+        this.requestStatus = request.getRequestStatus().toString().toLowerCase();
+        this.numOfRunningSimulation = request.getNumOfRunningSimulation().toString();
+        this.numOfTerminateSimulations = request.getNumOfTerminateSimulations().toString();
+
     }
 }

@@ -1,13 +1,13 @@
 package Manager;
 
-import Dto.FullRequestDto;
-import Dto.RequestDto;
-import Dto.RuleTitleDto;
-import Dto.SimulationTitlesDetails;
+import Body.ThirdScreen.RunSimulationTask;
+import Dto.*;
 import PRD.PRDWorld;
 import Property.definition.EnvPropertyDefinition;
 import UserRequest.*;
 import World.definition.WorldDefinition;
+import World.instance.WorldInstance;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
@@ -34,6 +34,13 @@ public class AdminManager {
         this.requests = new HashMap<>();
     }
 
+    public void runSimulationByRequestNumber(Integer requestNum,Map<String, Integer> entitiesPopulationMap,Map<String, String> envPropValue){
+
+
+        users.get(requests.get(requestNum).getUsername()).setWorldDefinition(new WorldDefinition(worldDefinitions.get(requests.get(requestNum).getSimulationName()),requests.get(requestNum).getTerminationConditions()));
+        
+    }
+
     public void addRequestToList(RequestDto requestDto){
         UserRequest request = new UserRequest(requests.size(),requestDto.getSimulationName(),requestDto.getUserName()
                 ,requestDto.getRequestedRuns(),requestDto.getTerminationConditionMap());
@@ -51,16 +58,12 @@ public class AdminManager {
         return res;
     }
 
+    public void SetRequestStatus(Integer requestNum, UserRequestStatusType status){
+        requests.get(requestNum).setRequestStatus(status);
+    }
+
     public List<FullRequestDto> getUserRequestslist(String userName){
         return users.get(userName).getRequestslist();
-    }
-
-    public void ApproveRequest(Integer requestNumber){
-        requests.get(requestNumber).setRequestApproved(UserRequestStatusType.Approved);
-    }
-
-    public void declineRequest(Integer requestNumber){
-        requests.get(requestNumber).setRequestApproved(UserRequestStatusType.Declined);
     }
 
     public SimulationTitlesDetails addSimulationToList(String xmlContent)
