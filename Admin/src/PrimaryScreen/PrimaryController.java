@@ -42,6 +42,7 @@ public class PrimaryController implements Initializable {
         }
     }
 
+
     public void loadSimulation(String FilePath) {
         SimulationTitlesDetails simulationTitleDto = null;
         try {

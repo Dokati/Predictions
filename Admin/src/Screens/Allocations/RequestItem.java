@@ -43,6 +43,28 @@ public class RequestItem {
         this.rejectButton.setGraphic(rejectImage);
     }
 
+    public RequestItem(RequestItem requestItem) {
+        this.id = requestItem.getId();
+        this.simulationName = requestItem.getSimulationName();
+        this.userName = requestItem.getUserName();
+        this.reqNumOfRuns = requestItem.getReqNumOfRuns();
+        this.terminationConditiom = requestItem.getTerminationConditiom();
+        this.status = new Label(requestItem.getStatus().getText());
+        this.status.setTextFill(javafx.scene.paint.Color.web("#FF0000"));
+        this.runningSimulations = requestItem.getRunningSimulations();
+        this.finishedSimulations = requestItem.getFinishedSimulations();
+        this.approveButton = new Button();
+        ImageView approveImage = new ImageView(ACCEPT_BUTTON);
+        approveImage.setFitHeight(20);
+        approveImage.setFitWidth(20);
+        this.approveButton.setGraphic(approveImage);
+        this.rejectButton = new Button();
+        ImageView rejectImage = new ImageView(REJECT_BUTTON);
+        rejectImage.setFitHeight(20);
+        rejectImage.setFitWidth(20);
+        this.rejectButton.setGraphic(rejectImage);
+    }
+
     public String getId() {
         return id;
     }

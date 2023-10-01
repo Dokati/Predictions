@@ -1,5 +1,8 @@
 package Screens.Allocations;
 
+import Dto.AdminRequestDto;
+import Screens.DetailsScreen.DetailScreenListenerTask;
+import Screens.Requests.RequestListenerTask;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -8,7 +11,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Timer;
+
+import static Utils.Timer.TIMER_DELAY;
+import static Utils.Timer.TIMER_SCEDULE_PERIOD;
 
 public class AllocationController implements Initializable {
 
@@ -35,6 +43,26 @@ public class AllocationController implements Initializable {
         RequestTable.setItems(data);
         RequestTable.refresh();
 
+//        startListeners();
+
+    }
+
+    private void startListeners() {
+        AllocationListenerTask allocationListenerTask = new AllocationListenerTask(this);
+        Timer timer = new Timer();
+        timer.schedule(allocationListenerTask, TIMER_DELAY, TIMER_SCEDULE_PERIOD);
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    }
+
+    public void setCurrentAllocationRequests(List<AdminRequestDto> requests) {
+        ObservableList<RequestItem> data = FXCollections.observableArrayList();
+        for (AdminRequestDto request : requests) {
+            data.add(new RequestItem(request.getId()));
+        }
+        RequestTable.setItems(data);
+        RequestTable.refresh();
 
     }
 }
