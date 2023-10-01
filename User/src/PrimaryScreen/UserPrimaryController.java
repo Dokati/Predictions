@@ -46,7 +46,7 @@ public class UserPrimaryController implements Initializable {
     private void startListeners() {
         DetailScreenListenerTask detailScreenListenerTask = new DetailScreenListenerTask(this.detailsComponentController , this);
         Timer timer = new Timer();
-        timer.schedule(detailScreenListenerTask, 5000, 5000);}
+        timer.schedule(detailScreenListenerTask, TIMER_DELAY, TIMER_SCEDULE_PERIOD);}
 
     private void logInPage() {
         Stage loginStage = new Stage();
