@@ -1,7 +1,11 @@
 package UserRequest;
+
+import Terminition.Termination;
+import Terminition.TerminationType;
 import java.util.ArrayList;
 import Terminition.Termination;
 import Terminition.TerminationType;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,7 +29,11 @@ public class UserRequest {
         this.requestStatus = UserRequestStatusType.Waiting;
         this.numOfRunningSimulation = 0;
         this.numOfTerminateSimulations = 0;
-        this.terminationConditions = new ArrayList<>();
+        this.terminationConditions = new HashMap<>();
+    }
+
+    public Integer getRequestedNumOfSimulationRuns() {
+        return requestedNumOfSimulationRuns;
     }
 
     public Integer getRequestedNumOfSimulationRuns() {
@@ -42,6 +50,14 @@ public class UserRequest {
 
     public boolean isOpenRequest() {
         return openRequest;
+    }
+
+    public void setNumOfRunningSimulation(Integer numOfRunningSimulation) {
+        this.numOfRunningSimulation = numOfRunningSimulation;
+    }
+
+    public void setNumOfTerminateSimulations(Integer numOfTerminateSimulations) {
+        this.numOfTerminateSimulations = numOfTerminateSimulations;
     }
 
     public UserRequestStatusType getRequestStatus() {

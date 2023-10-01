@@ -127,20 +127,7 @@ public class RequestController implements Initializable {
         simulationRequest.getSimulationName().getItems().addAll(simulationNames);
     }
 
-    public List<FullRequestDto> getListRequestsFromServer() {
-        Request request = CreateGetRequest("/userRequestsList");
-        Response response = ExecuteRequest(request);
-        if (response != null) {
-            try {
-                Type FullRequestDtoListType = new TypeToken<List<FullRequestDto>>() {}.getType();
-                List<FullRequestDto> FullRequestDtoList = new Gson().fromJson(response.body().string(), FullRequestDtoListType);
-                return FullRequestDtoList;
-            } catch (IOException e) {
-                throw new RuntimeException(e.getMessage());
-            }
-        }
-        return null;
-    }
+
     @FXML
     void executeButtonOnClick(ActionEvent event) {
 
@@ -149,5 +136,6 @@ public class RequestController implements Initializable {
     public void setCurrentRequests(List<FullRequestDto> requests) {
         ObservableList<FullRequestDto> data = FXCollections.observableArrayList(requests);
         executeRequestTable.setItems(data);
+        executeRequestTable.refresh();
     }
 }

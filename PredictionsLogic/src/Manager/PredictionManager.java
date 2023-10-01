@@ -7,6 +7,7 @@ import Property.Range;
 import Property.definition.EnvPropertyDefinition;
 import Property.definition.PropertyDefinition;
 import Rule.Rule;
+import Terminition.Termination;
 import Terminition.TerminationType;
 import UserRequest.UserRequest;
 import World.definition.WorldDefinition;
@@ -24,18 +25,24 @@ public class PredictionManager {
 
     WorldDefinition worldDefinition;
     HashMap<Integer, WorldInstance> simulationList;
-    Integer simulationIdNumber;
     List<UserRequest> requests;
 
     public PredictionManager() {
         simulationList = new HashMap<>();
-        simulationIdNumber = 1;
         worldDefinition = null;
-        requests = new ArrayList<>();
+        requests = new ArrayList<UserRequest>();
     }
 
     public void addRequest(UserRequest request){
         requests.add(request);
+    }
+
+    public Integer initPredictionManager(WorldDefinition worldDef , Map<String, Integer> entitiesPopulationMap, HashMap<TerminationType, Termination> terminationCondition, Map<String, String> envPropValue, UserRequest request){
+        worldDefinition = new WorldDefinition(worldDef,terminationCondition);
+        InitializePopulation(entitiesPopulationMap);
+        Integer simulationNumber = simulationList.size() + 1;
+        simulationList.put(simulationNumber,new WorldInstance(worldDefinition,envPropValue,request));
+        return simulationNumber;
     }
 
     public List<FullRequestDto> getRequestslist(){
@@ -50,14 +57,6 @@ public class PredictionManager {
 
     public HashMap<Integer, WorldInstance> getSimulationList() {
         return simulationList;
-    }
-
-    public Integer getSimulationIdNumber() {
-        return simulationIdNumber;
-    }
-
-    public void setSimulationIdNumber(Integer simulationIdNumber) {
-        this.simulationIdNumber = simulationIdNumber;
     }
 
     public SimulationTitlesDetails loadSimulation(String xmlContent)
@@ -175,7 +174,10 @@ public class PredictionManager {
 
     public void resetSimulationList() {
         simulationList = new HashMap<>();
-        simulationIdNumber = 1;
+    }
+
+    public void setWorldDefinition(WorldDefinition worldDefinition) {
+        this.worldDefinition = worldDefinition;
     }
 
     public void setWorldDefinition(WorldDefinition worldDefinition) {

@@ -49,7 +49,7 @@ public class UserPrimaryController implements Initializable {
         Timer timer = new Timer();
         timer.schedule(detailScreenListenerTask, TIMER_DELAY, TIMER_SCEDULE_PERIOD);
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        RequestListenerTask requestListenerTask = new RequestListenerTask(this.requestsComponentController);
+        RequestListenerTask requestListenerTask = new RequestListenerTask(this.requestsComponentController, this.userName);
         Timer timer2 = new Timer();
         timer2.schedule(requestListenerTask, TIMER_DELAY, TIMER_SCEDULE_PERIOD);
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

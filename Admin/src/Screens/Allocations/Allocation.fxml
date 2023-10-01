@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="1262.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Screens.Allocations.AllocationController">
+   <content>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+             <TableView fx:id="RequestTable">
+                 <columns>
+                     <TableColumn prefWidth="77.0" text="id" />
+                     <TableColumn prefWidth="151.0" text="Simulation Name" />
+                  <TableColumn prefWidth="107.0" text="User Name" />
+                     <TableColumn prefWidth="128.0" text="Requested runs" />
+                     <TableColumn prefWidth="191.0" text="termination condition" />
+                  <TableColumn prefWidth="89.0" text="Status" />
+                  <TableColumn prefWidth="88.0" text="Running" />
+                  <TableColumn prefWidth="112.0" text="Finished" />
+                  <TableColumn prefWidth="73.0" />
+                  <TableColumn prefWidth="73.0" />
+                 </columns>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="30.0" />
+               </VBox.margin>
+             </TableView>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

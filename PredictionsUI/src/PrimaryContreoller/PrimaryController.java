@@ -205,26 +205,26 @@ public void loadSimulation(String FilePath) {
     public void runSimulation(Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValues, ObservableList<EnvPropTableItem> items) {
 
         HashMap<Integer, WorldInstance> simulationList = this.predictionManager.getSimulationList();
-        int simulationIdNumber = this.predictionManager.getSimulationIdNumber();
-        String simulationId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy | HH.mm.ss"));
-
-        predictionManager.InitializePopulation(entitiesPopulationMap);
-        simulationList.put(simulationIdNumber,new WorldInstance(predictionManager.getWorldDefinition(),envPropValues));
-
-//        Future<SimulationEndDetailsDto> futureResult = predictionManager.threadPool.submit(simulationList.get(simulationIdNumber));
-
-        SimulationExecutionDto simulationExecutionDto =
-                new SimulationExecutionDto(simulationId,"Waiting", simulationIdNumber, entitiesPopulationMap,
-                        !predictionManager.getSimulationList().get(simulationIdNumber).SimulationEndsByUser(),
-                        predictionManager.getWorldDefinition(), items, envPropValues, entitiesPopulationMap);
-
-        this.thirdScreenBodyController.addSimulationToTable(simulationExecutionDto);
-        RunSimulationTask runSimulationTask = new RunSimulationTask(simulationList.get(simulationIdNumber),
-                simulationExecutionDto, this, predictionManager);
-
-        this.taskThreadPool.submit(runSimulationTask);
-
-        this.predictionManager.setSimulationIdNumber(simulationIdNumber+1);
+//        int simulationIdNumber = this.predictionManager.getSimulationIdNumber();
+//        String simulationId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy | HH.mm.ss"));
+//
+//        predictionManager.InitializePopulation(entitiesPopulationMap);
+//        simulationList.put(simulationIdNumber,new WorldInstance(predictionManager.getWorldDefinition(),envPropValues));
+//
+////        Future<SimulationEndDetailsDto> futureResult = predictionManager.threadPool.submit(simulationList.get(simulationIdNumber));
+//
+//        SimulationExecutionDto simulationExecutionDto =
+//                new SimulationExecutionDto(simulationId,"Waiting", simulationIdNumber, entitiesPopulationMap,
+//                        !predictionManager.getSimulationList().get(simulationIdNumber).SimulationEndsByUser(),
+//                        predictionManager.getWorldDefinition(), items, envPropValues, entitiesPopulationMap);
+//
+//        this.thirdScreenBodyController.addSimulationToTable(simulationExecutionDto);
+//        RunSimulationTask runSimulationTask = new RunSimulationTask(simulationList.get(simulationIdNumber),
+//                simulationExecutionDto, this, predictionManager);
+//
+//        this.taskThreadPool.submit(runSimulationTask);
+//
+//        this.predictionManager.setSimulationIdNumber(simulationIdNumber+1);
         this.queueManager.incrementRunningSimulations();
         
     }

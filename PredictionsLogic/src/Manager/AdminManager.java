@@ -1,22 +1,25 @@
 package Manager;
 
-import Body.ThirdScreen.RunSimulationTask;
+
 import Dto.*;
 import PRD.PRDWorld;
 import Property.definition.EnvPropertyDefinition;
 import UserRequest.*;
 import World.definition.WorldDefinition;
-import World.instance.WorldInstance;
+
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 public class AdminManager {
@@ -30,8 +33,15 @@ public class AdminManager {
         this.worldDefinitions = new HashMap<>();
         this.threadPoolSize = null;
         this.threadPool = null;
-        this.users = new HashMap<>();
         this.requests = new HashMap<>();
+        this.users = new HashMap<>();
+    }
+    public void runSimulationByRequestNumber(Integer requestNum, Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValue){
+        Integer simulationNumber = users.get(requests.get(requestNum).getUsername()).initPredictionManager(worldDefinitions.get(requests.get(requestNum).getSimulationName()),
+                entitiesPopulationMap,requests.get(requestNum).getTerminationConditions(),envPropValue,requests.get(requestNum));
+
+        threadPool.submit(users.get(requests.get(requestNum).getUsername()).getSimulationList().get(simulationNumber));
+
     }
 
     public void runSimulationByRequestNumber(Integer requestNum,Map<String, Integer> entitiesPopulationMap,Map<String, String> envPropValue){
