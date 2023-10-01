@@ -1,4 +1,5 @@
 package Screens.Requests;
+import Dto.FullRequestDto;
 import Dto.RequestDto;
 import PrimaryScreen.UserPrimaryController;
 import javafx.collections.FXCollections;
@@ -25,7 +26,9 @@ import static Request.RequestCreator.createPostRequestWithDto;
 public class RequestController implements Initializable {
     UserPrimaryController userPrimaryController;
     @FXML
-    private TableView<SimulationRequest> requestsTable;
+    private TableView<SimulationRequest> submitRequsetTable;
+    @FXML
+    private TableView<FullRequestDto> executeRequestTable;
     TextField SecondsTextField;
     @FXML private Button submitButton;
     @FXML private Label SubmitNoteLabel;
@@ -51,19 +54,26 @@ public class RequestController implements Initializable {
         ObservableList<SimulationRequest> data = FXCollections.observableArrayList(
                 new SimulationRequest()
 );
+        submitRequsetTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("simulationName"));
+        submitRequsetTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("requestedRuns"));
+        submitRequsetTable.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("terminationCondition"));
+        submitRequsetTable.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("tick"));
+        submitRequsetTable.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("seconds"));
 
-        requestsTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("simulationName"));
-        requestsTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("requestedRuns"));
-        requestsTable.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("terminationCondition"));
-        requestsTable.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("tick"));
-        requestsTable.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("seconds"));
+        submitRequsetTable.setEditable(true);
+        submitRequsetTable.setItems(data);
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        executeRequestTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("requestNumber"));
+        executeRequestTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("simulationName"));
+        executeRequestTable.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("requestedNumOfSimulationRuns"));
+        executeRequestTable.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("requestStatus"));
+        executeRequestTable.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("numOfRunningSimulation"));
+        executeRequestTable.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("numOfTerminateSimulations"));
 
-        requestsTable.setEditable(true);
-        requestsTable.setItems(data);
     }
 
     @FXML void submitButtonOnClick(ActionEvent event) {
-        SimulationRequest simulationRequest = requestsTable.getItems().get(0);
+        SimulationRequest simulationRequest = submitRequsetTable.getItems().get(0);
 
         if (requestFieldsHaveBeenFilledPropely()) {
             System.out.println("Please fill all the fields");
@@ -80,7 +90,7 @@ public class RequestController implements Initializable {
     }
 
     private boolean requestFieldsHaveBeenFilledPropely() {
-        SimulationRequest simulationRequest = requestsTable.getItems().get(0);
+        SimulationRequest simulationRequest = submitRequsetTable.getItems().get(0);
         boolean SimulationNameComboBoxIsEmpty = simulationRequest.getSimulationName().getValue() == null;
         boolean TerminationComboBoxIsEmpty = simulationRequest.getTerminationCondition().getValue() == null;
         boolean amountOfRunsTextFieldIsEmpty = simulationRequest.getRequestedRuns().getText().isEmpty();
@@ -109,7 +119,7 @@ public class RequestController implements Initializable {
     }
 
     public void setSimulationNames(List<String> simulationNames) {
-        SimulationRequest simulationRequest = requestsTable.getItems().get(0);
+        SimulationRequest simulationRequest = submitRequsetTable.getItems().get(0);
         simulationRequest.getSimulationName().getItems().clear();
         simulationRequest.getSimulationName().getItems().addAll(simulationNames);
     }
