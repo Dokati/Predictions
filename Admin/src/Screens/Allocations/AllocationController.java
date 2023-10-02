@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
+import java.util.stream.Collectors;
 
 import static Utils.Timer.TIMER_DELAY;
 import static Utils.Timer.TIMER_SCEDULE_PERIOD;
@@ -37,13 +38,13 @@ public class AllocationController implements Initializable {
         RequestTable.getColumns().get(9).setCellValueFactory(new PropertyValueFactory<>("rejectButton"));
 
         ObservableList<RequestItem> data = FXCollections.observableArrayList();
-        data.add(new RequestItem("1"));
-        data.add(new RequestItem("2"));
+//        data.add(new RequestItem("1"));
+//        data.add(new RequestItem("2"));
         RequestTable.setEditable(true);
         RequestTable.setItems(data);
         RequestTable.refresh();
 
-//        startListeners();
+        startListeners();
 
     }
 
@@ -57,9 +58,12 @@ public class AllocationController implements Initializable {
     }
 
     public void setCurrentAllocationRequests(List<AdminRequestDto> requests) {
+        List<String> IdList = RequestTable.getItems().stream().map(RequestItem::getId).collect(Collectors.toList());
         ObservableList<RequestItem> data = FXCollections.observableArrayList();
         for (AdminRequestDto request : requests) {
-            data.add(new RequestItem(request.getId()));
+            if (!IdList.contains(request.getId())) {
+                 data.add(new RequestItem(request));
+            }
         }
         RequestTable.setItems(data);
         RequestTable.refresh();

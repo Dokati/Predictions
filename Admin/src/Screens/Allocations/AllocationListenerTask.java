@@ -36,7 +36,7 @@ public class AllocationListenerTask extends TimerTask {
     }
 
     public List<AdminRequestDto> getListRequestsFromServer() {
-        Request request = CreateGetRequest("admin");
+        Request request = CreateGetRequest("/adminRequests");
         Response response = ExecuteRequest(request);
         if (response != null) {
             try {

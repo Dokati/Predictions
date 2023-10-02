@@ -1,5 +1,6 @@
 package Screens.Allocations;
 
+import Dto.AdminRequestDto;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -43,13 +44,13 @@ public class RequestItem {
         this.rejectButton.setGraphic(rejectImage);
     }
 
-    public RequestItem(RequestItem requestItem) {
+    public RequestItem(AdminRequestDto requestItem) {
         this.id = requestItem.getId();
         this.simulationName = requestItem.getSimulationName();
         this.userName = requestItem.getUserName();
         this.reqNumOfRuns = requestItem.getReqNumOfRuns();
-        this.terminationConditiom = requestItem.getTerminationConditiom();
-        this.status = new Label(requestItem.getStatus().getText());
+        this.terminationConditiom = requestItem.getTerminationConditiom().toString();
+        this.status = new Label(requestItem.getStatus());
         this.status.setTextFill(javafx.scene.paint.Color.web("#FF0000"));
         this.runningSimulations = requestItem.getRunningSimulations();
         this.finishedSimulations = requestItem.getFinishedSimulations();
