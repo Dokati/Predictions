@@ -1,4 +1,5 @@
 import Dto.EntityPropertyDetailDto;
+import Manager.AdminManager;
 import Manager.PredictionManager;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,14 +14,15 @@ public class EntityPropertiesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Get the "entityName" parameter from the request
         String entityName = request.getParameter("entityName");
+        String worldDefName = request.getParameter("worldDefName");
 
         if (entityName != null && !entityName.isEmpty()) {
             // Retrieve the PredictionManager instance from the servlet context
-            PredictionManager manager = (PredictionManager) getServletContext().getAttribute("manager");
+            AdminManager adminManager = (AdminManager) getServletContext().getAttribute("adminManager");
 
-            if (manager != null) {
+            if (adminManager != null) {
                 // Call the getEntityPropertiesDetail method and get the result
-                EntityPropertyDetailDto entityProperties = manager.getEntityPropertiesDetail(entityName);
+                EntityPropertyDetailDto entityProperties = adminManager.getEntityPropertiesDetail(worldDefName,entityName);
 
                 // Create an instance of Gson
                 Gson gson = new Gson();

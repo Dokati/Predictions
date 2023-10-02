@@ -1,4 +1,5 @@
 import Dto.EnvPropDto;
+import Manager.AdminManager;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,11 +15,12 @@ import java.util.List;
 public class AllEnvPropsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Retrieve the PredictionManager instance from the servlet context
-        PredictionManager manager = (PredictionManager) getServletContext().getAttribute("manager");
+        AdminManager adminManager = (AdminManager) getServletContext().getAttribute("adminManager");
 
-        if (manager != null) {
+        if (adminManager != null) {
+            String worldDefName = request.getParameter("worldDefName");
             // Call the getAllEnvProps method to obtain details of all environment properties
-            List<EnvPropDto> envPropsDetails = manager.getAllEnvProps();
+            List<EnvPropDto> envPropsDetails = adminManager.getAllEnvProps(worldDefName);
 
             // Create an instance of Gson for JSON serialization
             Gson gson = new Gson();
