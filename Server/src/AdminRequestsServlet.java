@@ -1,3 +1,4 @@
+import Dto.AdminRequestDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,7 +21,7 @@ public class AdminRequestsServlet extends HttpServlet {
 
         if (adminManager != null) {
             // Call the getRequestslist method to obtain the list of requests
-            List<FullRequestDto> requestList = adminManager.getRequestslist();
+            List<AdminRequestDto> requestList = adminManager.getRequestslist();
 
             // Serialize the result to JSON
             String jsonResult = gson.toJson(requestList);

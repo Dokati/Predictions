@@ -179,8 +179,4 @@ public class PredictionManager {
     public void setWorldDefinition(WorldDefinition worldDefinition) {
         this.worldDefinition = worldDefinition;
     }
-
-    public void setWorldDefinition(WorldDefinition worldDefinition) {
-        this.worldDefinition = worldDefinition;
-    }
 }
