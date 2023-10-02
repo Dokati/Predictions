@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static Paths.Paths.PATRIS;
 import static Request.RequestCreator.CreateThreadPoolSizePostRequest;
 import static Request.RequestCreator.ExecuteRequest;
 
@@ -33,9 +35,16 @@ public class ManagementController implements Initializable {
     @FXML private Label runningSimulationsLabel;
     @FXML private Label waitingSimulationsLabel;
     @FXML private Label finishedSimulations;
+    @FXML private Label patrisLabel;
     @FXML private TextArea queueTextArea;
 
     public void initialize(URL location, ResourceBundle resources) {
+        ImageView patis = new ImageView(PATRIS);
+        patis.setFitHeight(250);
+        patis.setFitWidth(250);
+        patrisLabel.setGraphic(patis);
+
+
     }
     @FXML public void HandleLoadFileButton(ActionEvent event) {
 

@@ -7,17 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="PredictionsUI" exported="" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../lib/gson-2.8.8.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="squareup.okhttp3.okhttp" level="project" />
-    <orderEntry type="module" module-name="ClientSharedClasess" exported="" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="module" module-name="PredictionsLogic" />
+    <orderEntry type="module" module-name="ClientSharedClasess" />
+    <orderEntry type="library" exported="" name="squareup.okhttp3.okhttp" level="project" />
   </component>
 </module>
