@@ -28,9 +28,8 @@ public class AllocationListenerTask extends TimerTask {
     public void run() {
         List<AdminRequestDto> requests = getListRequestsFromServer();
         if (requests != null){
-            if (currentRequests == null || !currentRequests.equals(requests)){
+            if (currentRequests == null){
                 allocationController.setCurrentAllocationRequests(requests);
-                currentRequests = requests;
             }
         }
     }

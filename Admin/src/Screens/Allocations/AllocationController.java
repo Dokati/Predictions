@@ -58,12 +58,9 @@ public class AllocationController implements Initializable {
     }
 
     public void setCurrentAllocationRequests(List<AdminRequestDto> requests) {
-        List<String> IdList = RequestTable.getItems().stream().map(RequestItem::getId).collect(Collectors.toList());
         ObservableList<RequestItem> data = FXCollections.observableArrayList();
         for (AdminRequestDto request : requests) {
-            if (!IdList.contains(request.getId())) {
                  data.add(new RequestItem(request));
-            }
         }
         RequestTable.setItems(data);
         RequestTable.refresh();

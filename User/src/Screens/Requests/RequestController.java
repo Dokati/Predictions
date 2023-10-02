@@ -105,14 +105,14 @@ public class RequestController implements Initializable {
     private HashMap<String, String> getTerminationHashMap(SimulationRequest simulationRequest) {
         HashMap<String,String> terminationConditionMap = new HashMap<>();
         if (simulationRequest.getTerminationCondition().getValue().equals("Tick")) {
-            terminationConditionMap.put("Tick", simulationRequest.getTick().getText());
+            terminationConditionMap.put("TICK", simulationRequest.getTick().getText());
         } else if (simulationRequest.getTerminationCondition().getValue().equals("Seconds")) {
-            terminationConditionMap.put("Seconds", simulationRequest.getSeconds().getText());
+            terminationConditionMap.put("SECOND", simulationRequest.getSeconds().getText());
         } else if (simulationRequest.getTerminationCondition().getValue().equals("Tick/Seconds")) {
-            terminationConditionMap.put("Tick", simulationRequest.getTick().getText());
-            terminationConditionMap.put("Seconds", simulationRequest.getSeconds().getText());
+            terminationConditionMap.put("TICK", simulationRequest.getTick().getText());
+            terminationConditionMap.put("SECOND", simulationRequest.getSeconds().getText());
         } else {
-            terminationConditionMap.put("UserChoise", "UserChoise");
+            terminationConditionMap.put("BYUSER", "0");
         }
         return terminationConditionMap;
     }

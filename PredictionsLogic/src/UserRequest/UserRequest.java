@@ -41,7 +41,12 @@ public class UserRequest {
         ArrayList<String> res = new ArrayList<>();
 
         for (Map.Entry<TerminationType,Termination> terminationCondition : terminationConditions.entrySet()){
-            res.add(terminationCondition.getValue().toString());
+            if (terminationCondition.getKey().equals(TerminationType.BYUSER)){
+                res.add("By User");
+            }
+            else {
+                res.add(terminationCondition.getValue().toString() + " " + terminationCondition.getKey().toString());
+            }
         }
 
         return res;
