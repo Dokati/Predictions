@@ -13,7 +13,7 @@ public class FullRequestDto {
     private String numOfRunningSimulation;
     private String numOfTerminateSimulations;
 
-    public FullRequestDto(UserRequest request){
+    public FullRequestDto(UserRequest request) {
         this.requestNumber = request.getRequestNumber().toString();
         this.simulationName = request.getSimulationName();
         this.requestedNumOfSimulationRuns = request.getRequestedNumOfSimulationRuns().toString();
@@ -46,4 +46,5 @@ public class FullRequestDto {
 
     public String getNumOfTerminateSimulations() {
         return numOfTerminateSimulations;
+    }
 }

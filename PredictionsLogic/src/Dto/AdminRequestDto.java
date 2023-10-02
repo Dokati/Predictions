@@ -1,28 +1,31 @@
 package Dto;
 
+import UserRequest.UserRequest;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
+import java.util.List;
+import java.util.Map;
 
 public class AdminRequestDto {
     String id;
     String simulationName;
     String userName;
     String reqNumOfRuns;
-    String terminationConditiom;
+    List<String> terminationConditions;
     String status;
     String runningSimulations;
     String finishedSimulations;
 
-    public AdminRequestDto(String id, String simulationName, String userName, String reqNumOfRuns,
-                           String terminationConditiom, String status, String runningSimulations, String finishedSimulations) {
-        this.id = id;
-        this.simulationName = simulationName;
-        this.userName = userName;
-        this.reqNumOfRuns = reqNumOfRuns;
-        this.terminationConditiom = terminationConditiom;
-        this.status = status;
-        this.runningSimulations = runningSimulations;
-        this.finishedSimulations = finishedSimulations;
+    public AdminRequestDto(UserRequest request) {
+        this.id = request.getRequestNumber().toString();
+        this.simulationName = request.getSimulationName();
+        this.userName = request.getUsername();
+        this.reqNumOfRuns = request.getRequestedNumOfSimulationRuns().toString();
+        this.terminationConditions = request.getTerminationConditionStringList();
+        this.status = request.getRequestStatus().toString().toLowerCase();
+        this.runningSimulations = request.getNumOfRunningSimulation().toString();
+        this.finishedSimulations = request.getNumOfTerminateSimulations().toString();
     }
 
     public String getId() {
@@ -41,8 +44,8 @@ public class AdminRequestDto {
         return reqNumOfRuns;
     }
 
-    public String getTerminationConditiom() {
-        return terminationConditiom;
+    public List<String> getTerminationConditiom() {
+        return terminationConditions;
     }
 
     public String getStatus() {

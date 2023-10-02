@@ -8,6 +8,7 @@ import Terminition.TerminationType;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserRequest {
     private Integer requestNumber;
@@ -20,20 +21,30 @@ public class UserRequest {
     private Integer numOfRunningSimulation;
     private Integer numOfTerminateSimulations;
 
-    public UserRequest(Integer requestNumber,String simulationName, String username, int requestedLectures, HashMap<String, String> terminationConditions) {
+    public UserRequest(Integer requestNumber,String simulationName, String username, int requestedNumOfSimulationRuns, HashMap<String, String> terminationConditions) {
         this.requestNumber = requestNumber;
         this.simulationName = simulationName;
         this.username = username;
-        this.requestedNumOfSimulationRuns = requestedLectures;
+        this.requestedNumOfSimulationRuns = requestedNumOfSimulationRuns;
         this.openRequest = true;
         this.requestStatus = UserRequestStatusType.Waiting;
         this.numOfRunningSimulation = 0;
         this.numOfTerminateSimulations = 0;
+
         this.terminationConditions = new HashMap<>();
+        for (Map.Entry<String, String> terminationCondition : terminationConditions.entrySet()){
+            this.terminationConditions.put(TerminationType.valueOf(terminationCondition.getKey()),new Termination(Integer.parseInt(terminationCondition.getValue()),TerminationType.valueOf(terminationCondition.getKey())));
+        }
     }
 
-    public Integer getRequestedNumOfSimulationRuns() {
-        return requestedNumOfSimulationRuns;
+    public List<String> getTerminationConditionStringList(){
+        ArrayList<String> res = new ArrayList<>();
+
+        for (Map.Entry<TerminationType,Termination> terminationCondition : terminationConditions.entrySet()){
+            res.add(terminationCondition.getValue().toString());
+        }
+
+        return res;
     }
 
     public Integer getRequestedNumOfSimulationRuns() {

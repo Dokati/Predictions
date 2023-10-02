@@ -44,13 +44,6 @@ public class AdminManager {
 
     }
 
-    public void runSimulationByRequestNumber(Integer requestNum,Map<String, Integer> entitiesPopulationMap,Map<String, String> envPropValue){
-
-
-        users.get(requests.get(requestNum).getUsername()).setWorldDefinition(new WorldDefinition(worldDefinitions.get(requests.get(requestNum).getSimulationName()),requests.get(requestNum).getTerminationConditions()));
-        
-    }
-
     public void addRequestToList(RequestDto requestDto){
         UserRequest request = new UserRequest(requests.size(),requestDto.getSimulationName(),requestDto.getUserName()
                 ,requestDto.getRequestedRuns(),requestDto.getTerminationConditionMap());
@@ -58,11 +51,11 @@ public class AdminManager {
         users.get(requestDto.getUserName()).addRequest(request);
     }
 
-    public List<FullRequestDto> getRequestslist(){
-        List<FullRequestDto> res = new ArrayList<>();
+    public List<AdminRequestDto> getRequestslist(){
+        List<AdminRequestDto> res = new ArrayList<>();
 
         for (Map.Entry<Integer, UserRequest> request : requests.entrySet()){
-            res.add(new FullRequestDto(request.getValue()));
+            res.add(new AdminRequestDto(request.getValue()));
         }
 
         return res;
