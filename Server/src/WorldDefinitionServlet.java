@@ -1,3 +1,4 @@
+import Manager.AdminManager;
 import World.definition.WorldDefinition;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,11 +14,13 @@ import java.io.IOException;
 public class WorldDefinitionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Retrieve the PredictionManager instance from the servlet context
-        PredictionManager manager = (PredictionManager) getServletContext().getAttribute("manager");
+        AdminManager adminManager = (AdminManager) getServletContext().getAttribute("adminManager");
 
-        if (manager != null) {
+        if (adminManager != null) {
+            String worldDefName = request.getParameter("worldDefName");
+
             // Call the getWorldDefinition method to obtain world definition details
-            WorldDefinition worldDefinition = manager.getWorldDefinition();
+            WorldDefinition worldDefinition = adminManager.getWorldDefinition(worldDefName);
 
             // Create an instance of Gson for JSON serialization
             Gson gson = new Gson();

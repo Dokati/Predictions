@@ -2,8 +2,13 @@ package Manager;
 
 
 import Dto.*;
+import Grid.Grid;
 import PRD.PRDWorld;
+import Property.Range;
 import Property.definition.EnvPropertyDefinition;
+import Property.definition.PropertyDefinition;
+import Rule.Rule;
+import Terminition.TerminationType;
 import UserRequest.*;
 import World.definition.WorldDefinition;
 
@@ -36,12 +41,78 @@ public class AdminManager {
         this.requests = new HashMap<>();
         this.users = new HashMap<>();
     }
+
+    public EntityPropertyDetailDto getEntityPropertiesDetail(String defName,String value) {
+        return new EntityPropertyDetailDto(worldDefinitions.get(defName).getEntities().get(value).getProperties().values().stream()
+                .map(PropertyDefinition::toString).collect(Collectors.toList()));
+    }
+
+    public RuleActivationDto getActivationDetails(String defName,String ruleName) {
+        Rule rule = worldDefinitions.get(defName).getRules().stream()
+                .filter(rule1 -> ruleName.equals(rule1.getName()))
+                .findFirst().get();
+        return new RuleActivationDto(rule.getTicks().toString(),rule.getProbability().toString());
+    }
+
+    public TerminationDto getTerminationDetails(String defName) {
+        return new TerminationDto(worldDefinitions.get(defName).getTerminationConditions().values().stream().collect(Collectors.
+                toMap(termination -> termination.getType().toString(),
+                        termination -> {
+                            return termination.getType().equals(TerminationType.BYUSER) ?  0:termination.getCount();
+                        })));
+    }
+
+    public EnviormentVariablesDto getEnvVariableDetails(String defName) {
+        return  new EnviormentVariablesDto(worldDefinitions.get(defName).getEnvironmentProperties().values().stream()
+                .map(env -> new EnvVariableDto(
+                        env.getName(),
+                        env.getType().toString(),
+                        env.hasRange()? env.getRange().toString():null))
+                .collect(Collectors.toList()));
+    }
+
+
+
+    public ActionDetailsDto getActionDetails(String defName,int actionIndex, String ruleName) {
+        return  new ActionDetailsDto(worldDefinitions.get(defName).getRules().stream().filter(rule -> rule.getName().equals(ruleName)).findFirst()
+                .get().getActions().get(actionIndex).getDetails().getActionDetails());
+    }
+
+    public GridDto getGridDetails(String defName) {
+        Grid grid = worldDefinitions.get(defName).getGrid();
+        return new GridDto(grid.getRows().toString(),grid.getColumns().toString());
+    }
+
+    public EnvPropDto getEnvProp(String defName, String envPropName) {
+        EnvPropertyDefinition envProp = worldDefinitions.get(defName).getEnvironmentProperties().get(envPropName);
+        Range range = envProp.hasRange()? envProp.getRange():null;
+        return new EnvPropDto(envPropName,envProp.getType().toString().toLowerCase(), range);
+    }
+
+    public List<EnvPropDto> getAllEnvProps(String defName) {
+        List<EnvPropDto> envPropDtoList = new ArrayList<>();
+
+        for (Map.Entry<String, EnvPropertyDefinition> entry :worldDefinitions.get(defName).getEnvironmentProperties().entrySet()) {
+            String envPropName = entry.getKey();
+            EnvPropertyDefinition envProp = entry.getValue();
+            Range range = envProp.hasRange() ? envProp.getRange() : null;
+
+            EnvPropDto envPropDto = new EnvPropDto(envPropName, envProp.getType().toString().toLowerCase(), range);
+            envPropDtoList.add(envPropDto);
+        }
+
+        return envPropDtoList;
+    }
+
+    public WorldDefinition getWorldDefinition(String defName) {
+        return worldDefinitions.get(defName);
+    }
+
     public void runSimulationByRequestNumber(Integer requestNum, Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValue){
         Integer simulationNumber = users.get(requests.get(requestNum).getUsername()).initPredictionManager(worldDefinitions.get(requests.get(requestNum).getSimulationName()),
                 entitiesPopulationMap,requests.get(requestNum).getTerminationConditions(),envPropValue,requests.get(requestNum));
 
         threadPool.submit(users.get(requests.get(requestNum).getUsername()).getSimulationList().get(simulationNumber));
-
     }
 
     public void addRequestToList(RequestDto requestDto){

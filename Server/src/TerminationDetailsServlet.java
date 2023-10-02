@@ -1,4 +1,5 @@
 import Dto.TerminationDto;
+import Manager.AdminManager;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,11 +14,13 @@ import java.io.IOException;
 public class TerminationDetailsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Retrieve the PredictionManager instance from the servlet context
-        PredictionManager manager = (PredictionManager) getServletContext().getAttribute("manager");
+        AdminManager adminManager = (AdminManager) getServletContext().getAttribute("adminManager");
 
-        if (manager != null) {
+        if (adminManager != null) {
+
+            String worldDefName = request.getParameter("worldDefName");
             // Call the TerminationDto method to obtain termination details
-            TerminationDto terminationDetails = manager.getTerminationDetails();
+            TerminationDto terminationDetails = adminManager.getTerminationDetails(worldDefName);
 
             // Create an instance of Gson for JSON serialization
             Gson gson = new Gson();

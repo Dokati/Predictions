@@ -1,4 +1,5 @@
 import Dto.RuleActivationDto;
+import Manager.AdminManager;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,11 +18,12 @@ public class RuleActivationServlet extends HttpServlet {
 
         if (ruleName != null && !ruleName.isEmpty()) {
             // Retrieve the PredictionManager instance from the servlet context
-            PredictionManager manager = (PredictionManager) getServletContext().getAttribute("manager");
+            AdminManager adminManager = (AdminManager) getServletContext().getAttribute("adminManager");
 
-            if (manager != null) {
+            if (adminManager != null) {
+                String worldDefName = request.getParameter("worldDefName");
                 // Call the RuleActivationDto method with the rule name
-                RuleActivationDto ruleActivation = manager.getActivationDetails(ruleName);
+                RuleActivationDto ruleActivation = adminManager.getActivationDetails(worldDefName,ruleName);
 
                 // Create an instance of Gson for JSON serialization
                 Gson gson = new Gson();
