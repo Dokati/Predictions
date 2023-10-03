@@ -1,6 +1,7 @@
 package World.instance;
 
 import Context.Context;
+import Dto.SimulationDetailsDto;
 import Dto.SimulationEndDetailsDto;
 import EndSimulationDetails.EntitySimulationEndDetails;
 import EndSimulationDetails.PropertySimulationEndDetails;
@@ -21,7 +22,7 @@ import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.Callable;
 
-public class WorldInstance implements Callable<SimulationEndDetailsDto> {
+public class WorldInstance implements Runnable {
 
     private List<EntityInstance> entities;
     private HashMap<String, EnvPropertyInstance> environmentProperties;
@@ -32,8 +33,9 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
     private HashMap<String, EntitySimulationEndDetails> endSimulationDetails;
     private SimulationStatusType status;
     private final Integer SimulationId;
-    private long runningTimeInSeconds;
+    private Long runningTimeInSeconds;
     private final UserRequest request;
+    private SimulationEndDetailsDto endDetailsDto;
 
     public WorldInstance(WorldDefinition worldDef,Map<String, String> envPropValue,UserRequest request){
 
@@ -88,7 +90,7 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
     }
 
     @Override
-    public SimulationEndDetailsDto call() {
+    public void run() {
         status = SimulationStatusType.Running;
 
         synchronized (request) {
@@ -152,9 +154,28 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
             request.setNumOfTerminateSimulations(request.getNumOfTerminateSimulations() + 1);
         }
 
-        return new SimulationEndDetailsDto(SimulationId, endSimulationDetails);
+        endDetailsDto =  new SimulationEndDetailsDto(SimulationId, endSimulationDetails);
     }
 
+    public SimulationEndDetailsDto getEndDetailsDto() {
+        return endDetailsDto;
+    }
+
+    public SimulationDetailsDto getSimulationDetailsDto(){
+
+        Map<String, Integer> entitiesPopulation = new HashMap<>();
+
+        for (EntityInstance entityInstance: entities){
+            if(entitiesPopulation.containsKey(entityInstance.getEntityDef().getName())){
+                entitiesPopulation.put(entityInstance.getEntityDef().getName(),1);
+            }
+            else {
+                entitiesPopulation.put(entityInstance.getEntityDef().getName(), entitiesPopulation.get(entityInstance.getEntityDef().getName()) + 1);
+            }
+        }
+
+        return new SimulationDetailsDto(tick,runningTimeInSeconds,entitiesPopulation,status);
+    }
 
     public void updateEntitiesPopulation() {
         for (Map.Entry<String, EntitySimulationEndDetails> entityDetails : endSimulationDetails.entrySet()) {
@@ -224,6 +245,10 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
         }
     }
 
+    public void setStatus(SimulationStatusType status) {
+        this.status = status;
+    }
+
     public EntityInstance[][] getGrid() {
         return grid;
     }
@@ -257,14 +282,6 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
         return environmentProperties;
     }
 
-    public List<Rule> getRules() {
-        return rules;
-    }
-
-    public HashMap<TerminationType,Termination> getTerminationConditions() {
-        return terminationConditions;
-    }
-
     public Termination getTicksTermination(){
         if(terminationConditions.containsKey(TerminationType.TICK)){
             return terminationConditions.get(TerminationType.TICK);
@@ -276,14 +293,6 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
         if(terminationConditions.containsKey(TerminationType.SECOND)){
             return terminationConditions.get(TerminationType.SECOND);
         }
-        return null;
-    }
-
-    public Set<EntityDefinition> getUniqueEntityDefinitions() {
-        return null;
-    }
-
-    public Map<Integer, EntityInstance> getAliveEntityInstances() {
         return null;
     }
 
@@ -313,10 +322,6 @@ public class WorldInstance implements Callable<SimulationEndDetailsDto> {
 
     public void ChangeSimulationStatusToRunning() {
         status = SimulationStatusType.Running;
-    }
-
-    public boolean SimulationEndsByUser(){
-        return this.terminationConditions.containsKey(TerminationType.BYUSER);
     }
 
     @Override
