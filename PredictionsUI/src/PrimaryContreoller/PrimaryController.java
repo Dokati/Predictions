@@ -152,12 +152,12 @@ public class PrimaryController implements Initializable {
 public void loadSimulation(String FilePath) {
     SimulationTitlesDetails simulationTitleDto = null;
     try {
-        simulationTitleDto = getPredictionManager().loadSimulation(FilePath);
+        //simulationTitleDto = getPredictionManager().loadSimulation(FilePath);
         predictionManager.resetSimulationList();
         headerComponentController.getFilePathTextField().setText(FilePath);
         showSuccessDialog();
         clearAllScreens();
-        initFirstNSecondScrean(simulationTitleDto);
+        //initFirstNSecondScrean(simulationTitleDto);
 //        taskThreadPool = Executors.newFixedThreadPool(((ThreadPoolExecutor)predictionManager.threadPool).getMaximumPoolSize());
 //        queueManager.setThreadPoolSize(((ThreadPoolExecutor)predictionManager.threadPool).getMaximumPoolSize());
     }

@@ -11,6 +11,7 @@ import Rule.Rule;
 import Terminition.TerminationType;
 import UserRequest.*;
 import World.definition.WorldDefinition;
+import World.instance.SimulationStatusType;
 
 
 import javax.xml.bind.JAXBContext;
@@ -33,6 +34,7 @@ public class AdminManager {
     private Integer threadPoolSize;
     private Map<Integer, UserRequest> requests;
     private Map<String, PredictionManager> users;
+    private boolean adminUp;
 
     public AdminManager() {
         this.worldDefinitions = new HashMap<>();
@@ -40,6 +42,7 @@ public class AdminManager {
         this.threadPool = null;
         this.requests = new HashMap<>();
         this.users = new HashMap<>();
+        this.adminUp = false;
     }
 
     public EntityPropertyDetailDto getEntityPropertiesDetail(String defName,String value) {
@@ -70,8 +73,6 @@ public class AdminManager {
                         env.hasRange()? env.getRange().toString():null))
                 .collect(Collectors.toList()));
     }
-
-
 
     public ActionDetailsDto getActionDetails(String defName,int actionIndex, String ruleName) {
         return  new ActionDetailsDto(worldDefinitions.get(defName).getRules().stream().filter(rule -> rule.getName().equals(ruleName)).findFirst()
@@ -113,6 +114,14 @@ public class AdminManager {
                 entitiesPopulationMap,requests.get(requestNum).getTerminationConditions(),envPropValue,requests.get(requestNum));
 
         threadPool.submit(users.get(requests.get(requestNum).getUsername()).getSimulationList().get(simulationNumber));
+    }
+
+    public SimulationDetailsDto getSimulationDetailsDto(String userName,Integer simulationId){
+        return users.get(userName).getSimulationDetailsDto(simulationId);
+    }
+
+    public void setSimulationStatus(String userName,Integer simulationId, SimulationStatusType status){
+        users.get(userName).setSimulationStatus(simulationId,status);
     }
 
     public void addRequestToList(RequestDto requestDto){
@@ -196,6 +205,14 @@ public class AdminManager {
         users.put(userName,new PredictionManager());
     }
 
+    public void setAdminUp(boolean adminUp) {
+        this.adminUp = adminUp;
+    }
+
+    public boolean isAdminUp() {
+        return adminUp;
+    }
+
     public void RemoveUserFromList(String userName){
             users.remove(userName);
     }
@@ -242,11 +259,4 @@ public class AdminManager {
         this.threadPool = Executors.newFixedThreadPool(threadPoolSize);
     }
 
-    public Map<String, PredictionManager> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Map<String, PredictionManager> users) {
-        this.users = users;
-    }
 }
