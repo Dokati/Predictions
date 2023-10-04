@@ -16,7 +16,7 @@
             </Tab>
           <Tab text="Allocations">
                <content>
-                  <fx:include source="../Screens/Allocations/Allocation.fxml" />
+                  <fx:include fx:id="AllocationScreen" source="../Screens/Allocations/Allocation.fxml" />
                </content></Tab>
             <Tab text="Executions History">
                <content>

@@ -11,14 +11,15 @@
     <orderEntry type="module" module-name="PredictionsLogic" />
     <orderEntry type="module" module-name="ClientSharedClasess" />
     <orderEntry type="library" exported="" name="squareup.okhttp3.okhttp" level="project" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/gson-2.10.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../lib/gson-2.8.8.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="fasterxml.jackson.core" level="project" />
   </component>
 </module>

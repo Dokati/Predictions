@@ -16,8 +16,7 @@ import java.util.List;
 import java.util.TimerTask;
 import java.util.stream.Collectors;
 
-import static Request.RequestCreator.CreateGetRequest;
-import static Request.RequestCreator.ExecuteRequest;
+import static Request.RequestCreator.*;
 
 public class DetailScreenListenerTask extends TimerTask {
     FirstScreenBodyController firstScreenBodyController;
@@ -51,34 +50,7 @@ public class DetailScreenListenerTask extends TimerTask {
 
     }
 
-    private List<SimulationTitlesDetails> getFromServerAllWorldsDetails() {
-        Request request = CreateGetRequest("/getAllSimulationsDetails");
-        Response response = ExecuteRequest(request);
-        if (response != null) {
-            try {
-                Type simulationListType = new TypeToken<List<SimulationTitlesDetails>>() {}.getType();
-                List<SimulationTitlesDetails> SimulationTitlesDetailsList = new Gson().fromJson(response.body().string(), simulationListType);
-                return SimulationTitlesDetailsList;
-            } catch (IOException e) {
-                throw new RuntimeException(e.getMessage());
-            }
-        }
-
-        return null;
-    }
 
 
-    private Integer askServerForNumberOfWorlds() {
-        Integer res = null;
-        Request request = CreateGetRequest("/getNumOfSimulations");
-        Response response = ExecuteRequest(request);
-        if (response != null) {
-            try {
-                res= Integer.parseInt(response.body().string());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return res;
-    }
+
 }

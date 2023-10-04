@@ -44,18 +44,10 @@ public class AllocationController implements Initializable {
         RequestTable.setItems(data);
         RequestTable.refresh();
 
-        startListeners();
 
     }
 
-    private void startListeners() {
-        AllocationListenerTask allocationListenerTask = new AllocationListenerTask(this);
-        Timer timer = new Timer();
-        timer.schedule(allocationListenerTask, TIMER_DELAY, TIMER_SCEDULE_PERIOD);
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-    }
 
     public void setCurrentAllocationRequests(List<AdminRequestDto> requests) {
         ObservableList<RequestItem> data = FXCollections.observableArrayList();

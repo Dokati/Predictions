@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import okhttp3.Request;
 import okhttp3.Response;
 
+
+
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -77,6 +79,10 @@ public class ManagementController implements Initializable {
             }
         }
 
+    }
+
+    public FirstScreenBodyController getDetailsComponentController() {
+        return detailsComponentController;
     }
 
     public void setMainController(PrimaryController primaryController) {

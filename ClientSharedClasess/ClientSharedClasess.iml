@@ -11,5 +11,14 @@
     <orderEntry type="module" module-name="PredictionsLogic" />
     <orderEntry type="module" module-name="User" />
     <orderEntry type="module" module-name="Admin" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../lib/gson-2.8.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
