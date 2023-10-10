@@ -154,7 +154,7 @@ public class WorldInstance implements Runnable {
             request.setNumOfTerminateSimulations(request.getNumOfTerminateSimulations() + 1);
         }
 
-        endDetailsDto =  new SimulationEndDetailsDto(SimulationId, endSimulationDetails);
+        endDetailsDto =  new SimulationEndDetailsDto(SimulationId, request.getUsername(), request.getRequestNumber(), endSimulationDetails);
     }
 
     public SimulationEndDetailsDto getEndDetailsDto() {

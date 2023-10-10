@@ -109,15 +109,20 @@ public class AdminManager {
         return worldDefinitions.get(defName);
     }
 
-    public void runSimulationByRequestNumber(Integer requestNum, Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValue){
+    public Integer runSimulationByRequestNumber(Integer requestNum, Map<String, Integer> entitiesPopulationMap, Map<String, String> envPropValue){
         Integer simulationNumber = users.get(requests.get(requestNum).getUsername()).initPredictionManager(worldDefinitions.get(requests.get(requestNum).getSimulationName()),
                 entitiesPopulationMap,requests.get(requestNum).getTerminationConditions(),envPropValue,requests.get(requestNum));
 
         threadPool.submit(users.get(requests.get(requestNum).getUsername()).getSimulationList().get(simulationNumber));
+        return simulationNumber;
     }
 
     public SimulationDetailsDto getSimulationDetailsDto(String userName,Integer simulationId){
         return users.get(userName).getSimulationDetailsDto(simulationId);
+    }
+
+    public SimulationEndDetailsDto getSimulationEndDetailsDto(String userName,Integer simulationId){
+        return users.get(userName).getSimulationEndDetailsDto(simulationId);
     }
 
     public void setSimulationStatus(String userName,Integer simulationId, SimulationStatusType status){

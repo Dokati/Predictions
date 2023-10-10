@@ -31,11 +31,14 @@ public class RunSimulationServlet extends HttpServlet {
                 Map<String, String> envPropValue = runSimulationDto.getEnvPropValue();
 
                 // Run the simulation based on the extracted parameters
-                adminManager.runSimulationByRequestNumber(requestNum, entitiesPopulationMap, envPropValue);
+                Integer simulationId = adminManager.runSimulationByRequestNumber(requestNum, entitiesPopulationMap, envPropValue);
 
-                // Send a success message in the response
+                // Send a success message in the response with the simulation ID as a query parameter
                 response.setStatus(HttpServletResponse.SC_OK);
-                response.getWriter().write("Simulation started successfully.");
+                response.getWriter().write("Simulation started successfully. Simulation ID: " + simulationId);
+
+                // Add simulationId as a query parameter to the response URL
+                response.sendRedirect("/your-servlet-path?simulationId=" + simulationId);
             } catch (JsonParseException | IllegalArgumentException e) {
                 // Handle JSON parsing or invalid data errors
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
