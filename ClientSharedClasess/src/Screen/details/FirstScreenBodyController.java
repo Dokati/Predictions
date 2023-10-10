@@ -1,10 +1,6 @@
 package Screen.details;
 
-import Screen.details.DetailLabel;
-import Screen.details.MyActionTreeItem;
-import Screen.details.MyTreeItem;
 import Dto.*;
-import PrimaryScreen.PrimaryController;
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,8 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
-import static Request.RequestCreator.*;
 
 public class FirstScreenBodyController implements Initializable {
 
@@ -46,7 +40,7 @@ public class FirstScreenBodyController implements Initializable {
 
     
     public void setTitleDetail(SimulationTitlesDetails simulationTitleDto){
-        MyTreeItem newWorld  = new MyTreeItem("World Name: " + simulationTitleDto.getWorldName(), "World Name");
+        MyTreeItem newWorld  = new MyTreeItem(simulationTitleDto.getWorldName(), "World Name");
         this.TreeView.getRoot().getChildren().add(newWorld);
         addToNewWorldBasicChildren(newWorld);
         // insert Entities Names:
@@ -71,7 +65,7 @@ public class FirstScreenBodyController implements Initializable {
         });
 
         //insert enviorment variable name:
-        newWorld.getChildren().get(3).getChildren().addAll(simulationTitleDto.getEnvVariableNames().stream()
+        newWorld.getChildren().get(2).getChildren().addAll(simulationTitleDto.getEnvVariableNames().stream()
                 .map(envName -> new MyTreeItem(envName, "Env name")).collect(Collectors.toList()));
 
 
@@ -79,18 +73,17 @@ public class FirstScreenBodyController implements Initializable {
                 .selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null && newValue.isLeaf()){
-                        if(((MyTreeItem)newValue).getName().equals("Entity name")) {try {setEntityPropertiesDetails(newValue.getValue());} catch (IOException e)
+                        String worldName = getWorldName(newValue);
+                        if(((MyTreeItem)newValue).getName().equals("Entity name")) {try {setEntityPropertiesDetails(newValue.getValue(),worldName);} catch (IOException e)
                         {throw new RuntimeException(e);}}
-                        if(((MyTreeItem)newValue).getName().equals("Activation")) {try {setRuleActivaionDetails(newValue.getParent().getValue());} catch (IOException e) {
+                        if(((MyTreeItem)newValue).getName().equals("Activation")) {try {setRuleActivaionDetails(newValue.getParent().getValue(), worldName);} catch (IOException e) {
                             throw new RuntimeException(e);}}
-                        if(((MyTreeItem)newValue).getName().equals("Termination")) {
-                            try {setTerminationDetails();} catch (IOException e) {throw new RuntimeException(e);}}
                         if(((MyTreeItem)newValue).getName().equals("Env name")) {
-                            try {setEnvVariablesDetails(newValue.getValue());} catch (IOException e) {throw new RuntimeException(e);}}
+                            try {setEnvVariablesDetails(newValue.getValue(), worldName);} catch (IOException e) {throw new RuntimeException(e);}}
                         if(((MyTreeItem)newValue).getName().equals("Action")) {
-                            try {setActionDetails(newValue, newValue.getParent().getParent().getValue());} catch (IOException e) {throw new RuntimeException(e);}}
+                            try {setActionDetails(newValue, newValue.getParent().getParent().getValue(),worldName);} catch (IOException e) {throw new RuntimeException(e);}}
                         if(((MyTreeItem)newValue).getName().equals("Grid"))
-                        {try {setGridDetails();}
+                        {try {setGridDetails(worldName);}
                         catch (IOException e)
                         {throw new RuntimeException(e);}
                         }
@@ -99,6 +92,14 @@ public class FirstScreenBodyController implements Initializable {
 
 
 
+    }
+
+    private String getWorldName(TreeItem<String> newValue) {
+        TreeItem<String> current = newValue;
+        while(current.getParent()!= this.TreeView.getRoot()){
+            current = current.getParent();
+        }
+        return current.getValue();
     }
 
     public void SetSeveralWorldsDetails(List<SimulationTitlesDetails> simulationTitlesDetailsList){
@@ -113,16 +114,15 @@ public class FirstScreenBodyController implements Initializable {
 
         MyTreeItem entitiesItem = new MyTreeItem("Entities","Entities");
         MyTreeItem rulesItem = new MyTreeItem("Rules","Rules");
-        MyTreeItem terminationItem = new MyTreeItem("Termination","Termination");
         MyTreeItem envItem = new MyTreeItem("Enviorment Variables","Enviorment Variables");
         MyTreeItem gridItem = new MyTreeItem("Grid","Grid");
 
-        newWorld.getChildren().addAll(entitiesItem,rulesItem,terminationItem,envItem,gridItem);
+        newWorld.getChildren().addAll(entitiesItem,rulesItem,envItem,gridItem);
     }
 
-    private void setGridDetails() throws IOException {
+    private void setGridDetails(String worldName) throws IOException {
         this.tilePane.getChildren().clear();
-        Request request = RequestCreator.CreateGetRequest("/getGridDetails");
+        Request request = RequestCreator.CreateSingleParameterGetRequest(worldName, "worldDefName","/getGridDetails");
         Response response = RequestCreator.ExecuteRequest(request);
         if(response!=null) {
             GridDto Grid = new Gson().fromJson(response.body().string(), GridDto.class);
@@ -131,11 +131,11 @@ public class FirstScreenBodyController implements Initializable {
         }
     }
 
-    private void setActionDetails(TreeItem<String> action, String ruleName) throws IOException {
+    private void setActionDetails(TreeItem<String> action, String ruleName, String worldName) throws IOException {
         this.tilePane.getChildren().clear();
         int Index = ((MyActionTreeItem)action).getactionIndex();
         String stringIndex = Integer.toString(Index);
-        Request request = RequestCreator.CreatePostActionsRequest(ruleName, stringIndex);
+        Request request = RequestCreator.CreatePostActionsRequest(ruleName, stringIndex, worldName);
         Response response = RequestCreator.ExecuteRequest(request);
         if(response!=null) {
             ActionDetailsDto actionDetailsDto = new Gson().fromJson(response.body().string(), ActionDetailsDto.class);
@@ -145,9 +145,9 @@ public class FirstScreenBodyController implements Initializable {
 
     }
 
-    private void setEnvVariablesDetails(String envName) throws IOException {
+    private void setEnvVariablesDetails(String envName, String worldName) throws IOException {
         this.tilePane.getChildren().clear();
-        Request request = RequestCreator.CreateGetRequest("/getEnvVariableDetails");
+        Request request = RequestCreator.CreateSingleParameterGetRequest(worldName, "worldDefName","/getEnvVariableDetails");
         Response response = RequestCreator.ExecuteRequest(request);
         if (response == null) return;
         EnviormentVariablesDto enviormentVariablesDto = new Gson().fromJson(response.body().string(), EnviormentVariablesDto.class);
@@ -157,25 +157,11 @@ public class FirstScreenBodyController implements Initializable {
         this.tilePane.getChildren().add(label);
     }
 
-    private void setTerminationDetails() throws IOException {
-        this.tilePane.getChildren().clear();
-        Request request = RequestCreator.CreateGetRequest("/getTerminationDetails");
-        Response response = RequestCreator.ExecuteRequest(request);
-        if (response == null) return;
-        TerminationDto terminationDto = new Gson().fromJson(response.body().string(), TerminationDto.class);
-        DetailLabel label = new DetailLabel("Termination by:\n");
-        for(Map.Entry<String ,Integer> entry : terminationDto.getTerminations().entrySet()){
-            if(entry.getKey()!= "BYUSER"){
-                label.setText(label.getText()+"\n"+ entry.getKey()+": " + entry.getValue().toString()+".\n");
-            }
-            else label.setText(label.getText() + "\nUser Choice.");
-        }
-        this.tilePane.getChildren().add(label);
-    }
 
-    private void setRuleActivaionDetails(String ruleName) throws IOException {
+
+    private void setRuleActivaionDetails(String ruleName, String worldName) throws IOException {
         this.tilePane.getChildren().clear();
-        Request request =  RequestCreator.CreateRuleActivaionRequest(ruleName);
+        Request request =  RequestCreator.CreateRuleActivaionRequest(ruleName, worldName);
         Response response = RequestCreator.ExecuteRequest(request);
         if (response == null) return;
         RuleActivationDto activationDto = new Gson().fromJson(response.body().string(), RuleActivationDto.class);
@@ -183,9 +169,9 @@ public class FirstScreenBodyController implements Initializable {
         this.tilePane.getChildren().add(label);
     }
 
-    private void setEntityPropertiesDetails(String entityName) throws IOException {
+    private void setEntityPropertiesDetails(String entityName, String worldName) throws IOException {
         this.tilePane.getChildren().clear();
-        Request request =  RequestCreator.CreateEntityActionsRequest(entityName);
+        Request request =  RequestCreator.CreateEntityActionsRequest(entityName, worldName);
         Response response = RequestCreator.ExecuteRequest(request);
         if (response == null) return;
         EntityPropertyDetailDto entityPropertiesDetail =  new Gson().fromJson(response.body().string(), EntityPropertyDetailDto.class);

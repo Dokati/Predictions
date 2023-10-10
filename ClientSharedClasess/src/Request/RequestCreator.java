@@ -1,9 +1,9 @@
 package Request;
 
-import Dto.ActionDetailsDto;
 import Dto.BaseDto;
-import Dto.RequestDto;
+import Dto.SimulationTitlesDetails;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
@@ -12,7 +12,9 @@ import okhttp3.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Optional;
 
 import static Config.Configuration.BASE_URL;
@@ -40,11 +42,12 @@ public class RequestCreator {
                 .build();
         return request;
     }
-    public static Request CreatePostActionsRequest(String ruleName, String index) {
+    public static Request CreatePostActionsRequest(String ruleName, String index, String worldDefName) {
         String url = BASE_URL + "/getActionDetails";
         RequestBody requestBody = new FormBody.Builder()
                 .add("ruleName", ruleName)
                 .add("index", index)
+                .add("worldDefName", worldDefName)
                 .build();
         Request request = new Request.Builder()
                 .url(url)
@@ -53,22 +56,39 @@ public class RequestCreator {
         return request;
     }
 
+
     public static Request CreateThreadPoolSizePostRequest(String size) {
         return  CreateSingleParameterPostRequest(size, "threadPoolSize", "/setThreadPoolSize");
     }
     public static Request CreateUserNamePostRequest(String userName) {
         return  CreateSingleParameterPostRequest(userName, "user name", "/UserList");
     }
-    public static Request CreateEntityActionsRequest(String entityName) {
-         return   CreateSingleParameterPostRequest(entityName, "entityName", "/getEntityProperties");
+    public static Request CreateEntityActionsRequest(String entityName, String worldName) {
+         return   CreateSTwoParameterPostRequest(entityName, "entityName",
+                 worldName,"worldDefName"  ,"/getEntityProperties");
     }
-    public static Request CreateRuleActivaionRequest(String entityName) {
-        return   CreateSingleParameterPostRequest(entityName, "ruleName", "/getRuleActivation");
+    public static Request CreateRuleActivaionRequest(String ruleName, String worldName) {
+        return   CreateSTwoParameterPostRequest(ruleName, "ruleName",
+                worldName,"worldDefName"  ,"/getRuleActivation");
     }
-    public static Request CreateSingleParameterPostRequest(String entityName, String parameterName , String resource) {
+    public static Request CreateSingleParameterPostRequest(String value, String parameterName , String resource) {
         String url = BASE_URL + resource;
         RequestBody requestBody = new FormBody.Builder()
-                .add(parameterName, entityName)
+                .add(parameterName, value)
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        return request;
+    }
+    public static Request CreateSTwoParameterPostRequest(String value1, String parameterName1 ,
+                                                         String value2, String parameterName2, String resource) {
+
+        String url = BASE_URL + resource;
+        RequestBody requestBody = new FormBody.Builder()
+                .add(parameterName1, value1)
+                .add(parameterName2, value2)
                 .build();
         Request request = new Request.Builder()
                 .url(url)
@@ -120,6 +140,45 @@ public class RequestCreator {
             Platform.runLater(()->showAlertToUser(e.getMessage())); // This prints the stack trace for debugging purposes
             return null; // Return an appropriate response or value in case of failure
         }
+    }
+    public static void ExecuteRequestAndHandleResponse(Request request) {
+        Response response = ExecuteRequest(request);
+        if(response == null || response.code() != 200 || !response.isSuccessful()){
+            showAlertToUser("An error occurred while trying to connect to the server, please try again later");
+        }
+        if(response != null) {
+            response.body().close();
+        }
+
+    }
+
+    public static List<SimulationTitlesDetails> getFromServerAllWorldsDetails() {
+        Request request = CreateGetRequest("/getAllSimulationsDetails");
+        Response response = ExecuteRequest(request);
+        if (response != null) {
+            try {
+                Type simulationListType = new TypeToken<List<SimulationTitlesDetails>>() {}.getType();
+                List<SimulationTitlesDetails> SimulationTitlesDetailsList = new Gson().fromJson(response.body().string(), simulationListType);
+                return SimulationTitlesDetailsList;
+            } catch (IOException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+        return null;
+    }
+
+    public static Integer askServerForNumberOfWorlds() {
+        Integer res = null;
+        Request request = CreateGetRequest("/getNumOfSimulations");
+        Response response = ExecuteRequest(request);
+        if (response != null) {
+            try {
+                res= Integer.parseInt(response.body().string());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
     }
 
     private static void showAlertToUser(String message) {

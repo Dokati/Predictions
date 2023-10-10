@@ -1,6 +1,7 @@
 package Dto;
 
 import EndSimulationDetails.EntitySimulationEndDetails;
+import Screens.Execution.EnvPropTableItem;
 import World.definition.WorldDefinition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -8,7 +9,6 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import Body.SecondScreen.EnvPropTableItem;
 
 
 import java.util.HashMap;

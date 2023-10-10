@@ -14,7 +14,6 @@ import okhttp3.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -170,7 +169,7 @@ public class FirstScreenBodyController implements Initializable {
 
     private void setEntityPropertiesDetails(String entityName) throws IOException {
         this.tilePane.getChildren().clear();
-        Request request =  CreateEntityActionsRequest(entityName);
+        Request request =  CreateEntityActionsRequest(entityName, worldName);
         Response response = ExecuteRequest(request);
         if (response == null) return;
         EntityPropertyDetailDto entityPropertiesDetail =  new Gson().fromJson(response.body().string(), EntityPropertyDetailDto.class);

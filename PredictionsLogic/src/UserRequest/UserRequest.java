@@ -45,7 +45,7 @@ public class UserRequest {
                 res.add("By User");
             }
             else {
-                res.add(terminationCondition.getValue().toString() + " " + terminationCondition.getKey().toString());
+                res.add(terminationCondition.getValue().getCount().toString() + " " + terminationCondition.getKey().toString());
             }
         }
 
