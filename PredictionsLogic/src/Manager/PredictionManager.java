@@ -50,6 +50,10 @@ public class PredictionManager {
         return simulationList.get(simulationId).getSimulationDetailsDto();
     }
 
+    public SimulationEndDetailsDto getSimulationEndDetailsDto(Integer simulationId){
+        return simulationList.get(simulationId).getEndDetailsDto();
+    }
+
     public void setSimulationStatus(Integer simulationId, SimulationStatusType status){
         simulationList.get(simulationId).setStatus(status);
     }
